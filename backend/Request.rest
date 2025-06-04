@@ -1,0 +1,44 @@
+### Menginsert data user baru
+POST http://localhost:5000/users
+content-type: application/json
+
+{
+    "roleId": 1,
+    "email": "masidik@gmail.com",
+    "username": "by",
+    "password": "12345678",
+    "fullName": "Hasby",
+    "gender": "laki-laki"
+}
+
+### Mengambil semua data user
+GET http://localhost:5000/users
+
+### Mengambil data user dengan id tertentu
+GET http://localhost:5000/users/1
+
+### Mengupdate data user dengan id tertentu, kolom tertentu
+PATCH http://localhost:5000/users/1
+content-type: application/json
+
+{
+    "email": "dukun@gmail.com"
+}
+
+### Mengupdate data user dengan id tertentu
+DELETE http://localhost:5000/users/3
+
+
+
+
+### Test masukkan username yang sudah ada
+POST http://localhost:5000/users
+content-type: application/json
+
+{
+    "name": "Hasby",
+    "username": "has",
+    "email": "masidik2@gmail.com",
+    "password": "12345678",
+    "gender": "laki-laki"
+}
