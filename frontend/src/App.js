@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import UserList from "./components/UserList";
-import AddUser from "./components/addUser.jsx";
-import EditUser from "./components/EditUser";
+import UserList from "./components/ListUsers";
+import UsersAdd from "./components/UsersAdd";
+import EditUser from "./components/UsersEdit";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UserList />} />
-        <Route path="add" element={<AddUser />} />
+        <Route path="add" element={<UsersAdd />} />
         <Route path="edit/:id" element={<EditUser />} />
       </Routes>
     </BrowserRouter>
