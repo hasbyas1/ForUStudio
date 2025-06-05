@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditUser = () => {
+const UsersEdit = () => {
   // ✅ State sesuai dengan field yang ada di UserModel
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -297,4 +297,4 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default UsersEdit;

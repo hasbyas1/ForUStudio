@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddUser = () => {
+const UsersAdd = () => {
   // ✅ Update state sesuai dengan UsersModel
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -245,4 +245,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default UsersAdd;
