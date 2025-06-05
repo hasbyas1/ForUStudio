@@ -44,10 +44,19 @@ const RolesList = () => {
   // ✅ Loading state
   if (isLoading) {
     return (
-      <div className="section">
+      <div 
+        className="section" 
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          minHeight: '100vh'
+        }}
+      >
         <div className="column is-fluid">
-          <div className="notification is-info">
-            <p>Loading roles...</p>
+          <div className="notification is-white has-text-centered">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+              <i className="fas fa-spinner fa-spin fa-lg"></i>
+              <p className="title is-5">Loading roles...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +81,7 @@ const RolesList = () => {
           <div className="level-right">
             <div className="level-item">
               {/* ✅ Tombol kembali ke Users */}
-              <Link to="/" className="button is-light mr-3">
+              <Link to="/users" className="button is-light mr-3">
                 <span className="icon">
                   <i className="fas fa-arrow-left"></i>
                 </span>
@@ -80,7 +89,7 @@ const RolesList = () => {
               </Link>
             </div>
             <div className="level-item">
-              <Link to="roles/add" className="button is-success">
+              <Link to="/roles/add" className="button is-success">
                 <span className="icon">
                   <i className="fas fa-plus"></i>
                 </span>
@@ -134,7 +143,7 @@ const RolesList = () => {
                     <td>
                       <div className="buttons">
                         <Link 
-                          to={`edit/${role.roleId}`} 
+                          to={`/roles/edit/${role.roleId}`} 
                           className="button is-small is-info"
                           title="Edit Role"
                         >
@@ -160,7 +169,7 @@ const RolesList = () => {
                 <tr>
                   <td colSpan="5" className="has-text-centered">
                     <div className="notification is-warning">
-                      <p>No roles found. <Link to="add">Add the first role</Link></p>
+                      <p>No roles found. <Link to="/roles/add">Add the first role</Link></p>
                     </div>
                   </td>
                 </tr>

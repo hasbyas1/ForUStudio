@@ -72,10 +72,21 @@ const RolesEdit = () => {
   // ✅ Loading state saat mengambil data role
   if (roleLoading) {
     return (
-      <div className="columns mt-5 is-centered">
-        <div className="column is-half">
-          <div className="notification is-info">
-            <p>Loading role data...</p>
+      <div 
+        className="section" 
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          minHeight: '100vh'
+        }}
+      >
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
+            <div className="notification is-white has-text-centered">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                <i className="fas fa-spinner fa-spin fa-lg"></i>
+                <p className="title is-5">Loading role data...</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -83,75 +94,83 @@ const RolesEdit = () => {
   }
 
   return (
-    <div className="columns mt-5 is-centered">
-      <div className="column is-half">
-        <h1 className="title">Edit Role</h1>
-        <form onSubmit={updateRole}>
-          {/* Role Name Field */}
-          <div className="field">
-            <label className="label">Role Name *</label>
-            <div className="control">
-              <input
-                type="text"
-                className="input"
-                value={roleName}
-                onChange={(e) => setRoleName(e.target.value)}
-                placeholder="Enter role name"
-                required
-                disabled={roleName === 'admin'} // Protect admin role name
-              />
+    <div 
+      className="section" 
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        minHeight: '100vh'
+      }}
+    >
+      <div className="columns mt-5 is-centered">
+        <div className="column is-half">
+          <h1 className="title">Edit Role</h1>
+          <form onSubmit={updateRole}>
+            {/* Role Name Field */}
+            <div className="field">
+              <label className="label">Role Name *</label>
+              <div className="control">
+                <input
+                  type="text"
+                  className="input"
+                  value={roleName}
+                  onChange={(e) => setRoleName(e.target.value)}
+                  placeholder="Enter role name"
+                  required
+                  disabled={roleName === 'admin'} // Protect admin role name
+                />
+              </div>
+              {roleName === 'admin' && (
+                <p className="help has-text-warning">Admin role name cannot be changed</p>
+              )}
             </div>
-            {roleName === 'admin' && (
-              <p className="help has-text-warning">Admin role name cannot be changed</p>
-            )}
-          </div>
 
-          {/* Description Field */}
-          <div className="field">
-            <label className="label">Description</label>
-            <div className="control">
-              <textarea
-                className="textarea"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter role description"
-                rows="3"
-              />
+            {/* Description Field */}
+            <div className="field">
+              <label className="label">Description</label>
+              <div className="control">
+                <textarea
+                  className="textarea"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter role description"
+                  rows="3"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Buttons */}
-          <div className="field is-grouped">
-            <div className="control">
-              <button 
-                type="submit" 
-                className={`button is-success ${isLoading ? 'is-loading' : ''}`}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Updating...' : 'Update Role'}
-              </button>
+            {/* Buttons */}
+            <div className="field is-grouped">
+              <div className="control">
+                <button 
+                  type="submit" 
+                  className={`button is-success ${isLoading ? 'is-loading' : ''}`}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Updating...' : 'Update Role'}
+                </button>
+              </div>
+              <div className="control">
+                <button 
+                  type="button" 
+                  className="button is-light" 
+                  onClick={() => navigate("/roles")}
+                  disabled={isLoading}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-            <div className="control">
-              <button 
-                type="button" 
-                className="button is-light" 
-                onClick={() => navigate("/roles")}
-                disabled={isLoading}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
 
-        {/* Info */}
-        <div className="notification is-info is-light mt-4">
-          <p><strong>Note:</strong></p>
-          <ul>
-            <li>Role name is required</li>
-            <li>Admin role name cannot be changed for security</li>
-            <li>Changing role name may affect users with this role</li>
-          </ul>
+          {/* Info */}
+          <div className="notification is-info is-light mt-4">
+            <p><strong>Note:</strong></p>
+            <ul>
+              <li>Role name is required</li>
+              <li>Admin role name cannot be changed for security</li>
+              <li>Changing role name may affect users with this role</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

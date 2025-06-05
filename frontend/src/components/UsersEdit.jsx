@@ -38,7 +38,7 @@ const UsersEdit = () => {
       } catch (error) {
         console.log("Error fetching user:", error);
         alert("Failed to load user data. Please try again.");
-        navigate("/");
+        navigate("/users");
       } finally {
         setUserLoading(false);
       }
@@ -98,7 +98,7 @@ const UsersEdit = () => {
 
       await axios.patch(`http://localhost:5000/users/${id}`, userData);
       alert("User updated successfully!");
-      navigate("/");
+      navigate("/users");
     } catch (error) {
       console.log("Error updating user:", error);
       
@@ -116,10 +116,21 @@ const UsersEdit = () => {
   // ✅ Loading state saat mengambil data user
   if (userLoading) {
     return (
-      <div className="columns mt-5 is-centered">
-        <div className="column is-half">
-          <div className="notification is-info">
-            <p>Loading user data...</p>
+      <div 
+        className="section" 
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          minHeight: '100vh'
+        }}
+      >
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
+            <div className="notification is-white has-text-centered">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                <i className="fas fa-spinner fa-spin fa-lg"></i>
+                <p className="title is-5">Loading user data...</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -127,170 +138,178 @@ const UsersEdit = () => {
   }
 
   return (
-    <div className="columns mt-5 is-centered">
-      <div className="column is-half">
-        <h1 className="title">Edit User</h1>
-        <form onSubmit={updateUser}>
-          {/* Email Field */}
-          <div className="field">
-            <label className="label">Email *</label>
-            <div className="control">
-              <input 
-                type="email" 
-                className="input" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                placeholder="Email" 
-                required 
-              />
-            </div>
-          </div>
-
-          {/* Username Field */}
-          <div className="field">
-            <label className="label">Username *</label>
-            <div className="control">
-              <input 
-                type="text" 
-                className="input" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-                placeholder="Username" 
-                minLength={3}
-                maxLength={50}
-                required 
-              />
-            </div>
-          </div>
-
-          {/* Password Field */}
-          <div className="field">
-            <label className="label">Password</label>
-            <div className="control">
-              <input 
-                type="password" 
-                className="input" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                placeholder="Leave blank to keep current password"
-                minLength={8}
-                maxLength={100}
-              />
-            </div>
-            <p className="help">Leave blank if you don't want to change password</p>
-          </div>
-
-          {/* Full Name Field */}
-          <div className="field">
-            <label className="label">Full Name *</label>
-            <div className="control">
-              <input 
-                type="text" 
-                className="input" 
-                value={fullName} 
-                onChange={(e) => setFullName(e.target.value)} 
-                placeholder="Full Name" 
-                minLength={3}
-                maxLength={100}
-                required 
-              />
-            </div>
-          </div>
-
-          {/* Gender Field */}
-          <div className="field">
-            <label className="label">Gender</label>
-            <div className="control">
-              <div className="select is-fullwidth">
-                <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                  <option value="-">Not Specified</option>
-                  <option value="laki-laki">Laki-laki</option>
-                  <option value="perempuan">Perempuan</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Phone Field */}
-          <div className="field">
-            <label className="label">Phone</label>
-            <div className="control">
-              <input 
-                type="tel" 
-                className="input" 
-                value={phone} 
-                onChange={(e) => setPhone(e.target.value)} 
-                placeholder="Phone Number (Optional)"
-                pattern="[0-9]{10,13}"
-              />
-            </div>
-            <p className="help">Numbers only, 10-13 digits (optional)</p>
-          </div>
-
-          {/* Role Field */}
-          <div className="field">
-            <label className="label">Role *</label>
-            <div className="control">
-              <div className="select is-fullwidth">
-                <select value={roleId} onChange={(e) => setRoleId(parseInt(e.target.value))}>
-                  {roles.map((role) => (
-                    <option key={role.roleId} value={role.roleId}>
-                      {role.roleName} - {role.description}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Is Active Field */}
-          <div className="field">
-            <label className="label">Status</label>
-            <div className="control">
-              <label className="checkbox">
-                <input
-                  type="checkbox"
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
+    <div 
+      className="section" 
+      style={{
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        minHeight: '100vh'
+      }}
+    >
+      <div className="columns mt-5 is-centered">
+        <div className="column is-half">
+          <h1 className="title">Edit User</h1>
+          <form onSubmit={updateUser}>
+            {/* Email Field */}
+            <div className="field">
+              <label className="label">Email *</label>
+              <div className="control">
+                <input 
+                  type="email" 
+                  className="input" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  placeholder="Email" 
+                  required 
                 />
-                {" "}User is active
-              </label>
+              </div>
             </div>
-            <p className="help">Uncheck to deactivate user account</p>
-          </div>
 
-          {/* Buttons */}
-          <div className="field is-grouped">
-            <div className="control">
-              <button 
-                type="submit" 
-                className={`button is-success ${isLoading ? 'is-loading' : ''}`}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Updating...' : 'Update User'}
-              </button>
+            {/* Username Field */}
+            <div className="field">
+              <label className="label">Username *</label>
+              <div className="control">
+                <input 
+                  type="text" 
+                  className="input" 
+                  value={username} 
+                  onChange={(e) => setUsername(e.target.value)} 
+                  placeholder="Username" 
+                  minLength={3}
+                  maxLength={50}
+                  required 
+                />
+              </div>
             </div>
-            <div className="control">
-              <button 
-                type="button" 
-                className="button is-light" 
-                onClick={() => navigate("/")}
-                disabled={isLoading}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </form>
 
-        {/* Info */}
-        <div className="notification is-info is-light mt-4">
-          <p><strong>Note:</strong></p>
-          <ul>
-            <li>Fields marked with * are required</li>
-            <li>User ID cannot be changed</li>
-            <li>Leave password blank to keep current password</li>
-          </ul>
+            {/* Password Field */}
+            <div className="field">
+              <label className="label">Password</label>
+              <div className="control">
+                <input 
+                  type="password" 
+                  className="input" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  placeholder="Leave blank to keep current password"
+                  minLength={8}
+                  maxLength={100}
+                />
+              </div>
+              <p className="help">Leave blank if you don't want to change password</p>
+            </div>
+
+            {/* Full Name Field */}
+            <div className="field">
+              <label className="label">Full Name *</label>
+              <div className="control">
+                <input 
+                  type="text" 
+                  className="input" 
+                  value={fullName} 
+                  onChange={(e) => setFullName(e.target.value)} 
+                  placeholder="Full Name" 
+                  minLength={3}
+                  maxLength={100}
+                  required 
+                />
+              </div>
+            </div>
+
+            {/* Gender Field */}
+            <div className="field">
+              <label className="label">Gender</label>
+              <div className="control">
+                <div className="select is-fullwidth">
+                  <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                    <option value="-">Not Specified</option>
+                    <option value="laki-laki">Laki-laki</option>
+                    <option value="perempuan">Perempuan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Phone Field */}
+            <div className="field">
+              <label className="label">Phone</label>
+              <div className="control">
+                <input 
+                  type="tel" 
+                  className="input" 
+                  value={phone} 
+                  onChange={(e) => setPhone(e.target.value)} 
+                  placeholder="Phone Number (Optional)"
+                  pattern="[0-9]{10,13}"
+                />
+              </div>
+              <p className="help">Numbers only, 10-13 digits (optional)</p>
+            </div>
+
+            {/* Role Field */}
+            <div className="field">
+              <label className="label">Role *</label>
+              <div className="control">
+                <div className="select is-fullwidth">
+                  <select value={roleId} onChange={(e) => setRoleId(parseInt(e.target.value))}>
+                    {roles.map((role) => (
+                      <option key={role.roleId} value={role.roleId}>
+                        {role.roleName} - {role.description}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Is Active Field */}
+            <div className="field">
+              <label className="label">Status</label>
+              <div className="control">
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={(e) => setIsActive(e.target.checked)}
+                  />
+                  {" "}User is active
+                </label>
+              </div>
+              <p className="help">Uncheck to deactivate user account</p>
+            </div>
+
+            {/* Buttons */}
+            <div className="field is-grouped">
+              <div className="control">
+                <button 
+                  type="submit" 
+                  className={`button is-success ${isLoading ? 'is-loading' : ''}`}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Updating...' : 'Update User'}
+                </button>
+              </div>
+              <div className="control">
+                <button 
+                  type="button" 
+                  className="button is-light" 
+                  onClick={() => navigate("/users")}
+                  disabled={isLoading}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+
+          {/* Info */}
+          <div className="notification is-info is-light mt-4">
+            <p><strong>Note:</strong></p>
+            <ul>
+              <li>Fields marked with * are required</li>
+              <li>User ID cannot be changed</li>
+              <li>Leave password blank to keep current password</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
