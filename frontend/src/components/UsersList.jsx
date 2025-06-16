@@ -42,7 +42,11 @@ const UsersList = () => {
 
   if (isLoading) {
     return (
-      <div className="gradient-background">
+      <div className="gradient-background"
+          style={{
+          minHeight: '100vh'
+        }}
+      >
         {/* Floating Shapes */}
         <div className="radius-shape-1"></div>
         <div className="radius-shape-2"></div>
