@@ -1,84 +1,64 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-const Navbar = ({ 
-  title = "ForUStudio", 
-  showUserMenu = true, 
-  currentUser = null,
-  variant = "default" // default, green, purple, orange, dark
-}) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const location = useLocation();
+const Navbar = () => {
+  const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isActive, setIsActive] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
-  // Fungsi untuk menentukan apakah link aktif
-  const isActiveLink = (path) => {
-    return location.pathname === path || location.pathname.startsWith(path);
-  };
-
-  // Fungsi logout sederhana tanpa auth context
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
-      // Clear any stored data
-      localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to login
+      logout();
       navigate('/login');
     }
   };
 
-  // Fungsi untuk mendapatkan kelas navbar berdasarkan variant
-  const getNavbarClass = () => {
-    switch(variant) {
-      case 'green':
-        return 'navbar-gradient-green';
-      case 'purple':
-        return 'navbar-gradient-purple';
-      case 'orange':
-        return 'navbar-gradient-orange';
-      case 'dark':
-        return 'navbar-gradient-dark';
-      default:
-        return 'navbar-gradient';
-    }
+  const toggleBurger = () => {
+    setIsActive(!isActive);
   };
 
+  const isCurrentPath = (path) => {
+    return location.pathname === path;
+  };
+
+  if (!isAuthenticated()) {
+    return null; // Don't show navbar if not authenticated
+  }
+
   return (
-    <nav className={`navbar is-fixed-top ${getNavbarClass()}`} role="navigation" aria-label="main navigation">
+    <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        {/* Logo/Brand */}
         <Link className="navbar-item" to="/users">
-          <span className="text-glass">
-            <strong>
-              <i className="fas fa-video mr-2"></i>
-              {title}
-            </strong>
+          <span className="icon-text">
+            <span className="icon">
+              <i className="fas fa-users"></i>
+            </span>
+            <span className="has-text-weight-bold">User Management</span>
           </span>
         </Link>
 
-        {/* Mobile burger menu */}
-        <button
-          className={`navbar-burger burger ${isMenuOpen ? 'is-active' : ''}`}
+        <a
+          role="button"
+          className={`navbar-burger ${isActive ? 'is-active' : ''}`}
           aria-label="menu"
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          style={{ border: 'none', background: 'transparent' }}
+          aria-expanded={isActive}
+          onClick={toggleBurger}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </button>
+        </a>
       </div>
 
-      <div className={`navbar-menu ${isMenuOpen ? 'is-active' : ''}`}>
-        {/* Left side navigation */}
+      <div className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
         <div className="navbar-start">
           <Link 
-            className={`navbar-item text-glass ${isActiveLink('/users') ? 'has-background-white-bis' : ''}`}
+            className={`navbar-item ${isCurrentPath('/users') ? 'is-active' : ''}`} 
             to="/users"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={() => setIsActive(false)}
           >
             <span className="icon">
               <i className="fas fa-users"></i>
@@ -86,52 +66,99 @@ const Navbar = ({
             <span>Users</span>
           </Link>
 
-          <Link 
-            className={`navbar-item text-glass ${isActiveLink('/roles') ? 'has-background-white-bis' : ''}`}
-            to="/roles"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <span className="icon">
-              <i className="fas fa-user-tag"></i>
-            </span>
-            <span>Roles</span>
-          </Link>
+          {isAdmin() && (
+            <>
+              <Link 
+                className={`navbar-item ${isCurrentPath('/roles') ? 'is-active' : ''}`} 
+                to="/roles"
+                onClick={() => setIsActive(false)}
+              >
+                <span className="icon">
+                  <i className="fas fa-user-tag"></i>
+                </span>
+                <span>Roles</span>
+              </Link>
 
-          {/* Projects menu (disabled for now) */}
-          <span className="navbar-item text-glass" style={{ opacity: 0.5 }}>
-            <span className="icon">
-              <i className="fas fa-project-diagram"></i>
-            </span>
-            <span>Projects</span>
-            <span className="tag is-small is-warning ml-2">Soon</span>
-          </span>
+              {/* Add New Dropdown Menu */}
+              <div className="navbar-item has-dropdown is-hoverable">
+                <a className="navbar-link">
+                  <span className="icon">
+                    <i className="fas fa-plus"></i>
+                  </span>
+                  <span>Add New</span>
+                </a>
+                <div className="navbar-dropdown">
+                  <Link 
+                    className="navbar-item" 
+                    to="/users/add"
+                    onClick={() => setIsActive(false)}
+                  >
+                    <span className="icon">
+                      <i className="fas fa-user-plus"></i>
+                    </span>
+                    <span>Add User</span>
+                  </Link>
+                  <Link 
+                    className="navbar-item" 
+                    to="/roles/add"
+                    onClick={() => setIsActive(false)}
+                  >
+                    <span className="icon">
+                      <i className="fas fa-plus-circle"></i>
+                    </span>
+                    <span>Add Role</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Projects menu (disabled for now) */}
+              <span className="navbar-item" style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                <span className="icon">
+                  <i className="fas fa-project-diagram"></i>
+                </span>
+                <span>Projects</span>
+                <span className="tag is-small is-warning ml-2">Soon</span>
+              </span>
+            </>
+          )}
         </div>
-
-        {/* Right side navigation */}
+        
         <div className="navbar-end">
           {/* Theme Switcher Buttons */}
           <div className="navbar-item">
             <div className="buttons">
               <button 
-                className="button is-small text-glass"
+                className="button is-small"
                 title="Default Theme (Blue)"
-                style={{ background: 'linear-gradient(45deg, #2c8fff, #1080bc)', border: 'none', color: 'white' }}
+                style={{ 
+                  background: 'linear-gradient(45deg, #2c8fff, #1080bc)', 
+                  border: 'none', 
+                  color: 'white' 
+                }}
                 onClick={() => window.location.reload()}
               >
                 🔵
               </button>
               <button 
-                className="button is-small text-glass"
+                className="button is-small"
                 title="Green Theme"
-                style={{ background: 'linear-gradient(45deg, #00c851, #00a63f)', border: 'none', color: 'white' }}
+                style={{ 
+                  background: 'linear-gradient(45deg, #00c851, #00a63f)', 
+                  border: 'none', 
+                  color: 'white' 
+                }}
                 onClick={() => alert('Green theme - Update variant prop to "green"')}
               >
                 🟢
               </button>
               <button 
-                className="button is-small text-glass"
+                className="button is-small"
                 title="Purple Theme"
-                style={{ background: 'linear-gradient(45deg, #9c27b0, #673ab7)', border: 'none', color: 'white' }}
+                style={{ 
+                  background: 'linear-gradient(45deg, #9c27b0, #673ab7)', 
+                  border: 'none', 
+                  color: 'white' 
+                }}
                 onClick={() => alert('Purple theme - Update variant prop to "purple"')}
               >
                 🟣
@@ -139,9 +166,9 @@ const Navbar = ({
             </div>
           </div>
 
-          {/* Notifications (mock) */}
+          {/* Notifications */}
           <div className="navbar-item">
-            <button className="button is-transparent text-glass" title="Notifications">
+            <button className="button is-transparent" title="Notifications">
               <span className="icon">
                 <i className="fas fa-bell"></i>
               </span>
@@ -150,49 +177,88 @@ const Navbar = ({
           </div>
 
           {/* User Menu */}
-          {showUserMenu && (
-            <div className={`navbar-item has-dropdown ${isUserDropdownOpen ? 'is-active' : ''}`}>
-              <button
-                className="navbar-link text-glass"
-                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                style={{ border: 'none', background: 'transparent' }}
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a 
+              className="navbar-link"
+              onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+            >
+              <span className="icon">
+                <i className="fas fa-user-circle"></i>
+              </span>
+              <span>{user?.fullName || user?.username || 'User'}</span>
+              <span className={`tag is-small ml-2 ${
+                user?.role?.roleName === 'admin' ? 'is-danger' :
+                user?.role?.roleName === 'editor' ? 'is-warning' :
+                'is-info'
+              }`}>
+                {user?.role?.roleName || 'client'}
+              </span>
+            </a>
+            
+            <div className="navbar-dropdown is-right">
+              {/* User Info */}
+              <div className="navbar-item">
+                <div className="content">
+                  <p className="is-size-7 has-text-grey">
+                    <strong>Email:</strong> {user?.email}
+                  </p>
+                  <p className="is-size-7 has-text-grey">
+                    <strong>Username:</strong> {user?.username}
+                  </p>
+                  {user?.phone && (
+                    <p className="is-size-7 has-text-grey">
+                      <strong>Phone:</strong> {user?.phone}
+                    </p>
+                  )}
+                </div>
+              </div>
+              
+              <hr className="navbar-divider" />
+              
+              {/* Profile Actions */}
+              <Link 
+                className="navbar-item" 
+                to="/profile"
+                onClick={() => setIsActive(false)}
               >
                 <span className="icon">
-                  <i className="fas fa-user-circle"></i>
+                  <i className="fas fa-user-edit"></i>
                 </span>
-                <span>{currentUser?.username || 'Admin'}</span>
+                <span>Edit Profile</span>
+              </Link>
+              
+              <Link 
+                className="navbar-item" 
+                to="/settings"
+                onClick={() => setIsActive(false)}
+              >
+                <span className="icon">
+                  <i className="fas fa-cog"></i>
+                </span>
+                <span>Settings</span>
+              </Link>
+              
+              <hr className="navbar-divider" />
+              
+              {/* Logout */}
+              <button 
+                className="navbar-item"
+                onClick={handleLogout}
+                style={{ 
+                  border: 'none', 
+                  background: 'transparent', 
+                  width: '100%', 
+                  textAlign: 'left',
+                  cursor: 'pointer'
+                }}
+              >
+                <span className="icon">
+                  <i className="fas fa-sign-out-alt"></i>
+                </span>
+                <span>Logout</span>
               </button>
-
-              <div className="navbar-dropdown is-right">
-                <div className="navbar-item">
-                  <span className="icon">
-                    <i className="fas fa-user"></i>
-                  </span>
-                  <span>Profile (Coming Soon)</span>
-                </div>
-                
-                <div className="navbar-item">
-                  <span className="icon">
-                    <i className="fas fa-cog"></i>
-                  </span>
-                  <span>Settings (Coming Soon)</span>
-                </div>
-                
-                <hr className="navbar-divider" />
-                
-                <button 
-                  className="navbar-item"
-                  onClick={handleLogout}
-                  style={{ border: 'none', background: 'transparent', width: '100%', textAlign: 'left' }}
-                >
-                  <span className="icon">
-                    <i className="fas fa-sign-out-alt"></i>
-                  </span>
-                  <span>Logout</span>
-                </button>
-              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </nav>
