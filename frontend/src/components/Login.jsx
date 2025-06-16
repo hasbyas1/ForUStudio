@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext"; // ← Import dari contexts
 
+import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -76,9 +78,8 @@ const Login = () => {
 
   return (
     <div 
-      className="section" 
+      className="section gradient-background" 
       style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center'

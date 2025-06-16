@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
 
+import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,9 +67,8 @@ const UsersList = () => {
     <>
       <Navbar />
       <div 
-        className="section" 
+        className="section gradient-background" 
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           minHeight: '100vh'
         }}
       >
