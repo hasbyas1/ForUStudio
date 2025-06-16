@@ -1,0 +1,452 @@
+/* ========================================
+   ADDITIONAL FLOATING ELEMENTS UNTUK GAMBAR 2 STYLE
+   ======================================== */
+
+/* === ADDITIONAL FLOATING ELEMENTS === */
+.floating-element-1 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  top: 15%;
+  left: 5%;
+  z-index: 1;
+  opacity: 0.3;
+  animation: float-slow 12s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.floating-element-2 {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 50%;
+  top: 25%;
+  right: 8%;
+  z-index: 1;
+  opacity: 0.25;
+  animation: float-medium 15s ease-in-out infinite;
+}
+
+.floating-element-3 {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  border-radius: 30px;
+  top: 45%;
+  left: 3%;
+  z-index: 1;
+  opacity: 0.2;
+  animation: float-fast 8s ease-in-out infinite;
+}
+
+.floating-element-4 {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  border-radius: 15px;
+  top: 65%;
+  right: 12%;
+  z-index: 1;
+  opacity: 0.3;
+  animation: float-slow 10s ease-in-out infinite reverse;
+}
+
+.floating-element-5 {
+  position: absolute;
+  width: 50px;
+  height: 90px;
+  background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+  border-radius: 25px;
+  top: 80%;
+  left: 10%;
+  z-index: 1;
+  opacity: 0.25;
+  animation: float-medium 13s ease-in-out infinite;
+}
+
+.floating-element-6 {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  border-radius: 50%;
+  top: 35%;
+  right: 25%;
+  z-index: 1;
+  opacity: 0.2;
+  animation: float-fast 11s ease-in-out infinite;
+}
+
+/* === FLOATING ANIMATIONS === */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  25% { transform: translateY(-20px) translateX(-10px) rotate(5deg); }
+  50% { transform: translateY(-30px) translateX(15px) rotate(-3deg); }
+  75% { transform: translateY(-15px) translateX(-8px) rotate(2deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+  33% { transform: translate(-15px, -25px) rotate(10deg) scale(1.05); }
+  66% { transform: translate(20px, -35px) rotate(-8deg) scale(0.95); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+  20% { transform: translate(-12px, -18px) rotate(15deg); }
+  40% { transform: translate(25px, -10px) rotate(-10deg); }
+  60% { transform: translate(-8px, -25px) rotate(8deg); }
+  80% { transform: translate(15px, -15px) rotate(-12deg); }
+}
+
+/* ========================================
+   MODERN TABLE STYLES SEPERTI GAMBAR 2
+   ======================================== */
+
+/* === MODERN STAT CARDS === */
+.modern-stat-card {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modern-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-title {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.stat-number {
+  color: #f1f5f9;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Specific card colors */
+.admin-card .stat-icon {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.editor-card .stat-icon {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.client-card .stat-icon {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.active-card .stat-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+/* === MODERN INFO CARD === */
+.modern-info-card {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.info-text {
+  color: #e2e8f0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.info-text strong {
+  color: #f1f5f9;
+}
+
+/* === MODERN TABLE CONTAINER === */
+.modern-table-container {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* === MODERN TABLE === */
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.modern-table th {
+  background: rgba(30, 41, 59, 0.8);
+  color: #cbd5e1;
+  padding: 1rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.modern-table th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.modern-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.modern-table-row {
+  transition: all 0.2s ease;
+}
+
+.modern-table-row:hover {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.modern-table td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  color: #e2e8f0;
+  font-size: 0.875rem;
+}
+
+/* === TABLE CELL STYLES === */
+.username-cell strong {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.email-cell {
+  color: #94a3b8;
+}
+
+.name-cell {
+  color: #e2e8f0;
+}
+
+.gender-cell {
+  color: #94a3b8;
+}
+
+.phone-cell {
+  color: #94a3b8;
+}
+
+/* === MODERN BADGES === */
+.modern-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.primary-badge {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.modern-role-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.admin-role {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.editor-role {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.client-role {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.modern-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.active-status {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.inactive-status {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+/* === MODERN ACTION BUTTONS === */
+.modern-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modern-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  color: white;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-1px);
+}
+
+/* === MODERN REFRESH BUTTON === */
+.modern-refresh-btn {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  color: #e2e8f0;
+  backdrop-filter: blur(15px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-refresh-btn:hover {
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* === EMPTY STATE === */
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty-text {
+  color: #94a3b8;
+  margin: 0;
+}
+
+.empty-link {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.empty-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .floating-element-1,
+  .floating-element-2,
+  .floating-element-3,
+  .floating-element-4,
+  .floating-element-5,
+  .floating-element-6 {
+    display: none;
+  }
+  
+  .modern-stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  
+  .modern-table-container {
+    padding: 1rem;
+  }
+  
+  .modern-table th,
+  .modern-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* === ANIMATIONS CONTROL === */
+.pause-animations .floating-element-1,
+.pause-animations .floating-element-2,
+.pause-animations .floating-element-3,
+.pause-animations .floating-element-4,
+.pause-animations .floating-element-5,
+.pause-animations .floating-element-6 {
+  animation-play-state: paused;
+}

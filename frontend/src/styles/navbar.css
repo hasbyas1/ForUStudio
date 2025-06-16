@@ -341,13 +341,13 @@ Ganti semua isi file yang lama dengan kode ini
 }
 
 /* ===== SCROLL EFFECT ===== */
-.navbar-forustudio.scrolled {
+/* .navbar-forustudio.scrolled {
   background: rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(30px) !important;
   -webkit-backdrop-filter: blur(30px) !important;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
+} */
 
 /* ===== RESPONSIVE STYLING ===== */
 @media screen and (max-width: 1023px) {
