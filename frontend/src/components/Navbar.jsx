@@ -17,13 +17,12 @@ const Navbar = ({
     return location.pathname === path || location.pathname.startsWith(path);
   };
 
-  // Fungsi logout
+  // Fungsi logout sederhana tanpa auth context
   const handleLogout = () => {
-    // Add your logout logic here
     if (window.confirm('Are you sure you want to logout?')) {
-      // Clear authentication data
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      // Clear any stored data
+      localStorage.clear();
+      sessionStorage.clear();
       
       // Redirect to login
       navigate('/login');
@@ -98,68 +97,49 @@ const Navbar = ({
             <span>Roles</span>
           </Link>
 
-          {/* Dropdown for Projects (future feature) */}
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link text-glass">
-              <span className="icon">
-                <i className="fas fa-project-diagram"></i>
-              </span>
-              <span>Projects</span>
-            </a>
-            <div className="navbar-dropdown">
-              <a className="navbar-item">
-                <span className="icon">
-                  <i className="fas fa-plus"></i>
-                </span>
-                <span>New Project</span>
-              </a>
-              <a className="navbar-item">
-                <span className="icon">
-                  <i className="fas fa-list"></i>
-                </span>
-                <span>All Projects</span>
-              </a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">
-                <span className="icon">
-                  <i className="fas fa-archive"></i>
-                </span>
-                <span>Archived</span>
-              </a>
-            </div>
-          </div>
+          {/* Projects menu (disabled for now) */}
+          <span className="navbar-item text-glass" style={{ opacity: 0.5 }}>
+            <span className="icon">
+              <i className="fas fa-project-diagram"></i>
+            </span>
+            <span>Projects</span>
+            <span className="tag is-small is-warning ml-2">Soon</span>
+          </span>
         </div>
 
         {/* Right side navigation */}
         <div className="navbar-end">
-          {/* Theme Switcher */}
+          {/* Theme Switcher Buttons */}
           <div className="navbar-item">
             <div className="buttons">
               <button 
-                className="button is-small is-transparent text-glass"
-                title="Default Theme"
+                className="button is-small text-glass"
+                title="Default Theme (Blue)"
+                style={{ background: 'linear-gradient(45deg, #2c8fff, #1080bc)', border: 'none', color: 'white' }}
                 onClick={() => window.location.reload()}
               >
                 🔵
               </button>
               <button 
-                className="button is-small is-transparent text-glass"
+                className="button is-small text-glass"
                 title="Green Theme"
-                onClick={() => {/* Add theme switching logic */}}
+                style={{ background: 'linear-gradient(45deg, #00c851, #00a63f)', border: 'none', color: 'white' }}
+                onClick={() => alert('Green theme - Update variant prop to "green"')}
               >
                 🟢
               </button>
               <button 
-                className="button is-small is-transparent text-glass"
+                className="button is-small text-glass"
                 title="Purple Theme"
-                onClick={() => {/* Add theme switching logic */}}
+                style={{ background: 'linear-gradient(45deg, #9c27b0, #673ab7)', border: 'none', color: 'white' }}
+                onClick={() => alert('Purple theme - Update variant prop to "purple"')}
               >
                 🟣
               </button>
             </div>
           </div>
 
-          {/* Notifications */}
+          {/* Notifications (mock) */}
           <div className="navbar-item">
             <button className="button is-transparent text-glass" title="Notifications">
               <span className="icon">
@@ -180,23 +160,23 @@ const Navbar = ({
                 <span className="icon">
                   <i className="fas fa-user-circle"></i>
                 </span>
-                <span>{currentUser?.username || 'User'}</span>
+                <span>{currentUser?.username || 'Admin'}</span>
               </button>
 
               <div className="navbar-dropdown is-right">
-                <Link className="navbar-item" to="/profile">
+                <div className="navbar-item">
                   <span className="icon">
                     <i className="fas fa-user"></i>
                   </span>
-                  <span>Profile</span>
-                </Link>
+                  <span>Profile (Coming Soon)</span>
+                </div>
                 
-                <Link className="navbar-item" to="/settings">
+                <div className="navbar-item">
                   <span className="icon">
                     <i className="fas fa-cog"></i>
                   </span>
-                  <span>Settings</span>
-                </Link>
+                  <span>Settings (Coming Soon)</span>
+                </div>
                 
                 <hr className="navbar-divider" />
                 

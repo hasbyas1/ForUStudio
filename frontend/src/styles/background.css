@@ -358,16 +358,6 @@ html, body {
   min-height: 100vh;
 }
 
-/* Content wrapper dengan navbar */
-.content-wrapper.with-navbar {
-  padding-top: 4rem; /* Space untuk fixed navbar */
-}
-
-/* Content wrapper tanpa navbar (untuk login/register) */
-.content-wrapper:not(.with-navbar) {
-  padding-top: 0;
-}
-
 /* === HOVER EFFECTS === */
 .data-hover:hover {
   transform: translateX(50px) translateY(-10px) rotate(5deg);
