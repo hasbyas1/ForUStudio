@@ -207,7 +207,7 @@ html, body {
 
 .radius-shape-2 {
   bottom: -60px;
-  right: -80px;
+  right: -40px;
   width: 340px;
   height: 280px;
   background: radial-gradient(#004333, #67fdb7);
@@ -217,7 +217,7 @@ html, body {
 
 .radius-shape-3 {
   bottom: 103px;
-  right: -220px;
+  right: -180px;
   width: 330px;
   height: 300px;
   background: radial-gradient(#097188, #23ccb8);
@@ -227,7 +227,7 @@ html, body {
 
 .radius-shape-4 {
   bottom: -118px;
-  right: -295px;
+  right: -255px;
   width: 305px;
   height: 328px;
   background: radial-gradient(#0a3b6b, #1080bc);
@@ -236,8 +236,8 @@ html, body {
 }
 
 .radius-shape-5 {
-  bottom: -330px;
-  right: 325px;
+  bottom: 80px;
+  right: 1725px;
   width: 300px;
   height: 300px;
   background: radial-gradient(#002e6b, #1f80ff);
@@ -275,28 +275,29 @@ html, body {
 
 .data-shape-1 {
   top: 525px;
-  left: -301.5px;
+  left: 301.5px;
   background: radial-gradient(#004233, #00b68c);
   animation: gentle-float1 7s ease-in-out infinite;
+  z-index: 0;
 }
 
 .data-shape-2 {
   top: 475px;
-  left: -301.5px;
+  left: 301.5px;
   background: radial-gradient(#006b52, #25fdb5);
   animation: gentle-float2 9s ease-in-out infinite;
 }
 
 .data-shape-3 {
   top: 425px;
-  left: -301.5px;
+  left: 301.5px;
   background: radial-gradient(#670000, #fd4525);
   animation: gentle-float3 8s ease-in-out infinite;
 }
 
 .data-shape-4 {
   top: 375px;
-  left: -301.5px;
+  left: 301.5px;
   background: radial-gradient(#006670, #00f2ff);
   animation: gentle-float4 11s ease-in-out infinite;
 }

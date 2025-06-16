@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+import "../styles/navbar.css"; // Pastikan Anda memiliki file CSS untuk styling
 
 const UsersAdd = () => {
   // ✅ Update state sesuai dengan UsersModel
@@ -83,174 +85,187 @@ const UsersAdd = () => {
   }
 
   return (
-    <div 
-      className="section gradient-background" 
-      style={{
-        minHeight: '100vh'
-      }}
-    >
-      <div className="columns mt-5 is-centered">
-        <div className="column is-half">
-          <h1 className="title">Add New User</h1>
-          <form onSubmit={saveUser}>
-            {/* Email Field */}
-            <div className="field">
-              <label className="label">Email *</label>
-              <div className="control">
-                <input
-                  type="email"
-                  className="input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter email address"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Username Field */}
-            <div className="field">
-              <label className="label">Username *</label>
-              <div className="control">
-                <input
-                  type="text"
-                  className="input"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter username (3-50 characters)"
-                  minLength={3}
-                  maxLength={50}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div className="field">
-              <label className="label">Password *</label>
-              <div className="control">
-                <input
-                  type="password"
-                  className="input"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password (min 8 characters)"
-                  minLength={8}
-                  maxLength={100}
-                  required
-                />
-              </div>
-              <p className="help">Password must be at least 8 characters long</p>
-            </div>
-
-            {/* Full Name Field - Ganti dari "Name" */}
-            <div className="field">
-              <label className="label">Full Name *</label>
-              <div className="control">
-                <input
-                  type="text"
-                  className="input"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Enter full name"
-                  minLength={3}
-                  maxLength={100}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Gender Field - Update options */}
-            <div className="field">
-              <label className="label">Gender</label>
-              <div className="control">
-                <div className="select is-fullwidth">
-                  <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                    <option value="-">Not Specified</option>
-                    <option value="laki-laki">Laki-laki</option>
-                    <option value="perempuan">Perempuan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone Field - Tambahan baru */}
-            <div className="field">
-              <label className="label">Phone</label>
-              <div className="control">
-                <input
-                  type="tel"
-                  className="input"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter phone number (10-13 digits, optional)"
-                  pattern="[0-9]{10,13}"
-                />
-              </div>
-              <p className="help">Optional. Numbers only, 10-13 digits</p>
-            </div>
-
-            {/* Role Field - Tambahan baru */}
-            <div className="field">
-              <label className="label">Role *</label>
-              <div className="control">
-                <div className="select is-fullwidth">
-                  <select 
-                    value={roleId} 
-                    onChange={(e) => setRoleId(parseInt(e.target.value))}
+    <>
+      <Navbar/>
+      <div
+        className="gradient-background"
+          style={{
+          minHeight: '100vh'
+        }}
+      >
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+        
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
+            <h1 className="title">Add New User</h1>
+            <form onSubmit={saveUser}>
+              {/* Email Field */}
+              <div className="field">
+                <label className="label">Email *</label>
+                <div className="control">
+                  <input
+                    type="email"
+                    className="input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter email address"
                     required
-                  >
-                    {roles.length > 0 ? (
-                      roles.map((role) => (
-                        <option key={role.roleId} value={role.roleId}>
-                          {role.roleName} - {role.description}
-                        </option>
-                      ))
-                    ) : (
-                      <option value="">Loading roles...</option>
-                    )}
-                  </select>
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Buttons - Update dengan loading state */}
-            <div className="field is-grouped">
-              <div className="control">
-                <button 
-                  type="submit" 
-                  className={`button is-success ${isLoading ? 'is-loading' : ''}`}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Creating...' : 'Save'}
-                </button>
+              {/* Username Field */}
+              <div className="field">
+                <label className="label">Username *</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter username (3-50 characters)"
+                    minLength={3}
+                    maxLength={50}
+                    required
+                  />
+                </div>
               </div>
-              <div className="control">
-                <button 
-                  type="button" 
-                  className="button is-light" 
-                  onClick={() => navigate("/users")}
-                  disabled={isLoading}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
 
-          {/* Required Fields Info */}
-          <div className="notification is-info is-light mt-4">
-            <p><strong>Note:</strong></p>
-            <ul>
-              <li>Fields marked with * are required</li>
-              <li>User ID will be generated automatically</li>
-              <li>Default role is Client if not specified</li>
-              <li>User will be active by default</li>
-            </ul>
+              {/* Password Field */}
+              <div className="field">
+                <label className="label">Password *</label>
+                <div className="control">
+                  <input
+                    type="password"
+                    className="input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter password (min 8 characters)"
+                    minLength={8}
+                    maxLength={100}
+                    required
+                  />
+                </div>
+                <p className="help">Password must be at least 8 characters long</p>
+              </div>
+
+              {/* Full Name Field - Ganti dari "Name" */}
+              <div className="field">
+                <label className="label">Full Name *</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Enter full name"
+                    minLength={3}
+                    maxLength={100}
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Gender Field - Update options */}
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                      <option value="-">Not Specified</option>
+                      <option value="laki-laki">Laki-laki</option>
+                      <option value="perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone Field - Tambahan baru */}
+              <div className="field">
+                <label className="label">Phone</label>
+                <div className="control">
+                  <input
+                    type="tel"
+                    className="input"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter phone number (10-13 digits, optional)"
+                    pattern="[0-9]{10,13}"
+                  />
+                </div>
+                <p className="help">Optional. Numbers only, 10-13 digits</p>
+              </div>
+
+              {/* Role Field - Tambahan baru */}
+              <div className="field">
+                <label className="label">Role *</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select 
+                      value={roleId} 
+                      onChange={(e) => setRoleId(parseInt(e.target.value))}
+                      required
+                    >
+                      {roles.length > 0 ? (
+                        roles.map((role) => (
+                          <option key={role.roleId} value={role.roleId}>
+                            {role.roleName} - {role.description}
+                          </option>
+                        ))
+                      ) : (
+                        <option value="">Loading roles...</option>
+                      )}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Buttons - Update dengan loading state */}
+              <div className="field is-grouped">
+                <div className="control">
+                  <button 
+                    type="submit" 
+                    className={`button is-success ${isLoading ? 'is-loading' : ''}`}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Creating...' : 'Save'}
+                  </button>
+                </div>
+                <div className="control">
+                  <button 
+                    type="button" 
+                    className="button is-light" 
+                    onClick={() => navigate("/users")}
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            {/* Required Fields Info */}
+            <div className="notification is-info is-light mt-4">
+              <p><strong>Note:</strong></p>
+              <ul>
+                <li>Fields marked with * are required</li>
+                <li>User ID will be generated automatically</li>
+                <li>Default role is Client if not specified</li>
+                <li>User will be active by default</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
