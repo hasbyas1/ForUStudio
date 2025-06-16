@@ -1,0 +1,205 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-top: 80px !important; /* Beri ruang untuk fixed navbar */
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+}
+
+/* ===== SECTION LAYOUT FIX ===== */
+.section {
+  padding-top: 2rem !important; /* Tambahan padding atas untuk konten */
+  padding-bottom: 2rem !important;
+  min-height: calc(100vh - 80px) !important; /* Tinggi minimal minus navbar */
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ===== CONTAINER SPACING ===== */
+.container {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ===== KHUSUS UNTUK HALAMAN ROLES ===== */
+.section.gradient-background {
+  padding-top: 2.5rem !important; /* Extra padding untuk halaman roles */
+  padding-bottom: 3rem !important;
+}
+
+/* ===== TITLE SPACING ===== */
+.title.has-text-white {
+  margin-top: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* ===== LEVEL (Header Section) SPACING ===== */
+.level {
+  margin-bottom: 2rem !important;
+}
+
+/* ===== BOX/CARD SPACING ===== */
+.box {
+  margin-top: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* ===== NOTIFICATION SPACING ===== */
+.notification {
+  margin-bottom: 1.5rem !important;
+}
+
+/* ===== TABLE WRAPPER SPACING ===== */
+.table-wrapper {
+  margin-top: 1rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* ===== MOBILE RESPONSIVE SPACING ===== */
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 70px !important; /* Navbar mobile lebih kecil */
+  }
+  
+  .section {
+    padding-top: 1.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    min-height: calc(100vh - 70px) !important;
+  }
+  
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .title.has-text-white {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 1.5rem !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding-top: 60px !important;
+  }
+  
+  .section {
+    padding-top: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+/* ===== TABLET RESPONSIVE ===== */
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  body {
+    padding-top: 75px !important;
+  }
+  
+  .section {
+    padding-top: 2rem !important;
+  }
+}
+
+/* ===== DESKTOP RESPONSIVE ===== */
+@media screen and (min-width: 1024px) {
+  body {
+    padding-top: 80px !important;
+  }
+  
+  .section {
+    padding-top: 2.5rem !important;
+  }
+  
+  .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* ===== LARGE DESKTOP ===== */
+@media screen and (min-width: 1408px) {
+  .container {
+    max-width: 1344px !important;
+  }
+}
+
+/* ===== HAPUS ANIMASI PAGE TRANSITION ===== */
+* {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ===== KECUALI untuk element yang memang butuh animasi ===== */
+.navbar-forustudio,
+.navbar-forustudio .navbar-item,
+.navbar-forustudio .navbar-dropdown,
+.button,
+.modal,
+.notification,
+.tag,
+.is-loading {
+  transition: all 0.3s ease !important;
+}
+
+/* ===== SMOOTH SCROLL ===== */
+html {
+  scroll-behavior: smooth !important;
+}
+
+/* ===== LOADING SPINNER YANG DIIZINKAN ===== */
+.fa-spinner,
+.is-loading::after {
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== ZUSÄTZLICHE FIXES ===== */
+
+/* Fix untuk halaman yang menggunakan gradient-background */
+.gradient-background .container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Fix untuk tabel yang terlalu nempel */
+.table {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Fix untuk form yang terlalu nempel */
+.field {
+  margin-bottom: 1rem !important;
+}
+
+/* Fix untuk button group */
+.field.is-grouped {
+  margin-top: 1.5rem !important;
+}
+
+/* Fix untuk back button dan add button */
+.level-left,
+.level-right {
+  margin-bottom: 1rem !important;
+}
+
+@media screen and (max-width: 768px) {
+  .level-left,
+  .level-right {
+    margin-bottom: 0.5rem !important;
+  }
+}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+
 const UsersEdit = () => {
   // ✅ State sesuai dengan field yang ada di UserModel
   const [email, setEmail] = useState("");
@@ -117,9 +119,8 @@ const UsersEdit = () => {
   if (userLoading) {
     return (
       <div 
-        className="section" 
+        className="section gradient-background" 
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           minHeight: '100vh'
         }}
       >
@@ -139,9 +140,8 @@ const UsersEdit = () => {
 
   return (
     <div 
-      className="section" 
+      className="section gradient-background" 
       style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '100vh'
       }}
     >

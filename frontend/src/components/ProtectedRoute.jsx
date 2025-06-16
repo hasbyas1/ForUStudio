@@ -10,9 +10,8 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   if (isLoading) {
     return (
       <div 
-        className="section" 
+        className="section gradient-background" 
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
@@ -39,9 +38,8 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   if (requireAdmin && !isAdmin()) {
     return (
       <div 
-        className="section" 
+        className="section gradient-background" 
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',

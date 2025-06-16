@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+
 const UsersAdd = () => {
   // ✅ Update state sesuai dengan UsersModel
   const [email, setEmail] = useState("");
@@ -82,9 +84,8 @@ const UsersAdd = () => {
 
   return (
     <div 
-      className="section" 
+      className="section gradient-background" 
       style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '100vh'
       }}
     >

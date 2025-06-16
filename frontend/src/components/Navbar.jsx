@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import '../styles/navbar.css';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isActive, setIsActive] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // ✅ PILIH SALAH SATU TEMA TRANSPARAN INI:
+  
+  // OPTION 1: Glass effect minimal (sedikit putih)
+  // const navbarTheme = 'theme-glass';
+  
+  // OPTION 2: Pure glass (hampir tidak ada warna)
+  // const navbarTheme = 'theme-pure-glass';
+  
+  // OPTION 3: Hanya blur tanpa background (PALING TRANSPARAN)
+  // const navbarTheme = 'theme-blur-only';
+  
+  // OPTION 4: Dark glass (untuk background terang)
+  // const navbarTheme = 'theme-dark-glass';
+  
+  // OPTION 5: Tinted glass (sedikit warna)
+  const navbarTheme = 'theme-tinted-glass';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
@@ -23,19 +51,38 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
-  if (!isAuthenticated()) {
-    return null; // Don't show navbar if not authenticated
+  const excludedPaths = ['/login', '/register'];
+  
+  if (!isAuthenticated() || excludedPaths.includes(location.pathname)) {
+    return null;
   }
 
   return (
-    <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
+    <nav 
+      className={`navbar navbar-forustudio ${navbarTheme} ${isScrolled ? 'scrolled' : ''}`}
+      role="navigation" 
+      aria-label="main navigation"
+      style={{
+        // ✅ FORCE TRANSPARENT - Pastikan tidak ada background
+        backgroundColor: 'transparent',
+        backgroundImage: 'none',
+        background: 'transparent'
+      }}
+    >
       <div className="navbar-brand">
-        <Link className="navbar-item" to="/users">
+        <Link 
+          className="navbar-item" 
+          to="/users"
+          style={{
+            backgroundColor: 'transparent',
+            background: 'transparent'
+          }}
+        >
           <span className="icon-text">
             <span className="icon">
-              <i className="fas fa-users"></i>
+              <i className="fas fa-video"></i>
             </span>
-            <span className="has-text-weight-bold">User Management</span>
+            <span className="has-text-weight-bold">ForUStudio</span>
           </span>
         </Link>
 
@@ -45,6 +92,10 @@ const Navbar = () => {
           aria-label="menu"
           aria-expanded="false"
           onClick={toggleBurger}
+          style={{
+            backgroundColor: 'transparent',
+            background: 'transparent'
+          }}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -52,12 +103,28 @@ const Navbar = () => {
         </a>
       </div>
 
-      <div className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
-        <div className="navbar-start">
+      <div 
+        className={`navbar-menu ${isActive ? 'is-active' : ''}`}
+        style={{
+          backgroundColor: 'transparent',
+          background: 'transparent'
+        }}
+      >
+        <div 
+          className="navbar-start"
+          style={{
+            backgroundColor: 'transparent',
+            background: 'transparent'
+          }}
+        >
           <Link 
             className={`navbar-item ${isCurrentPath('/users') ? 'is-active' : ''}`} 
             to="/users"
             onClick={() => setIsActive(false)}
+            style={{
+              backgroundColor: 'transparent',
+              background: 'transparent'
+            }}
           >
             <span className="icon">
               <i className="fas fa-users"></i>
@@ -71,6 +138,10 @@ const Navbar = () => {
                 className={`navbar-item ${isCurrentPath('/roles') ? 'is-active' : ''}`} 
                 to="/roles"
                 onClick={() => setIsActive(false)}
+                style={{
+                  backgroundColor: 'transparent',
+                  background: 'transparent'
+                }}
               >
                 <span className="icon">
                   <i className="fas fa-user-tag"></i>
@@ -79,7 +150,13 @@ const Navbar = () => {
               </Link>
 
               <div className="navbar-item has-dropdown is-hoverable">
-                <a className="navbar-link">
+                <a 
+                  className="navbar-link"
+                  style={{
+                    backgroundColor: 'transparent',
+                    background: 'transparent'
+                  }}
+                >
                   <span className="icon">
                     <i className="fas fa-plus"></i>
                   </span>
@@ -112,9 +189,21 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="navbar-end">
+        <div 
+          className="navbar-end"
+          style={{
+            backgroundColor: 'transparent',
+            background: 'transparent'
+          }}
+        >
           <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">
+            <a 
+              className="navbar-link"
+              style={{
+                backgroundColor: 'transparent',
+                background: 'transparent'
+              }}
+            >
               <span className="icon">
                 <i className="fas fa-user-circle"></i>
               </span>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
+import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+
 const Register = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -110,9 +112,8 @@ const Register = () => {
 
   return (
     <div 
-      className="section" 
+      className="section gradient-background" 
       style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '100vh',
         paddingTop: '2rem',
         paddingBottom: '2rem'

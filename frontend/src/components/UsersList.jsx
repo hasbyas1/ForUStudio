@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import Navbar from "./Navbar";
 
 import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+import "../styles/navbar.css"; // Pastikan Anda memiliki file CSS untuk styling
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -52,7 +53,7 @@ const UsersList = () => {
     return (
       <>
         <Navbar />
-        <div className="section">
+        <div className="section gradient-background" style={{minHeight: '100vh'}}>
           <div className="column is-fluid">
             <div className="notification is-info">
               <p>Loading users...</p>
@@ -219,21 +220,20 @@ const UsersList = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* Refresh button */}
-            <div className="field is-grouped is-grouped-centered mt-4">
-              <div className="control">
-                <button 
-                  className="button is-light" 
-                  onClick={getUsers}
-                  disabled={isLoading}
-                >
-                  <span className="icon">
-                    <i className="fas fa-sync-alt"></i>
-                  </span>
-                  <span>Refresh</span>
-                </button>
-              </div>
+          </div>
+          {/* Refresh button */}
+          <div className="field is-grouped is-grouped-centered mt-4">
+            <div className="control">
+              <button 
+                className="button is-light" 
+                onClick={getUsers}
+                disabled={isLoading}
+              >
+                <span className="icon">
+                  <i className="fas fa-sync-alt"></i>
+                </span>
+                <span>Refresh</span>
+              </button>
             </div>
           </div>
         </div>
