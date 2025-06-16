@@ -43,6 +43,65 @@ html, body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* === NAVBAR VARIANTS === */
+.navbar-gradient-green {
+  background: linear-gradient(45deg, 
+    #00c851 5%, 
+    #00ff88 20%, 
+    #00a63f 65%, 
+    #004d1f 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-gradient-purple {
+  background: linear-gradient(45deg, 
+    #9c27b0 5%, 
+    #e91e63 20%, 
+    #673ab7 65%, 
+    #3f51b5 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-gradient-orange {
+  background: linear-gradient(45deg, 
+    #ff9800 5%, 
+    #ffeb3b 20%, 
+    #ff5722 65%, 
+    #e65100 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-gradient-dark {
+  background: linear-gradient(45deg, 
+    #424242 5%, 
+    #616161 20%, 
+    #212121 65%, 
+    #000000 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* === NAVBAR STYLES === */
+.navbar.is-fixed-top {
+  z-index: 1000;
+}
+
+.navbar-item.text-glass:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navbar-dropdown {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-burger span {
+  background-color: white !important;
+}
+
 /* === FLOATING ANIMATIONS (seperti mengambang di air) === */
 @keyframes floating-shape1 {
   0%, 100% { 
@@ -297,6 +356,16 @@ html, body {
   position: relative;
   z-index: 10;
   min-height: 100vh;
+}
+
+/* Content wrapper dengan navbar */
+.content-wrapper.with-navbar {
+  padding-top: 4rem; /* Space untuk fixed navbar */
+}
+
+/* Content wrapper tanpa navbar (untuk login/register) */
+.content-wrapper:not(.with-navbar) {
+  padding-top: 0;
 }
 
 /* === HOVER EFFECTS === */
