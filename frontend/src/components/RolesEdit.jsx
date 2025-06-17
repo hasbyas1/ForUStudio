@@ -3,6 +3,9 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar"; // ✅ Import Navbar
 
+import "../styles/background.css"; // Import your CSS styles
+import "../styles/navbar.css"; // Import your CSS styles
+
 const RolesEdit = () => {
   const [roleName, setRoleName] = useState("");
   const [description, setDescription] = useState("");
@@ -74,10 +77,31 @@ const RolesEdit = () => {
     return (
       <>
         <Navbar />
-        <div className="section gradient-background" style={{minHeight: '100vh'}}>
-          <div className="column is-fluid">
-            <div className="notification is-info">
-              <p>Loading role data...</p>
+        <div
+          className="gradient-background"
+            style={{
+            minHeight: '100vh'
+          }}
+        >
+          {/* Floating Shapes */}
+          <div className="radius-shape-1"></div>
+          <div className="radius-shape-2"></div>
+          <div className="radius-shape-3"></div>
+          <div className="radius-shape-4"></div>
+          <div className="radius-shape-5"></div>
+          <div className="data-shape-1"></div>
+          <div className="data-shape-2"></div>
+          <div className="data-shape-3"></div>
+          <div className="data-shape-4"></div>
+          
+          <div className="columns mt-5 is-centered">
+            <div className="column is-half">
+              <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                  <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
+                  <p className="title is-5 text-glass">Loading role data...</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -89,13 +113,24 @@ const RolesEdit = () => {
     <>
       <Navbar /> {/* ✅ Tambahkan Navbar */}
       <div 
-        className="section gradient-background" 
+        className="gradient-background" 
         style={{
           minHeight: '100vh'
         }}
       >
-        <div className="container">
-          <div className="column is-half is-offset-one-quarter">
+        {/* Floating Shapes Background - Sama seperti gambar 1 */}
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
             <h1 className="title has-text-white">Edit Role</h1>
             
             <form onSubmit={updateRole} className="box">

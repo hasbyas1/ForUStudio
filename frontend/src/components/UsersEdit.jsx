@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "./Navbar";
 
 import "../styles/background.css"; // Pastikan Anda memiliki file CSS untuk styling
+import "../styles/navbar.css"; // Pastikan Anda memiliki file CSS untuk styling
 
 const UsersEdit = () => {
   // ✅ State sesuai dengan field yang ada di UserModel
@@ -118,201 +120,229 @@ const UsersEdit = () => {
   // ✅ Loading state saat mengambil data user
   if (userLoading) {
     return (
-      <div 
-        className="section gradient-background" 
-        style={{
-          minHeight: '100vh'
-        }}
-      >
-        <div className="columns mt-5 is-centered">
-          <div className="column is-half">
-            <div className="notification is-white has-text-centered">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                <i className="fas fa-spinner fa-spin fa-lg"></i>
-                <p className="title is-5">Loading user data...</p>
+      <>
+        <Navbar/>
+        <div
+          className="gradient-background"
+            style={{
+            minHeight: '100vh'
+          }}
+        >
+          {/* Floating Shapes */}
+          <div className="radius-shape-1"></div>
+          <div className="radius-shape-2"></div>
+          <div className="radius-shape-3"></div>
+          <div className="radius-shape-4"></div>
+          <div className="radius-shape-5"></div>
+          <div className="data-shape-1"></div>
+          <div className="data-shape-2"></div>
+          <div className="data-shape-3"></div>
+          <div className="data-shape-4"></div>
+
+          <div className="columns mt-5 is-centered">
+            <div className="column is-half">
+              <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+                  <i className="fas fa-spinner fa-spin fa-lg"></i>
+                  <p className="title is-5">Loading user data...</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div 
-      className="section gradient-background" 
-      style={{
-        minHeight: '100vh'
-      }}
-    >
-      <div className="columns mt-5 is-centered">
-        <div className="column is-half">
-          <h1 className="title">Edit User</h1>
-          <form onSubmit={updateUser}>
-            {/* Email Field */}
-            <div className="field">
-              <label className="label">Email *</label>
-              <div className="control">
-                <input 
-                  type="email" 
-                  className="input" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
-                  placeholder="Email" 
-                  required 
-                />
-              </div>
-            </div>
+    <>
+      <Navbar/>
+      <div
+        className="gradient-background"
+          style={{
+          minHeight: '100vh'
+        }}
+      >
+        {/* Floating Shapes */}
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
 
-            {/* Username Field */}
-            <div className="field">
-              <label className="label">Username *</label>
-              <div className="control">
-                <input 
-                  type="text" 
-                  className="input" 
-                  value={username} 
-                  onChange={(e) => setUsername(e.target.value)} 
-                  placeholder="Username" 
-                  minLength={3}
-                  maxLength={50}
-                  required 
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input 
-                  type="password" 
-                  className="input" 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)} 
-                  placeholder="Leave blank to keep current password"
-                  minLength={8}
-                  maxLength={100}
-                />
-              </div>
-              <p className="help">Leave blank if you don't want to change password</p>
-            </div>
-
-            {/* Full Name Field */}
-            <div className="field">
-              <label className="label">Full Name *</label>
-              <div className="control">
-                <input 
-                  type="text" 
-                  className="input" 
-                  value={fullName} 
-                  onChange={(e) => setFullName(e.target.value)} 
-                  placeholder="Full Name" 
-                  minLength={3}
-                  maxLength={100}
-                  required 
-                />
-              </div>
-            </div>
-
-            {/* Gender Field */}
-            <div className="field">
-              <label className="label">Gender</label>
-              <div className="control">
-                <div className="select is-fullwidth">
-                  <select value={gender} onChange={(e) => setGender(e.target.value)}>
-                    <option value="-">Not Specified</option>
-                    <option value="laki-laki">Laki-laki</option>
-                    <option value="perempuan">Perempuan</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone Field */}
-            <div className="field">
-              <label className="label">Phone</label>
-              <div className="control">
-                <input 
-                  type="tel" 
-                  className="input" 
-                  value={phone} 
-                  onChange={(e) => setPhone(e.target.value)} 
-                  placeholder="Phone Number (Optional)"
-                  pattern="[0-9]{10,13}"
-                />
-              </div>
-              <p className="help">Numbers only, 10-13 digits (optional)</p>
-            </div>
-
-            {/* Role Field */}
-            <div className="field">
-              <label className="label">Role *</label>
-              <div className="control">
-                <div className="select is-fullwidth">
-                  <select value={roleId} onChange={(e) => setRoleId(parseInt(e.target.value))}>
-                    {roles.map((role) => (
-                      <option key={role.roleId} value={role.roleId}>
-                        {role.roleName} - {role.description}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Is Active Field */}
-            <div className="field">
-              <label className="label">Status</label>
-              <div className="control">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={isActive}
-                    onChange={(e) => setIsActive(e.target.checked)}
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
+            <h1 className="title">Edit User</h1>
+            <form onSubmit={updateUser}>
+              {/* Email Field */}
+              <div className="field">
+                <label className="label">Email *</label>
+                <div className="control">
+                  <input 
+                    type="email" 
+                    className="input" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    placeholder="Email" 
+                    required 
                   />
-                  {" "}User is active
-                </label>
+                </div>
               </div>
-              <p className="help">Uncheck to deactivate user account</p>
-            </div>
 
-            {/* Buttons */}
-            <div className="field is-grouped">
-              <div className="control">
-                <button 
-                  type="submit" 
-                  className={`button is-success ${isLoading ? 'is-loading' : ''}`}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Updating...' : 'Update User'}
-                </button>
+              {/* Username Field */}
+              <div className="field">
+                <label className="label">Username *</label>
+                <div className="control">
+                  <input 
+                    type="text" 
+                    className="input" 
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)} 
+                    placeholder="Username" 
+                    minLength={3}
+                    maxLength={50}
+                    required 
+                  />
+                </div>
               </div>
-              <div className="control">
-                <button 
-                  type="button" 
-                  className="button is-light" 
-                  onClick={() => navigate("/users")}
-                  disabled={isLoading}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </form>
 
-          {/* Info */}
-          <div className="notification is-info is-light mt-4">
-            <p><strong>Note:</strong></p>
-            <ul>
-              <li>Fields marked with * are required</li>
-              <li>User ID cannot be changed</li>
-              <li>Leave password blank to keep current password</li>
-            </ul>
+              {/* Password Field */}
+              <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                  <input 
+                    type="password" 
+                    className="input" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    placeholder="Leave blank to keep current password"
+                    minLength={8}
+                    maxLength={100}
+                  />
+                </div>
+                <p className="help">Leave blank if you don't want to change password</p>
+              </div>
+
+              {/* Full Name Field */}
+              <div className="field">
+                <label className="label">Full Name *</label>
+                <div className="control">
+                  <input 
+                    type="text" 
+                    className="input" 
+                    value={fullName} 
+                    onChange={(e) => setFullName(e.target.value)} 
+                    placeholder="Full Name" 
+                    minLength={3}
+                    maxLength={100}
+                    required 
+                  />
+                </div>
+              </div>
+
+              {/* Gender Field */}
+              <div className="field">
+                <label className="label">Gender</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                      <option value="-">Not Specified</option>
+                      <option value="laki-laki">Laki-laki</option>
+                      <option value="perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone Field */}
+              <div className="field">
+                <label className="label">Phone</label>
+                <div className="control">
+                  <input 
+                    type="tel" 
+                    className="input" 
+                    value={phone} 
+                    onChange={(e) => setPhone(e.target.value)} 
+                    placeholder="Phone Number (Optional)"
+                    pattern="[0-9]{10,13}"
+                  />
+                </div>
+                <p className="help">Numbers only, 10-13 digits (optional)</p>
+              </div>
+
+              {/* Role Field */}
+              <div className="field">
+                <label className="label">Role *</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select value={roleId} onChange={(e) => setRoleId(parseInt(e.target.value))}>
+                      {roles.map((role) => (
+                        <option key={role.roleId} value={role.roleId}>
+                          {role.roleName} - {role.description}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Is Active Field */}
+              <div className="field">
+                <label className="label">Status</label>
+                <div className="control">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      checked={isActive}
+                      onChange={(e) => setIsActive(e.target.checked)}
+                    />
+                    {" "}User is active
+                  </label>
+                </div>
+                <p className="help">Uncheck to deactivate user account</p>
+              </div>
+
+              {/* Buttons */}
+              <div className="field is-grouped">
+                <div className="control">
+                  <button 
+                    type="submit" 
+                    className={`button is-success ${isLoading ? 'is-loading' : ''}`}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Updating...' : 'Update User'}
+                  </button>
+                </div>
+                <div className="control">
+                  <button 
+                    type="button" 
+                    className="button is-light" 
+                    onClick={() => navigate("/users")}
+                    disabled={isLoading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            {/* Info */}
+            <div className="notification is-info is-light mt-4">
+              <p><strong>Note:</strong></p>
+              <ul>
+                <li>Fields marked with * are required</li>
+                <li>User ID cannot be changed</li>
+                <li>Leave password blank to keep current password</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

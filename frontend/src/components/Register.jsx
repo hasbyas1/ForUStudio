@@ -112,13 +112,24 @@ const Register = () => {
 
   return (
     <div 
-      className="section gradient-background" 
+      className="gradient-background" 
       style={{
         minHeight: '100vh',
         paddingTop: '2rem',
         paddingBottom: '2rem'
       }}
     >
+      {/* Floating Shapes */}
+      <div className="radius-shape-1"></div>
+      <div className="radius-shape-2"></div>
+      <div className="radius-shape-3"></div>
+      <div className="radius-shape-4"></div>
+      <div className="radius-shape-5"></div>
+      <div className="data-shape-1"></div>
+      <div className="data-shape-2"></div>
+      <div className="data-shape-3"></div>
+      <div className="data-shape-4"></div>
+      
       <div className="container">
         <div className="columns is-centered">
           <div className="column is-6">

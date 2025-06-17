@@ -1,44 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import '../styles/navbar.css';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isActive, setIsActive] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  // ✅ PILIH SALAH SATU TEMA TRANSPARAN INI:
-  
-  // OPTION 1: Glass effect minimal (sedikit putih)
-  // const navbarTheme = 'theme-glass';
-  
-  // OPTION 2: Pure glass (hampir tidak ada warna)
-  // const navbarTheme = 'theme-pure-glass';
-  
-  // OPTION 3: Hanya blur tanpa background (PALING TRANSPARAN)
-  // const navbarTheme = 'theme-blur-only';
-  
-  // OPTION 4: Dark glass (untuk background terang)
-  // const navbarTheme = 'theme-dark-glass';
-  
-  // OPTION 5: Tinted glass (sedikit warna)
-  const navbarTheme = 'theme-tinted-glass';
+  // Fungsi untuk menentukan apakah link aktif
+  const isActiveLink = (path) => {
+    return location.pathname === path || location.pathname.startsWith(path);
+  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Fungsi logout sederhana tanpa auth context
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
-      logout();
+      // Clear any stored data
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Redirect to login
       navigate('/login');
     }
   };
@@ -51,38 +33,19 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
-  const excludedPaths = ['/login', '/register'];
-  
-  if (!isAuthenticated() || excludedPaths.includes(location.pathname)) {
-    return null;
+  if (!isAuthenticated()) {
+    return null; // Don't show navbar if not authenticated
   }
 
   return (
-    <nav 
-      className={`navbar navbar-forustudio ${navbarTheme} ${isScrolled ? 'scrolled' : ''}`}
-      role="navigation" 
-      aria-label="main navigation"
-      style={{
-        // ✅ FORCE TRANSPARENT - Pastikan tidak ada background
-        backgroundColor: 'transparent',
-        backgroundImage: 'none',
-        background: 'transparent'
-      }}
-    >
+    <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <Link 
-          className="navbar-item" 
-          to="/users"
-          style={{
-            backgroundColor: 'transparent',
-            background: 'transparent'
-          }}
-        >
+        <Link className="navbar-item" to="/users">
           <span className="icon-text">
             <span className="icon">
-              <i className="fas fa-video"></i>
+              <i className="fas fa-users"></i>
             </span>
-            <span className="has-text-weight-bold">ForUStudio</span>
+            <span className="has-text-weight-bold">User Management</span>
           </span>
         </Link>
 
@@ -92,10 +55,6 @@ const Navbar = () => {
           aria-label="menu"
           aria-expanded="false"
           onClick={toggleBurger}
-          style={{
-            backgroundColor: 'transparent',
-            background: 'transparent'
-          }}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -103,28 +62,12 @@ const Navbar = () => {
         </a>
       </div>
 
-      <div 
-        className={`navbar-menu ${isActive ? 'is-active' : ''}`}
-        style={{
-          backgroundColor: 'transparent',
-          background: 'transparent'
-        }}
-      >
-        <div 
-          className="navbar-start"
-          style={{
-            backgroundColor: 'transparent',
-            background: 'transparent'
-          }}
-        >
+      <div className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
+        <div className="navbar-start">
           <Link 
             className={`navbar-item ${isCurrentPath('/users') ? 'is-active' : ''}`} 
             to="/users"
             onClick={() => setIsActive(false)}
-            style={{
-              backgroundColor: 'transparent',
-              background: 'transparent'
-            }}
           >
             <span className="icon">
               <i className="fas fa-users"></i>
@@ -138,99 +81,108 @@ const Navbar = () => {
                 className={`navbar-item ${isCurrentPath('/roles') ? 'is-active' : ''}`} 
                 to="/roles"
                 onClick={() => setIsActive(false)}
-                style={{
-                  backgroundColor: 'transparent',
-                  background: 'transparent'
-                }}
               >
                 <span className="icon">
                   <i className="fas fa-user-tag"></i>
                 </span>
                 <span>Roles</span>
               </Link>
-
-              <div className="navbar-item has-dropdown is-hoverable">
-                <a 
-                  className="navbar-link"
-                  style={{
-                    backgroundColor: 'transparent',
-                    background: 'transparent'
-                  }}
-                >
-                  <span className="icon">
-                    <i className="fas fa-plus"></i>
-                  </span>
-                  <span>Add New</span>
-                </a>
-                <div className="navbar-dropdown">
-                  <Link 
-                    className="navbar-item" 
-                    to="/users/add"
-                    onClick={() => setIsActive(false)}
-                  >
-                    <span className="icon">
-                      <i className="fas fa-user-plus"></i>
-                    </span>
-                    <span>Add User</span>
-                  </Link>
-                  <Link 
-                    className="navbar-item" 
-                    to="/roles/add"
-                    onClick={() => setIsActive(false)}
-                  >
-                    <span className="icon">
-                      <i className="fas fa-plus-circle"></i>
-                    </span>
-                    <span>Add Role</span>
-                  </Link>
-                </div>
-              </div>
-            </>
+          
+          {/* Projects menu (disabled for now) */}
+          <span className="navbar-item text-glass" style={{ opacity: 0.5 }}>
+            <span className="icon">
+              <i className="fas fa-project-diagram"></i>
+            </span>
+            <span>Projects</span>
+            <span className="tag is-small is-warning ml-2">Soon</span>
+          </span>
+          </>
           )}
         </div>
+        
 
-        <div 
-          className="navbar-end"
-          style={{
-            backgroundColor: 'transparent',
-            background: 'transparent'
-          }}
-        >
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a 
-              className="navbar-link"
-              style={{
-                backgroundColor: 'transparent',
-                background: 'transparent'
-              }}
-            >
+        <div className="navbar-end">
+          {/* Theme Switcher Buttons */}
+          <div className="navbar-item">
+            <div className="buttons">
+              <button 
+                className="button is-small text-glass"
+                title="Default Theme (Blue)"
+                style={{ background: 'linear-gradient(45deg, #2c8fff, #1080bc)', border: 'none', color: 'white' }}
+                onClick={() => window.location.reload()}
+              >
+                🔵
+              </button>
+              <button 
+                className="button is-small text-glass"
+                title="Green Theme"
+                style={{ background: 'linear-gradient(45deg, #00c851, #00a63f)', border: 'none', color: 'white' }}
+                onClick={() => alert('Green theme - Update variant prop to "green"')}
+              >
+                🟢
+              </button>
+              <button 
+                className="button is-small text-glass"
+                title="Purple Theme"
+                style={{ background: 'linear-gradient(45deg, #9c27b0, #673ab7)', border: 'none', color: 'white' }}
+                onClick={() => alert('Purple theme - Update variant prop to "purple"')}
+              >
+                🟣
+              </button>
+            </div>
+          </div>
+
+          {/* Notifications (mock) */}
+          <div className="navbar-item">
+            <button className="button is-transparent text-glass" title="Notifications">
               <span className="icon">
                 <i className="fas fa-user-circle"></i>
               </span>
-              <span>{user?.fullName || 'User'}</span>
-              <span className={`tag is-small ml-2 ${
-                user?.role?.roleName === 'admin' ? 'is-danger' :
-                user?.role?.roleName === 'editor' ? 'is-warning' :
-                'is-info'
-              }`}>
-                {user?.role?.roleName || 'client'}
-              </span>
-            </a>
-            <div className="navbar-dropdown is-right">
-              <div className="navbar-item">
-                <div className="content">
-                  <p className="is-size-7 has-text-grey">
-                    <strong>Email:</strong> {user?.email}
-                  </p>
-                  <p className="is-size-7 has-text-grey">
-                    <strong>Username:</strong> {user?.username}
-                  </p>
-                  {user?.phone && (
-                    <p className="is-size-7 has-text-grey">
-                      <strong>Phone:</strong> {user?.phone}
-                    </p>
-                  )}
+              <span className="tag is-danger is-small">3</span>
+            </button>
+          </div>
+
+          {/* User Menu */}
+          {showUserMenu && (
+            <div className={`navbar-item has-dropdown ${isUserDropdownOpen ? 'is-active' : ''}`}>
+              <button
+                className="navbar-link text-glass"
+                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                style={{ border: 'none', background: 'transparent' }}
+              >
+                <span className="icon">
+                  <i className="fas fa-user-circle"></i>
+                </span>
+                <span>{currentUser?.username || 'Admin'}</span>
+              </button>
+
+              <div className="navbar-dropdown is-right">
+                <div className="navbar-item">
+                  <span className="icon">
+                    <i className="fas fa-user"></i>
+                  </span>
+                  <span>Profile (Coming Soon)</span>
                 </div>
+                
+                <div className="navbar-item">
+                  <span className="icon">
+                    <i className="fas fa-cog"></i>
+                  </span>
+                  <span>Settings (Coming Soon)</span>
+                </div>
+                
+                <hr className="navbar-divider" />
+                
+                <button 
+                  className="navbar-item"
+                  onClick={handleLogout}
+                  style={{ border: 'none', background: 'transparent', width: '100%', textAlign: 'left' }}
+                >
+                  <span className="icon">
+                    <i className="fas fa-sign-out-alt"></i>
+                  </span>
+                  <span>Logout</span>
+                </button>
               </div>
               <hr className="navbar-divider" />
               <a className="navbar-item" href="#" onClick={(e) => e.preventDefault()}>
@@ -253,6 +205,7 @@ const Navbar = () => {
                 <span>Logout</span>
               </a>
             </div>
+          )}
           </div>
         </div>
       </div>

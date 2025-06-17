@@ -78,13 +78,24 @@ const Login = () => {
 
   return (
     <div 
-      className="section gradient-background" 
+      className="gradient-background" 
       style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center'
       }}
     >
+      {/* Floating Shapes */}
+      <div className="radius-shape-1"></div>
+      <div className="radius-shape-2"></div>
+      <div className="radius-shape-3"></div>
+      <div className="radius-shape-4"></div>
+      <div className="radius-shape-5"></div>
+      <div className="data-shape-1"></div>
+      <div className="data-shape-2"></div>
+      <div className="data-shape-3"></div>
+      <div className="data-shape-4"></div>
+
       <div className="container">
         <div className="columns is-centered">
           <div className="column is-4">
@@ -96,7 +107,7 @@ const Login = () => {
                     <i className="fas fa-user-circle"></i>
                   </span>
                 </h1>
-                <h2 className="title is-4">Welcome Back</h2>
+                <h2 className="title is-4">Welcome to ForUStudio</h2>
                 <p className="subtitle is-6 has-text-grey">Please sign in to your account</p>
               </div>
 
@@ -197,8 +208,18 @@ const Login = () => {
               </div>
             </div>
 
+            {/* Divider */}
+            <hr />
+
+            {/* Quote */}
+            <div className="has-text-centered">
+              <p style={{color: "black"}}>
+                It was designed and made just for U!{" "}
+              </p>
+            </div>
+
             {/* Demo Credentials */}
-            <div className="notification is-info is-light mt-4">
+            <div className="notification is-info bg-glass is-light mt-4">
               <p className="has-text-weight-semibold">Demo Credentials:</p>
               <div className="content">
                 <p><strong>Admin:</strong></p>

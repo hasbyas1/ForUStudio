@@ -46,21 +46,27 @@ const RolesList = () => {
 
   if (isLoading) {
     return (
-      <div className="gradient-background">
-        {/* Floating Shapes */}
-        <div className="radius-shape-1"></div>
-        <div className="radius-shape-2"></div>
-        <div className="radius-shape-3"></div>
-        <div className="radius-shape-4"></div>
-        <div className="radius-shape-5"></div>
-        <div className="data-shape-1"></div>
-        <div className="data-shape-2"></div>
-        <div className="data-shape-3"></div>
-        <div className="data-shape-4"></div>
+      <>
+        <Navbar/>
+        <div
+          className="gradient-background"
+            style={{
+            minHeight: '100vh'
+          }}
+        >
+          {/* Floating Shapes */}
+          <div className="radius-shape-1"></div>
+          <div className="radius-shape-2"></div>
+          <div className="radius-shape-3"></div>
+          <div className="radius-shape-4"></div>
+          <div className="radius-shape-5"></div>
+          <div className="data-shape-1"></div>
+          <div className="data-shape-2"></div>
+          <div className="data-shape-3"></div>
+          <div className="data-shape-4"></div>
 
-        <div className="content-wrapper">
-          <div className="section">
-            <div className="column is-fluid">
+          <div className="columns mt-5 is-centered">
+            <div className="column is-half">
               <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
                   <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
@@ -70,12 +76,12 @@ const RolesList = () => {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-        <>
+    <>
       <Navbar/>
       <div
         className="gradient-background"
@@ -83,7 +89,6 @@ const RolesList = () => {
           minHeight: '100vh'
         }}
       >
-      <div className="gradient-background">
         {/* Floating Shapes Background */}
         <div className="radius-shape-1"></div>
         <div className="radius-shape-2"></div>
@@ -98,7 +103,6 @@ const RolesList = () => {
         <div className="content-wrapper">
           <div className="section">
             <div className="column is-fluid">
-              {/* Header dengan glass effect */}
               <div className="level mb-5">
                 <div className="level-left">
                   <div className="level-item">
@@ -138,9 +142,12 @@ const RolesList = () => {
               {/* Table dengan glass effect */}
               <div className="bg-glass" style={{ padding: '1.5rem', borderRadius: '15px' }}>
                 <div style={{ overflowX: "auto" }}>
-                  <table className="table is-fullwidth is-hoverable" style={{ backgroundColor: 'transparent' }}>
+                  <table className="table is-fullwidth is-hoverable" style={{
+                    backgroundColor: 'transparent',
+                    color: '#e2e8f0'
+                  }}>
                     <thead>
-                      <tr>
+                      <tr style={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}>
                         <th className="text-glass">No</th>
                         <th className="text-glass">Role ID</th>
                         <th className="text-glass">Role Name</th>
@@ -151,7 +158,16 @@ const RolesList = () => {
                     <tbody>
                       {roles.length > 0 ? (
                         roles.map((role, index) => (
-                          <tr key={role.roleId} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                          <tr key={role.roleId} style={{
+                            backgroundColor: 'rgba(15, 23, 42, 0.3)', 
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(30, 41, 59, 0.6)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.3)';
+                          }}>
                             <td className="text-glass">{index + 1}</td>
                             <td>
                               <span className="tag is-primary">{role.roleId}</span>
@@ -226,7 +242,6 @@ const RolesList = () => {
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

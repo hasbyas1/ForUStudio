@@ -42,25 +42,26 @@ const UsersList = () => {
 
   if (isLoading) {
     return (
-      <div className="gradient-background"
-          style={{
-          minHeight: '100vh'
-        }}
-      >
-        {/* Floating Shapes */}
-        <div className="radius-shape-1"></div>
-        <div className="radius-shape-2"></div>
-        <div className="radius-shape-3"></div>
-        <div className="radius-shape-4"></div>
-        <div className="radius-shape-5"></div>
-        <div className="data-shape-1"></div>
-        <div className="data-shape-2"></div>
-        <div className="data-shape-3"></div>
-        <div className="data-shape-4"></div>
+      <>
+        <Navbar/>
+        <div className="gradient-background"
+            style={{
+            minHeight: '100vh'
+          }}
+        >
+          {/* Floating Shapes */}
+          <div className="radius-shape-1"></div>
+          <div className="radius-shape-2"></div>
+          <div className="radius-shape-3"></div>
+          <div className="radius-shape-4"></div>
+          <div className="radius-shape-5"></div>
+          <div className="data-shape-1"></div>
+          <div className="data-shape-2"></div>
+          <div className="data-shape-3"></div>
+          <div className="data-shape-4"></div>
 
-        <div className="content-wrapper">
-          <div className="section">
-            <div className="column is-fluid">
+          <div className="columns mt-5 is-centered">
+            <div className="column is-half">
               <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
                   <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
@@ -70,7 +71,7 @@ const UsersList = () => {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -95,10 +96,8 @@ const UsersList = () => {
         <div className="data-shape-4"></div>
 
         <div className="content-wrapper">
-          {/* Navbar dengan gradient - Sama seperti gambar 1 */}
           <div className="section">
             <div className="column is-fluid">
-              {/* Header dengan glass effect */}
               <div className="level mb-5">
                 <div className="level-left">
                   <div className="level-item">

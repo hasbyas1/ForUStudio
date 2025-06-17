@@ -3,6 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar"; // ✅ Import Navbar
 
+import "../styles/background.css"; // Import your CSS styles
+import "../styles/navbar.css"; // Import your CSS styles
+
 const RolesAdd = () => {
   const [roleName, setRoleName] = useState("");
   const [description, setDescription] = useState("");
@@ -48,13 +51,24 @@ const RolesAdd = () => {
     <>
       <Navbar /> {/* ✅ Tambahkan Navbar */}
       <div 
-        className="section gradient-background" 
+        className="gradient-background" 
         style={{
           minHeight: '100vh'
         }}
       >
-        <div className="container">
-          <div className="column is-half is-offset-one-quarter">
+        {/* Floating Shapes Background - Sama seperti gambar 1 */}
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
             <h1 className="title has-text-white">Add New Role</h1>
             
             <form onSubmit={saveRole} className="box">
