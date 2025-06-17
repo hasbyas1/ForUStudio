@@ -64,11 +64,13 @@ const RolesAdd = () => {
         <div className="data-shape-3"></div>
         <div className="data-shape-4"></div>
 
-        <div className="columns mt-5 is-centered">
-          <div className="column is-half">
+        <div className="columns mt-5 is-centered" style={{ zIndex: 100, position: 'relative' }}>
+          <div className="column is-half" style={{ zIndex: 110, position: 'relative' }}>
             <h1 className="title has-text-white">Add New Role</h1>
-            
-            <form onSubmit={saveRole} className="box" style={{zIndex : 9999}}>
+            <form onSubmit={saveRole} style={{ 
+              zIndex: 120, 
+              position: 'relative',
+            }}>
               <div className="field">
                 <label className="label">Role Name</label>
                 <div className="control has-icons-left">
@@ -84,7 +86,7 @@ const RolesAdd = () => {
                     <i className="fas fa-user-tag"></i>
                   </span>
                 </div>
-                <p className="help">Role name will be converted to lowercase automatically</p>
+                <strong className="help" style={{color:"white"}}>Role name will be converted to lowercase automatically</strong>
               </div>
 
               <div className="field">
@@ -101,7 +103,7 @@ const RolesAdd = () => {
                     <i className="fas fa-info-circle"></i>
                   </span>
                 </div>
-                <p className="help">If empty, will use default description</p>
+                <strong className="help" style={{color:"white"}}>If empty, will use default description</strong>
               </div>
 
               <div className="field is-grouped">

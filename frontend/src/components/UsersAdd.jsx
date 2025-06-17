@@ -103,10 +103,13 @@ const UsersAdd = () => {
         <div className="data-shape-3"></div>
         <div className="data-shape-4"></div>
         
-        <div className="columns mt-5 is-centered">
-          <div className="column is-half">
-            <h1 className="title">Add New User</h1>
-            <form onSubmit={saveUser}>
+        <div className="columns mt-5 is-centered" style={{ zIndex: 100, position: 'relative' }}>
+          <div className="column is-half" style={{ zIndex: 110, position: 'relative' }}>
+            <h1 className="title has-text-white">Add New User</h1>
+            <form onSubmit={saveUser} style={{ 
+              zIndex: 120, 
+              position: 'relative',
+            }}>
               {/* Email Field */}
               <div className="field">
                 <label className="label">Email *</label>
@@ -154,7 +157,7 @@ const UsersAdd = () => {
                     required
                   />
                 </div>
-                <p className="help">Password must be at least 8 characters long</p>
+                <strong className="help" style={{color:"white"}}>Password must be at least 8 characters long</strong>
               </div>
 
               {/* Full Name Field - Ganti dari "Name" */}
@@ -201,7 +204,7 @@ const UsersAdd = () => {
                     pattern="[0-9]{10,13}"
                   />
                 </div>
-                <p className="help">Optional. Numbers only, 10-13 digits</p>
+                <strong className="help" style={{color:"white"}}>Optional. Numbers only, 10-13 digits</strong>
               </div>
 
               {/* Role Field - Tambahan baru */}

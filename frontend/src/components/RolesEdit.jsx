@@ -126,11 +126,13 @@ const RolesEdit = () => {
         <div className="data-shape-3"></div>
         <div className="data-shape-4"></div>
 
-        <div className="columns mt-5 is-centered">
-          <div className="column is-half">
+        <div className="columns mt-5 is-centered" style={{ zIndex: 100, position: 'relative' }}>
+          <div className="column is-half" style={{ zIndex: 110, position: 'relative' }}>
             <h1 className="title has-text-white">Edit Role</h1>
-            
-            <form onSubmit={updateRole} className="box">
+            <form onSubmit={updateRole} style={{ 
+              zIndex: 120, 
+              position: 'relative',
+            }}>
               <div className="field">
                 <label className="label">Role Name</label>
                 <div className="control has-icons-left">
@@ -145,8 +147,8 @@ const RolesEdit = () => {
                   <span className="icon is-small is-left">
                     <i className="fas fa-user-tag"></i>
                   </span>
-                </div>
-                <p className="help">Role name will be converted to lowercase automatically</p>
+                </div >
+                <strong className="help" style={{color:"white"}}>Role name will be converted to lowercase automatically</strong>
               </div>
 
               <div className="field">

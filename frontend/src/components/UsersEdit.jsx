@@ -175,10 +175,13 @@ const UsersEdit = () => {
         <div className="data-shape-3"></div>
         <div className="data-shape-4"></div>
         
-        <div className="columns mt-5 is-centered">
-          <div className="column is-half">
-            <h1 className="title">Edit User</h1>
-            <form onSubmit={updateUser}>
+        <div className="columns mt-5 is-centered" style={{ zIndex: 100, position: 'relative' }}>
+          <div className="column is-half" style={{ zIndex: 110, position: 'relative' }}>
+            <h1 className="title has-text-white">Edit User</h1>
+            <form onSubmit={updateUser} style={{ 
+              zIndex: 120, 
+              position: 'relative',
+            }}>
               {/* Email Field */}
               <div className="field">
                 <label className="label">Email *</label>
@@ -225,7 +228,7 @@ const UsersEdit = () => {
                     maxLength={100}
                   />
                 </div>
-                <p className="help">Leave blank if you don't want to change password</p>
+                <strong className="help" style={{color:"white"}}>Leave blank if you don't want to change password</strong>
               </div>
 
               {/* Full Name Field */}
@@ -272,7 +275,7 @@ const UsersEdit = () => {
                     pattern="[0-9]{10,13}"
                   />
                 </div>
-                <p className="help">Numbers only, 10-13 digits (optional)</p>
+                <strong className="help" style={{color:"white"}}>Numbers only, 10-13 digits (optional)</strong>
               </div>
 
               {/* Role Field */}
@@ -295,7 +298,7 @@ const UsersEdit = () => {
               <div className="field">
                 <label className="label">Status</label>
                 <div className="control">
-                  <label className="checkbox">
+                  <label className="checkbox" style={{color:"white"}}>
                     <input
                       type="checkbox"
                       checked={isActive}
@@ -304,7 +307,7 @@ const UsersEdit = () => {
                     {" "}User is active
                   </label>
                 </div>
-                <p className="help">Uncheck to deactivate user account</p>
+                <strong className="help" style={{color:"white"}}>Uncheck to deactivate user account</strong>
               </div>
 
               {/* Buttons */}
