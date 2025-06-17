@@ -477,3 +477,593 @@ nav.navbar-forustudio {
 .navbar-forustudio .navbar-dropdown {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
+
+/* 
+===================================
+🔍 NAVBAR FORUSTUDIO - TRANSPARAN MURNI
+===================================
+Copy seluruh kode ini ke: frontend/src/styles/Navbar.css
+Ganti semua isi file yang lama dengan kode ini
+*/
+
+/* ===== FORCE REMOVE SEMUA BACKGROUND BULMA ===== */
+.navbar-forustudio.navbar,
+.navbar-forustudio {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1050 !important;
+  transition: all 0.3s ease !important;
+  border-bottom: none !important;
+}
+
+/* ===== OVERRIDE BULMA NAVBAR CLASSES ===== */
+.navbar-forustudio.navbar.is-primary {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* ===== TEMA 1: GLASS EFFECT MINIMAL ===== */
+.navbar-forustudio.theme-glass {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== TEMA 2: PURE GLASS (HAMPIR TIDAK ADA WARNA) ===== */
+.navbar-forustudio.theme-pure-glass {
+  background: rgba(255, 255, 255, 0.01) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ===== TEMA 3: BLUR ONLY (PALING TRANSPARAN) ===== */
+.navbar-forustudio.theme-blur-only {
+  background: transparent !important;
+  backdrop-filter: blur(25px) contrast(120%) !important;
+  -webkit-backdrop-filter: blur(25px) contrast(120%) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== TEMA 4: DARK GLASS (UNTUK BACKGROUND TERANG) ===== */
+.navbar-forustudio.theme-dark-glass {
+  background: rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== TEMA 5: TINTED GLASS (SEDIKIT WARNA) ===== */
+.navbar-forustudio.theme-tinted-glass {
+  background: rgba(25, 53, 31, 0.65) !important;
+  backdrop-filter: blur(18px) brightness(110%) !important;
+  -webkit-backdrop-filter: blur(2px) brightness(110%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== TEMA 6: VIDEO STUDIO (TRANSPARAN) ===== */
+.navbar-forustudio.theme-video-studio {
+  background: rgba(255, 107, 107, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(255, 107, 107, 0.05) !important;
+}
+
+/* ===== TEMA 7: GRADIENT BLUE (TRANSPARAN) ===== */
+.navbar-forustudio.theme-gradient-blue {
+  background: rgba(102, 126, 234, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.05) !important;
+}
+
+/* ===== TEMA 8: CREATIVE (TRANSPARAN) ===== */
+.navbar-forustudio.theme-creative {
+  background: rgba(0, 180, 219, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(0, 180, 219, 0.05) !important;
+}
+
+/* ===== TEMA 9: FRESH (TRANSPARAN) ===== */
+.navbar-forustudio.theme-fresh {
+  background: rgba(86, 171, 47, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(86, 171, 47, 0.05) !important;
+}
+
+/* ===== TEMA 10: VIBRANT (TRANSPARAN) ===== */
+.navbar-forustudio.theme-vibrant {
+  background: rgba(131, 96, 195, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(131, 96, 195, 0.05) !important;
+}
+
+/* ===== TEMA 11: WARM (TRANSPARAN) ===== */
+.navbar-forustudio.theme-warm {
+  background: rgba(240, 147, 251, 0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  box-shadow: 0 8px 32px rgba(240, 147, 251, 0.05) !important;
+}
+
+/* ===== FORCE TRANSPARENT UNTUK SEMUA CHILD ELEMENTS ===== */
+.navbar-forustudio .navbar-brand,
+.navbar-forustudio .navbar-menu,
+.navbar-forustudio .navbar-start,
+.navbar-forustudio .navbar-end,
+.navbar-forustudio .navbar-item,
+.navbar-forustudio .navbar-link {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* ===== NAVBAR BRAND STYLING ===== */
+.navbar-forustudio .navbar-brand {
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  color: white !important;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.navbar-forustudio .navbar-brand .navbar-item {
+  background: transparent !important;
+  color: white !important;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.navbar-forustudio .navbar-brand .navbar-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  transform: scale(1.02) !important;
+  border-radius: 8px !important;
+}
+
+/* ===== NAVBAR ITEMS STYLING ===== */
+.navbar-forustudio .navbar-item {
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4) !important;
+  position: relative !important;
+}
+
+.navbar-forustudio .navbar-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.navbar-forustudio .navbar-item.is-active {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ===== NAVBAR LINK (untuk dropdown trigger) ===== */
+.navbar-forustudio .navbar-link {
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+.navbar-forustudio .navbar-link:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+.navbar-forustudio .navbar-link::after {
+  border-color: white !important;
+  margin-top: -0.375em !important;
+  right: 1.125em !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important;
+}
+
+/* ===== DROPDOWN STYLING (PERBAIKAN UTAMA) ===== */
+.navbar-forustudio .navbar-item.has-dropdown {
+  position: relative !important;
+}
+
+.navbar-forustudio .navbar-item.has-dropdown:hover .navbar-dropdown,
+.navbar-forustudio .navbar-item.has-dropdown.is-active .navbar-dropdown,
+.navbar-forustudio .navbar-item.has-dropdown.is-hoverable:hover .navbar-dropdown {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+.navbar-forustudio .navbar-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  min-width: 200px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 8px !important;
+  
+  /* ✅ PERBAIKAN DROPDOWN */
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-10px) !important;
+  transition: all 0.3s ease !important;
+  z-index: 9999 !important;
+}
+
+.navbar-forustudio .navbar-dropdown.is-right {
+  left: auto !important;
+  right: 0 !important;
+}
+
+.navbar-forustudio .navbar-dropdown .navbar-item {
+  color: #333 !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  border-radius: 8px !important;
+  margin: 4px 8px !important;
+  padding: 12px 16px !important;
+  white-space: nowrap !important;
+  font-weight: 500 !important;
+}
+
+.navbar-forustudio .navbar-dropdown .navbar-item:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #333 !important;
+  text-shadow: none !important;
+}
+
+/* ===== BURGER MENU STYLING ===== */
+.navbar-forustudio .navbar-burger {
+  color: white !important;
+  background: transparent !important;
+  height: 3.25rem !important;
+  width: 3.25rem !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.navbar-forustudio .navbar-burger span {
+  background-color: white !important;
+  height: 2px !important;
+  width: 18px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.navbar-forustudio .navbar-burger:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg) !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(2) {
+  opacity: 0 !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg) !important;
+}
+
+/* ===== ROLE TAGS STYLING ===== */
+.navbar-forustudio .tag {
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: none !important;
+}
+
+.navbar-forustudio .tag.is-danger {
+  background-color: #ff3860 !important;
+  color: white !important;
+}
+
+.navbar-forustudio .tag.is-warning {
+  background-color: #ffdd57 !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.navbar-forustudio .tag.is-info {
+  background-color: #3298dc !important;
+  color: white !important;
+}
+
+/* ===== DIVIDER STYLING ===== */
+.navbar-forustudio .navbar-divider {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  margin: 0.5rem 0 !important;
+}
+
+/* ===== SCROLL EFFECT ===== */
+/* .navbar-forustudio.scrolled {
+  background: rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+} */
+
+/* ===== RESPONSIVE STYLING ===== */
+@media screen and (max-width: 1023px) {
+  .navbar-forustudio .navbar-menu {
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 0 0 12px 12px !important;
+    margin-top: 0 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .navbar-forustudio .navbar-item {
+    padding: 1rem 1.5rem !important;
+  }
+  
+  /* Mobile dropdown fix */
+  .navbar-forustudio .navbar-dropdown {
+    position: static !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    border-radius: 8px !important;
+    margin: 8px 16px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item {
+    color: white !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+.navbar-forustudio .navbar-item {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.navbar-forustudio .navbar-item::before {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 2px !important;
+  background: white !important;
+  transition: all 0.3s ease !important;
+  transform: translateX(-50%) !important;
+}
+
+.navbar-forustudio .navbar-item:hover::before {
+  width: 80% !important;
+}
+
+/* ===== ICON STYLING ===== */
+.navbar-forustudio .icon {
+  transition: all 0.3s ease !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important;
+}
+
+.navbar-forustudio .navbar-item:hover .icon {
+  transform: scale(1.05) !important;
+}
+
+/* ===== CONTENT STYLING ===== */
+.navbar-forustudio .content p {
+  margin-bottom: 0.25rem !important;
+  font-size: 0.8rem !important;
+}
+
+/* ===== DEBUGGING: Jika browser tidak support backdrop-filter ===== */
+@supports not (backdrop-filter: blur(1px)) {
+  .navbar-forustudio.theme-glass,
+  .navbar-forustudio.theme-pure-glass,
+  .navbar-forustudio.theme-tinted-glass {
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .navbar-forustudio.theme-dark-glass {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  .navbar-forustudio.theme-blur-only {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* ===== Z-INDEX FIX ===== */
+.navbar-forustudio {
+  z-index: 1050 !important;
+}
+
+.navbar-forustudio .navbar-dropdown {
+  z-index: 1051 !important;
+}
+
+/* ===== FORCE OVERRIDE BULMA ===== */
+nav.navbar-forustudio {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* ===== ADDITIONAL FIXES ===== */
+.navbar-forustudio * {
+  box-sizing: border-box !important;
+}
+
+.navbar-forustudio .navbar-menu.is-active {
+  display: block !important;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+.navbar-forustudio,
+.navbar-forustudio .navbar-item,
+.navbar-forustudio .navbar-link,
+.navbar-forustudio .navbar-dropdown {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 1. HAPUS HOVER EFFECT YANG MENGHALANGI */
+.navbar-forustudio .navbar-item.has-dropdown .navbar-link::before,
+.navbar-forustudio .navbar-item.has-dropdown::before {
+  display: none !important;
+}
+
+/* 2. HAPUS TRANSFORM YANG BIKIN GAP */
+.navbar-forustudio .navbar-item.has-dropdown:hover {
+  transform: none !important;
+}
+
+.navbar-forustudio .navbar-item.has-dropdown .navbar-link:hover {
+  transform: none !important;
+}
+
+/* 3. DROPDOWN STYLING BERSIH */
+.navbar-forustudio .navbar-dropdown {
+  /* Reset semua yang bikin masalah */
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  min-width: 200px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 0px !important; /* Hapus gap */
+  z-index: 99999 !important; /* Z-index super tinggi */
+  
+  /* Paksa hidden default */
+  display: none !important;
+  
+  /* Hapus semua animasi */
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* 4. DROPDOWN MUNCUL SAAT HOVER - TANPA HAMBATAN */
+.navbar-forustudio .navbar-item.has-dropdown:hover .navbar-dropdown {
+  display: block !important;
+}
+
+/* 5. BUAT AREA HOVER LEBIH BESAR */
+.navbar-forustudio .navbar-item.has-dropdown {
+  position: relative !important;
+}
+
+.navbar-forustudio .navbar-item.has-dropdown::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -10px !important; /* Extend ke bawah */
+  z-index: 1 !important;
+}
+
+/* 6. DROPDOWN RIGHT */
+.navbar-forustudio .navbar-dropdown.is-right {
+  left: auto !important;
+  right: 0 !important;
+}
+
+/* 7. STYLE ITEM DROPDOWN */
+.navbar-forustudio .navbar-dropdown .navbar-item {
+  color: #333 !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  padding: 10px 15px !important;
+  margin: 2px 4px !important;
+  border-radius: 6px !important;
+  font-weight: normal !important;
+  
+  /* Hapus animasi dan transform */
+  transition: none !important;
+  transform: none !important;
+}
+
+.navbar-forustudio .navbar-dropdown .navbar-item:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: #333 !important;
+  
+  /* Hapus semua animasi */
+  transition: none !important;
+  transform: none !important;
+}
+
+/* 8. MOBILE DROPDOWN */
+@media screen and (max-width: 1023px) {
+  .navbar-forustudio .navbar-dropdown {
+    position: static !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 4px 8px !important;
+    display: block !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item {
+    color: white !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+  }
+}

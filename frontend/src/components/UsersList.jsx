@@ -96,7 +96,6 @@ const UsersList = () => {
         <div className="data-shape-4"></div>
 
         <div className="content-wrapper">
-          {/* Navbar dengan gradient - Sama seperti gambar 1 */}
           <div className="section">
             <div className="column is-fluid">
               {/* Header dengan glass effect */}

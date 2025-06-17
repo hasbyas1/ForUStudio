@@ -80,7 +80,7 @@ const Navbar = () => {
         >
           <span className="icon-text">
             <span className="icon">
-              <i className="fas fa-video"></i>
+              <i className="fas fa-cube"></i>
             </span>
             <span className="has-text-weight-bold">ForUStudio</span>
           </span>
