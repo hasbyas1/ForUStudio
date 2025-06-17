@@ -89,7 +89,6 @@ const RolesList = () => {
           minHeight: '100vh'
         }}
       >
-      <div className="gradient-background">
         {/* Floating Shapes Background */}
         <div className="radius-shape-1"></div>
         <div className="radius-shape-2"></div>
@@ -144,7 +143,10 @@ const RolesList = () => {
               {/* Table dengan glass effect */}
               <div className="bg-glass" style={{ padding: '1.5rem', borderRadius: '15px' }}>
                 <div style={{ overflowX: "auto" }}>
-                  <table className="table is-fullwidth is-hoverable" style={{ backgroundColor: 'transparent' }}>
+                  <table className="table is-fullwidth is-hoverable" style={{
+                    backgroundColor: 'transparent',
+                    color: '#e2e8f0'
+                  }}>
                     <thead>
                       <tr style={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}>
                         <th className="text-glass">No</th>
@@ -241,7 +243,6 @@ const RolesList = () => {
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
