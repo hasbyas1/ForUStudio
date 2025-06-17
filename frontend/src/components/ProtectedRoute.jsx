@@ -48,7 +48,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   if (requireAdmin && !isAdmin()) {
     return (
       <div 
-        className="section gradient-background" 
+        className="gradient-background" 
         style={{
           minHeight: '100vh',
           display: 'flex',
