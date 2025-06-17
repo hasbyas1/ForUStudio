@@ -53,8 +53,19 @@ const RolesAdd = () => {
           minHeight: '100vh'
         }}
       >
-        <div className="container">
-          <div className="column is-half is-offset-one-quarter">
+        {/* Floating Shapes */}
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+
+        <div className="columns mt-5 is-centered">
+          <div className="column is-half">
             <h1 className="title has-text-white">Add New Role</h1>
             
             <form onSubmit={saveRole} className="box">
