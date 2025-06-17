@@ -68,7 +68,7 @@ const RolesAdd = () => {
           <div className="column is-half">
             <h1 className="title has-text-white">Add New Role</h1>
             
-            <form onSubmit={saveRole} className="box">
+            <form onSubmit={saveRole} className="box" style={{zIndex : 9999}}>
               <div className="field">
                 <label className="label">Role Name</label>
                 <div className="control has-icons-left">

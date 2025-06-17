@@ -1066,4 +1066,426 @@ nav.navbar-forustudio {
     background: rgba(255, 255, 255, 0.1) !important;
     color: white !important;
   }
+  /* ===== NAVBAR FORUSTUDIO BASE STYLING ===== */
+.navbar-forustudio {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1050 !important;
+  
+  /* TRANSPARENT BACKGROUND */
+  background: transparent !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  
+  /* SMOOTH TRANSITIONS */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ===== THEME VARIATIONS ===== */
+.navbar-forustudio.theme-glass {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.navbar-forustudio.theme-pure-glass {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.navbar-forustudio.theme-blur-only {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.navbar-forustudio.theme-dark-glass {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-forustudio.theme-tinted-glass {
+  background: rgba(102, 126, 234, 0.08) !important;
+}
+
+/* ===== NAVBAR BRAND STYLING ===== */
+.navbar-forustudio .navbar-brand .navbar-item {
+  color: white !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.navbar-forustudio .navbar-brand .navbar-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  transform: scale(1.02) !important;
+  border-radius: 8px !important;
+}
+
+/* ===== NAVBAR ITEMS STYLING ===== */
+.navbar-forustudio .navbar-item {
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4) !important;
+  position: relative !important;
+}
+
+.navbar-forustudio .navbar-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.navbar-forustudio .navbar-item.is-active {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ===== NAVBAR LINK (untuk dropdown trigger) ===== */
+.navbar-forustudio .navbar-link {
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+  margin: 0 4px !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+.navbar-forustudio .navbar-link:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+.navbar-forustudio .navbar-link::after {
+  border-color: white !important;
+  margin-top: -0.375em !important;
+  right: 1.125em !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important;
+}
+
+/* ===== DROPDOWN STYLING (CLICK-BASED) ===== */
+.navbar-forustudio .navbar-item.has-dropdown {
+  position: relative !important;
+}
+
+/* PENTING: Hapus semua hover-based dropdown behavior */
+.navbar-forustudio .navbar-item.has-dropdown:hover .navbar-dropdown,
+.navbar-forustudio .navbar-item.has-dropdown.is-hoverable:hover .navbar-dropdown {
+  display: none !important; /* Disable hover behavior completely */
+}
+
+/* Dropdown hanya muncul saat di-click (menggunakan is-active class) */
+.navbar-forustudio .navbar-item.has-dropdown.is-active .navbar-dropdown {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+/* Debug styles untuk memastikan dropdown terlihat */
+.navbar-forustudio .navbar-item.has-dropdown.is-active {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Force show dropdown saat is-active (override semua rules lain) */
+.navbar-forustudio .navbar-item.has-dropdown.is-active > .navbar-dropdown {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+}
+
+.navbar-forustudio .navbar-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  min-width: 200px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 8px !important;
+  
+  /* Default hidden state */
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-10px) !important;
+  transition: all 0.3s ease !important;
+  z-index: 9999 !important;
+}
+
+.navbar-forustudio .navbar-dropdown.is-right {
+  left: auto !important;
+  right: 0 !important;
+}
+
+.navbar-forustudio .navbar-dropdown .navbar-item {
+  color: #333 !important;
+  background: transparent !important;
+  text-shadow: none !important;
+  border-radius: 8px !important;
+  margin: 4px 8px !important;
+  padding: 12px 16px !important;
+  white-space: nowrap !important;
+  font-weight: 500 !important;
+}
+
+.navbar-forustudio .navbar-dropdown .navbar-item:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #333 !important;
+  text-shadow: none !important;
+}
+
+/* ===== BURGER MENU STYLING ===== */
+.navbar-forustudio .navbar-burger {
+  color: white !important;
+  background: transparent !important;
+  height: 3.25rem !important;
+  width: 3.25rem !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.navbar-forustudio .navbar-burger span {
+  background-color: white !important;
+  height: 2px !important;
+  width: 18px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.navbar-forustudio .navbar-burger:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg) !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(2) {
+  opacity: 0 !important;
+}
+
+.navbar-forustudio .navbar-burger.is-active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg) !important;
+}
+
+/* ===== ROLE TAGS STYLING ===== */
+.navbar-forustudio .tag {
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: none !important;
+}
+
+.navbar-forustudio .tag.is-danger {
+  background-color: #ff3860 !important;
+  color: white !important;
+}
+
+.navbar-forustudio .tag.is-warning {
+  background-color: #ffdd57 !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.navbar-forustudio .tag.is-info {
+  background-color: #3298dc !important;
+  color: white !important;
+}
+
+/* ===== DIVIDER STYLING ===== */
+.navbar-forustudio .navbar-divider {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  margin: 0.5rem 0 !important;
+}
+
+/* ===== RESPONSIVE STYLING ===== */
+@media screen and (max-width: 1023px) {
+  .navbar-forustudio .navbar-menu {
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-radius: 0 0 12px 12px !important;
+    margin-top: 0 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .navbar-forustudio .navbar-item {
+    padding: 1rem 1.5rem !important;
+  }
+  
+  /* Mobile dropdown fix - tetap click-based */
+  .navbar-forustudio .navbar-dropdown {
+    position: static !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    border-radius: 8px !important;
+    margin: 8px 16px !important;
+    /* Di mobile, dropdown tetap hidden by default */
+    display: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+  
+  /* Di mobile, dropdown hanya muncul saat is-active */
+  .navbar-forustudio .navbar-item.has-dropdown.is-active .navbar-dropdown {
+    display: block !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item {
+    color: white !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  .navbar-forustudio .navbar-dropdown .navbar-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+.navbar-forustudio .navbar-item {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.navbar-forustudio .navbar-item::before {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  width: 0 !important;
+  height: 2px !important;
+  background: white !important;
+  transition: all 0.3s ease !important;
+  transform: translateX(-50%) !important;
+}
+
+.navbar-forustudio .navbar-item:hover::before {
+  width: 80% !important;
+}
+
+/* ===== ICON STYLING ===== */
+.navbar-forustudio .icon {
+  transition: all 0.3s ease !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important;
+}
+
+.navbar-forustudio .navbar-item:hover .icon {
+  transform: scale(1.05) !important;
+}
+
+/* ===== CONTENT STYLING ===== */
+.navbar-forustudio .content p {
+  margin-bottom: 0.25rem !important;
+  font-size: 0.8rem !important;
+}
+
+/* ===== DEBUGGING: Jika browser tidak support backdrop-filter ===== */
+@supports not (backdrop-filter: blur(1px)) {
+  .navbar-forustudio.theme-glass,
+  .navbar-forustudio.theme-pure-glass,
+  .navbar-forustudio.theme-tinted-glass {
+    background: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .navbar-forustudio.theme-dark-glass {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  .navbar-forustudio.theme-blur-only {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* ===== Z-INDEX FIX ===== */
+.navbar-forustudio {
+  z-index: 1050 !important;
+}
+
+.navbar-forustudio .navbar-dropdown {
+  z-index: 1051 !important;
+}
+
+/* ===== FORCE OVERRIDE BULMA ===== */
+nav.navbar-forustudio {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* ===== ADDITIONAL FIXES ===== */
+.navbar-forustudio * {
+  box-sizing: border-box !important;
+}
+
+.navbar-forustudio .navbar-menu.is-active {
+  display: block !important;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+.navbar-forustudio,
+.navbar-forustudio .navbar-item,
+.navbar-forustudio .navbar-link,
+.navbar-forustudio .navbar-dropdown {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ===== CLICK-BASED DROPDOWN IMPROVEMENTS ===== */
+
+/* Tambahkan visual feedback untuk dropdown button */
+.navbar-forustudio .navbar-item.has-dropdown.is-active > .navbar-link {
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Animasi arrow rotation untuk menunjukkan dropdown terbuka */
+.navbar-forustudio .navbar-item.has-dropdown.is-active .navbar-link::after {
+  transform: rotate(180deg) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* Pastikan dropdown button bisa diklik */
+.navbar-forustudio .navbar-link {
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+/* Prevent text selection saat click dropdown button */
+.navbar-forustudio .navbar-link * {
+  pointer-events: none !important;
+}
 }
