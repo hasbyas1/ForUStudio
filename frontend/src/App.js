@@ -104,7 +104,7 @@ function App() {
           <Route 
             path="/users/edit/:id" 
             element={
-              <ProtectedRoute requireAdmin={true}>
+              <ProtectedRoute requireOwnerOrAdmin={true}>
                 <EditUser />
               </ProtectedRoute>
             } 

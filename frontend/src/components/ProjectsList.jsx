@@ -481,7 +481,7 @@ const ProjectsList = () => {
                   </div>
                 ) : (
                   <div style={{ overflowX: "auto" }}>
-                    <table className="table is-fullwidth is-hoverable" style={{
+                    <table className="table is-fullwidth is-hoverable enhanced-table" style={{
                       backgroundColor: 'transparent',
                       color: '#e2e8f0'
                     }}>
@@ -505,41 +505,41 @@ const ProjectsList = () => {
                           <tr key={ticket.projectTicketId} style={{ 
                             backgroundColor: index % 2 === 0 ? 'rgba(30, 41, 59, 0.4)' : 'rgba(30, 41, 59, 0.2)' 
                           }}>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               <strong>#{ticket.projectTicketId}</strong>
                             </td>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               <Link 
                                 to={`/projects/view/${ticket.projectTicketId}`}
-                                className="has-text-link"
+                                className="table-link"
                               >
                                 <strong>{ticket.projectTitle}</strong>
                               </Link>
                               <br />
-                              <small className="has-text-grey-light">
+                              <small className="small-text-stroke">
                                 {ticket.subject}
                               </small>
                             </td>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               <div>
-                                <strong>{ticket.client?.fullName}</strong>
+                                <strong className="table-text-white">{ticket.client?.fullName}</strong>
                                 <br />
-                                <small className="has-text-grey-light">
+                                <small className="small-text-stroke">
                                   {ticket.client?.email}
                                 </small>
                               </div>
                             </td>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               {ticket.editor ? (
                                 <div>
-                                  <strong>{ticket.editor.fullName}</strong>
+                                  <strong className="table-text-white">{ticket.editor.fullName}</strong>
                                   <br />
-                                  <small className="has-text-grey-light">
+                                  <small className="small-text-stroke">
                                     {ticket.editor.email}
                                   </small>
                                 </div>
                               ) : (
-                                <span className="has-text-grey-light">Unassigned</span>
+                                <span className="small-text-stroke">Unassigned</span>
                               )}
                             </td>
                             <td>
@@ -547,7 +547,7 @@ const ProjectsList = () => {
                                 {ticket.priority}
                               </span>
                             </td>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               <strong>${ticket.budget?.toLocaleString()}</strong>
                             </td>
                             <td>
@@ -560,20 +560,22 @@ const ProjectsList = () => {
                                 {ticket.projectStatus.replace('_', ' ')}
                               </span>
                             </td>
-                            <td className="text-glass">
-                              <small>
+                            <td className="table-text-white">
+                              <small className="small-text-stroke">
                                 {new Date(ticket.createdAt).toLocaleDateString()}
                               </small>
                             </td>
-                            <td className="text-glass">
+                            <td className="table-text-white">
                               {ticket.deadline ? (
                                 <small className={
-                                  new Date(ticket.deadline) < new Date() ? 'has-text-danger' : ''
+                                  new Date(ticket.deadline) < new Date() 
+                                    ? 'has-text-danger small-text-stroke' 
+                                    : 'small-text-stroke'
                                 }>
                                   {new Date(ticket.deadline).toLocaleDateString()}
                                 </small>
                               ) : (
-                                <span className="has-text-grey-light">No deadline</span>
+                                <span className="small-text-stroke">No deadline</span>
                               )}
                             </td>
                             <td>

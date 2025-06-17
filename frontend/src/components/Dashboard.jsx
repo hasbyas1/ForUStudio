@@ -232,6 +232,7 @@ const Dashboard = () => {
                       </Link>
                     </div>
                   )}
+                  {(user?.role?.roleName === 'admin') && (
                   <div className="column">
                     <Link to="/users" className="button is-primary is-fullwidth">
                       <span className="icon">
@@ -240,6 +241,7 @@ const Dashboard = () => {
                       <span>Manage Users</span>
                     </Link>
                   </div>
+                  )}
                   {(user?.role?.roleName === 'admin') && (
                     <div className="column">
                       <Link to="/roles" className="button is-warning is-fullwidth">

@@ -391,7 +391,7 @@ const Navbar = () => {
                 {/* Menu Items */}
                 <div style={{ padding: '0.5rem 0' }}>
                   <Link
-                    to="/profile"
+                    to={`/users/edit/${user?.userId}`}  // ← Changed from /profile to actual edit user route
                     className="custom-dropdown-item"
                     onClick={() => {
                       setUserDropdownOpen(false);
@@ -412,7 +412,7 @@ const Navbar = () => {
                     <span className="icon">
                       <i className="fas fa-user-cog"></i>
                     </span>
-                    <span>Profile Settings</span>
+                    <span>Edit Profile</span>
                   </Link>
 
                   <Link

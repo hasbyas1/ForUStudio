@@ -527,6 +527,7 @@ const ProjectsEdit = () => {
                             <div className="control">
                               <textarea
                                 className="textarea"
+                                style={{color:"white"}}
                                 name="description"
                                 value={formData.description}
                                 onChange={handleInputChange}
@@ -601,7 +602,7 @@ const ProjectsEdit = () => {
                             ) : originalTicket.ticketStatus === 'OPEN' ? (
                               <span className="has-text-success">✅ You can edit all fields and delete this ticket</span>
                             ) : originalTicket.projectStatus === 'REVIEW' && originalTicket.ticketStatus === 'IN_PROGRESS' ? (
-                              <span className="has-text-info">✅ You can mark this ticket as RESOLVED if you're satisfied</span>
+                              <span style={{color:"darkcyan"}}>✅ You can mark this ticket as RESOLVED if you're satisfied</span>
                             ) : (
                               <span className="has-text-warning">🚫 You cannot edit any fields in current state</span>
                             )}
