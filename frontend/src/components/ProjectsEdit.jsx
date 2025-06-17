@@ -95,24 +95,31 @@ const ProjectsEdit = () => {
         throw new Error('Budget must be greater than 0');
       }
 
-      // Check business rules for client
+      const token = localStorage.getItem('token');
+      
+      // Prepare update data based on what client can actually change
+      let updateData = {};
+      
       if (user?.role?.roleName === 'client') {
-        if (formData.ticketStatus === 'OPEN' && originalTicket.projectStatus === 'IN_PROGRESS') {
-          throw new Error('Cannot change ticket status to OPEN when project is in progress');
+        // If ticket status is OPEN, client can edit basic fields
+        if (originalTicket.ticketStatus === 'OPEN') {
+          updateData = {
+            subject: formData.subject,
+            budget: parseFloat(formData.budget),
+            description: formData.description,
+            priority: formData.priority,
+            projectTitle: formData.projectTitle,
+            deadline: formData.deadline || null
+          };
+        }
+        
+        // If project is in REVIEW and ticket is IN_PROGRESS, client can change ticket status to RESOLVED
+        if (canChangeTicketStatus() && formData.ticketStatus !== originalTicket.ticketStatus) {
+          updateData.ticketStatus = formData.ticketStatus;
         }
       }
 
-      const token = localStorage.getItem('token');
-      const updateData = {
-        ...formData,
-        budget: parseFloat(formData.budget),
-        deadline: formData.deadline || null
-      };
-
-      // Set resolvedAt if changing to RESOLVED
-      if (formData.ticketStatus === 'RESOLVED' && originalTicket.ticketStatus !== 'RESOLVED') {
-        updateData.resolvedAt = new Date().toISOString();
-      }
+      console.log('Sending update data:', updateData);
 
       const response = await fetch(`http://localhost:5000/project-tickets/${id}`, {
         method: 'PATCH',
@@ -128,6 +135,9 @@ const ProjectsEdit = () => {
         throw new Error(errorData.message || 'Failed to update project ticket');
       }
 
+      const result = await response.json();
+      console.log('Update successful:', result);
+
       // Success - redirect to projects list
       navigate('/projects');
     } catch (error) {
@@ -141,22 +151,66 @@ const ProjectsEdit = () => {
   // Check permissions
   const canEdit = () => {
     if (!originalTicket) return false;
+    
+    // Nobody can edit if ticket is in final state
+    const isFinalState = originalTicket.projectStatus === 'COMPLETED' || originalTicket.ticketStatus === 'CLOSED';
+    if (isFinalState) return false;
+    
     if (user?.role?.roleName === 'admin') return true;
-    if (user?.role?.roleName === 'client' && originalTicket.clientId === user.userId) return true;
+    
+    if (user?.role?.roleName === 'client' && originalTicket.clientId === user.userId) {
+      // Client can edit when ticket is OPEN or when project is REVIEW (but only ticket status)
+      return originalTicket.ticketStatus === 'OPEN' || 
+             (originalTicket.projectStatus === 'REVIEW');
+    }
+    
     return false;
   };
 
   const getAvailableTicketStatuses = () => {
+    if (!originalTicket) return [];
+    
     if (user?.role?.roleName === 'client') {
-      // Client can change to any status except when project is IN_PROGRESS and trying to set OPEN
-      if (originalTicket?.projectStatus === 'IN_PROGRESS') {
-        return ['IN_PROGRESS', 'RESOLVED', 'CLOSED'].filter(status => 
-          status !== 'OPEN'
-        );
+      // Client can only change to RESOLVED when project is in REVIEW and ticket is IN_PROGRESS
+      if (originalTicket.projectStatus === 'REVIEW' && originalTicket.ticketStatus === 'IN_PROGRESS') {
+        return ['IN_PROGRESS', 'RESOLVED'];
       }
-      return ['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'];
+      // Otherwise, client cannot change ticket status
+      return [originalTicket.ticketStatus];
     }
-    return ['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED'];
+    
+    return [originalTicket.ticketStatus]; // Default: cannot change
+  };
+
+  const getEditableFields = () => {
+    if (!originalTicket) return [];
+    
+    if (user?.role?.roleName === 'client') {
+      // Client can edit basic fields ONLY when ticket status is OPEN
+      if (originalTicket.ticketStatus === 'OPEN') {
+        return ['subject', 'budget', 'description', 'priority', 'projectTitle', 'deadline'];
+      }
+      // When ticket status is not OPEN, client can only change ticket status (and only to RESOLVED when in REVIEW)
+      return [];
+    }
+    
+    return [];
+  };
+
+  const isFieldEditable = (fieldName) => {
+    const editableFields = getEditableFields();
+    return editableFields.includes(fieldName);
+  };
+
+  const canChangeTicketStatus = () => {
+    if (!originalTicket) return false;
+    
+    if (user?.role?.roleName === 'client') {
+      // Client can change ticket status to RESOLVED when project is REVIEW and ticket is IN_PROGRESS
+      return originalTicket.projectStatus === 'REVIEW' && originalTicket.ticketStatus === 'IN_PROGRESS';
+    }
+    
+    return false;
   };
 
   if (isLoading) {
@@ -330,6 +384,7 @@ const ProjectsEdit = () => {
                                 value={formData.projectTitle}
                                 onChange={handleInputChange}
                                 placeholder="Enter project title"
+                                disabled={!isFieldEditable('projectTitle')}
                                 required
                               />
                               <span className="icon is-small is-left">
@@ -353,6 +408,7 @@ const ProjectsEdit = () => {
                                 value={formData.subject}
                                 onChange={handleInputChange}
                                 placeholder="Brief description of the project"
+                                disabled={!isFieldEditable('subject')}
                                 required
                               />
                               <span className="icon is-small is-left">
@@ -378,6 +434,7 @@ const ProjectsEdit = () => {
                                 placeholder="0.00"
                                 min="0"
                                 step="0.01"
+                                disabled={!isFieldEditable('budget')}
                                 required
                               />
                               <span className="icon is-small is-left">
@@ -396,6 +453,7 @@ const ProjectsEdit = () => {
                                   name="priority"
                                   value={formData.priority}
                                   onChange={handleInputChange}
+                                  disabled={!isFieldEditable('priority')}
                                 >
                                   <option value="LOW">Low</option>
                                   <option value="MEDIUM">Medium</option>
@@ -419,6 +477,7 @@ const ProjectsEdit = () => {
                                   name="ticketStatus"
                                   value={formData.ticketStatus}
                                   onChange={handleInputChange}
+                                  disabled={!canChangeTicketStatus()}
                                 >
                                   {getAvailableTicketStatuses().map(status => (
                                     <option key={status} value={status}>
@@ -431,6 +490,11 @@ const ProjectsEdit = () => {
                                 <i className="fas fa-flag"></i>
                               </span>
                             </div>
+                            {!canChangeTicketStatus() && (
+                              <p className="help text-glass">
+                                Ticket status cannot be changed in current state
+                              </p>
+                            )}
                           </div>
                         </div>
 
@@ -445,6 +509,7 @@ const ProjectsEdit = () => {
                                 name="deadline"
                                 value={formData.deadline}
                                 onChange={handleInputChange}
+                                disabled={!isFieldEditable('deadline')}
                               />
                               <span className="icon is-small is-left">
                                 <i className="fas fa-calendar-alt"></i>
@@ -467,6 +532,7 @@ const ProjectsEdit = () => {
                                 onChange={handleInputChange}
                                 placeholder="Detailed description of your project requirements..."
                                 rows="6"
+                                disabled={!isFieldEditable('description')}
                                 required
                               ></textarea>
                             </div>
@@ -512,15 +578,35 @@ const ProjectsEdit = () => {
                     <div className="bg-glass mt-5" style={{ padding: '1.5rem', borderRadius: '15px' }}>
                       <h4 className="title is-6 text-glass">
                         <i className="fas fa-info-circle mr-2"></i>
-                        Important Notes
+                        Business Rules
                       </h4>
                       <div className="content text-glass">
                         <ul>
-                          <li>You can edit most fields while your ticket is in <strong>PENDING</strong> status</li>
-                          <li>Once an editor takes your project (<strong>IN_PROGRESS</strong>), you cannot change ticket status to <strong>OPEN</strong></li>
-                          <li>You can mark your ticket as <strong>RESOLVED</strong> when you're satisfied with the work</li>
-                          <li>Changing ticket status to <strong>RESOLVED</strong> will automatically set the resolved date</li>
+                          <li><strong>OPEN Status:</strong> You can edit all fields and delete the ticket</li>
+                          <li><strong>IN_PROGRESS:</strong> You CANNOT edit any fields (editor is working)</li>
+                          <li><strong>REVIEW Status:</strong> You can ONLY mark ticket as <strong>RESOLVED</strong> if satisfied</li>
+                          <li><strong>COMPLETED/CLOSED:</strong> Ticket is final and cannot be modified</li>
                         </ul>
+                        
+                        {originalTicket && (
+                          <div className="notification is-info is-light mt-3">
+                            <strong>Current State:</strong>
+                            <br />
+                            Ticket Status: <span className="tag is-info">{originalTicket.ticketStatus}</span>
+                            <br />
+                            Project Status: <span className="tag is-info">{originalTicket.projectStatus}</span>
+                            <br />
+                            {originalTicket.projectStatus === 'COMPLETED' || originalTicket.ticketStatus === 'CLOSED' ? (
+                              <span className="has-text-danger">🔒 This ticket is in final state and cannot be modified</span>
+                            ) : originalTicket.ticketStatus === 'OPEN' ? (
+                              <span className="has-text-success">✅ You can edit all fields and delete this ticket</span>
+                            ) : originalTicket.projectStatus === 'REVIEW' && originalTicket.ticketStatus === 'IN_PROGRESS' ? (
+                              <span className="has-text-info">✅ You can mark this ticket as RESOLVED if you're satisfied</span>
+                            ) : (
+                              <span className="has-text-warning">🚫 You cannot edit any fields in current state</span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}

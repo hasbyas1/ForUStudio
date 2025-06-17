@@ -44,6 +44,8 @@ const ProjectsList = () => {
 
   const handleStatusUpdate = async (ticketId, updates) => {
     try {
+      console.log('Updating ticket:', ticketId, 'with:', updates);
+      
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:5000/project-tickets/${ticketId}`, {
         method: 'PATCH',
@@ -54,9 +56,11 @@ const ProjectsList = () => {
         body: JSON.stringify(updates)
       });
 
+      const result = await response.json();
+      console.log('Update response:', result);
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update ticket');
+        throw new Error(result.message || 'Failed to update ticket');
       }
 
       // Refresh the tickets list
@@ -136,35 +140,54 @@ const ProjectsList = () => {
     return false;
   };
 
-  const canDelete = () => {
-    return user?.role?.roleName === 'admin';
-  };
-
   const renderActionButtons = (ticket) => {
     const isClient = user?.role?.roleName === 'client';
     const isEditor = user?.role?.roleName === 'editor' || user?.role?.roleName === 'admin';
+    const isAdmin = user?.role?.roleName === 'admin';
     const isOwner = ticket.clientId === user?.userId;
+    
+    // Check if ticket is in final state
+    const isFinalState = ticket.projectStatus === 'COMPLETED' || ticket.ticketStatus === 'CLOSED';
+    
+    // Helper functions for permissions
+    const canClientEdit = () => {
+      if (!isClient || !isOwner || isFinalState) return false;
+      return ticket.ticketStatus === 'OPEN' || 
+             (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus !== 'CLOSED');
+    };
+    
+    const canClientDelete = () => {
+      return isClient && isOwner && ticket.ticketStatus === 'OPEN';
+    };
+    
+    const canEditorEdit = () => {
+      return isEditor && !isFinalState;
+    };
 
     return (
       <div className="field is-grouped">
         {/* Client Actions */}
         {isClient && isOwner && (
           <>
-            <div className="control">
-              <Link 
-                to={`/projects/edit/${ticket.projectTicketId}`} 
-                className="button is-small is-info"
-              >
-                <span className="icon">
-                  <i className="fas fa-edit"></i>
-                </span>
-                <span>Edit</span>
-              </Link>
-            </div>
-            {ticket.ticketStatus !== 'RESOLVED' && ticket.projectStatus !== 'IN_PROGRESS' && (
+            {canClientEdit() && (
+              <div className="control">
+                <Link 
+                  to={`/projects/edit/${ticket.projectTicketId}`} 
+                  className="button is-small is-info"
+                >
+                  <span className="icon">
+                    <i className="fas fa-edit"></i>
+                  </span>
+                  <span>Edit</span>
+                </Link>
+              </div>
+            )}
+            
+            {/* Client can mark as RESOLVED only when project is in REVIEW */}
+            {ticket.projectStatus === 'REVIEW' && ticket.ticketStatus === 'IN_PROGRESS' && (
               <div className="control">
                 <button 
-                  className="button is-small is-warning"
+                  className="button is-small is-success"
                   onClick={() => handleStatusUpdate(ticket.projectTicketId, { ticketStatus: 'RESOLVED' })}
                 >
                   <span className="icon">
@@ -174,12 +197,28 @@ const ProjectsList = () => {
                 </button>
               </div>
             )}
+            
+            {/* Client can delete only when ticket is OPEN */}
+            {canClientDelete() && (
+              <div className="control">
+                <button 
+                  className="button is-small is-danger"
+                  onClick={() => handleDelete(ticket.projectTicketId)}
+                >
+                  <span className="icon">
+                    <i className="fas fa-trash"></i>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            )}
           </>
         )}
 
         {/* Editor Actions */}
-        {isEditor && (
+        {canEditorEdit() && (
           <>
+            {/* Editor can take project when PENDING */}
             {ticket.projectStatus === 'PENDING' && (
               <div className="control">
                 <button 
@@ -194,27 +233,27 @@ const ProjectsList = () => {
               </div>
             )}
             
+            {/* Editor can send to review when IN_PROGRESS */}
             {ticket.projectStatus === 'IN_PROGRESS' && (
-              <>
-                <div className="control">
-                  <button 
-                    className="button is-small is-link"
-                    onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'REVIEW' })}
-                  >
-                    <span className="icon">
-                      <i className="fas fa-search"></i>
-                    </span>
-                    <span>Send to Review</span>
-                  </button>
-                </div>
-              </>
+              <div className="control">
+                <button 
+                  className="button is-small is-link"
+                  onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'REVIEW' })}
+                >
+                  <span className="icon">
+                    <i className="fas fa-search"></i>
+                  </span>
+                  <span>Send to Review</span>
+                </button>
+              </div>
             )}
 
+            {/* Editor actions when project is in REVIEW */}
             {ticket.projectStatus === 'REVIEW' && (
               <>
                 <div className="control">
                   <button 
-                    className="button is-small is-info"
+                    className="button is-small is-warning"
                     onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'IN_PROGRESS' })}
                   >
                     <span className="icon">
@@ -223,24 +262,28 @@ const ProjectsList = () => {
                     <span>Back to Progress</span>
                   </button>
                 </div>
-                <div className="control">
-                  <button 
-                    className="button is-small is-success"
-                    onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'COMPLETED' })}
-                  >
-                    <span className="icon">
-                      <i className="fas fa-check-circle"></i>
-                    </span>
-                    <span>Complete</span>
-                  </button>
-                </div>
+                
+                {/* Editor can complete only if ticket is RESOLVED */}
+                {ticket.ticketStatus === 'RESOLVED' && (
+                  <div className="control">
+                    <button 
+                      className="button is-small is-success"
+                      onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'COMPLETED' })}
+                    >
+                      <span className="icon">
+                        <i className="fas fa-check-circle"></i>
+                      </span>
+                      <span>Complete Project</span>
+                    </button>
+                  </div>
+                )}
               </>
             )}
           </>
         )}
 
-        {/* Admin Delete Action */}
-        {canDelete() && (
+        {/* Admin can always delete */}
+        {isAdmin && (
           <div className="control">
             <button 
               className="button is-small is-danger"
@@ -251,6 +294,18 @@ const ProjectsList = () => {
               </span>
               <span>Delete</span>
             </button>
+          </div>
+        )}
+
+        {/* Show final state message */}
+        {isFinalState && (
+          <div className="control">
+            <span className="tag is-dark">
+              <span className="icon">
+                <i className="fas fa-lock"></i>
+              </span>
+              <span>Final State</span>
+            </span>
           </div>
         )}
       </div>

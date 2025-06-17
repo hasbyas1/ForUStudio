@@ -15,7 +15,7 @@ const ProjectTickets = db.define(
       allowNull: false,
     },
     clientId: {
-      type: DataTypes.INTEGER, // ← Changed from STRING to INTEGER
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: Users,
@@ -23,7 +23,7 @@ const ProjectTickets = db.define(
       }
     },
     editorId: {
-      type: DataTypes.INTEGER, // ← Changed from STRING to INTEGER
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: Users,
@@ -86,32 +86,28 @@ const ProjectTickets = db.define(
   },
   {
     freezeTableName: true,
-    timestamps: true, // This will handle createdAt and updatedAt automatically
+    timestamps: true,
     hooks: {
       beforeUpdate: async (ticket, options) => {
-        // Auto update ticketStatus when projectStatus changes
-        if (ticket.changed('projectStatus')) {
-          if (ticket.projectStatus === 'PENDING' && ticket.ticketStatus !== 'OPEN') {
-            ticket.ticketStatus = 'OPEN';
-          } else if (ticket.projectStatus === 'IN_PROGRESS' && ticket.ticketStatus !== 'IN_PROGRESS') {
-            ticket.ticketStatus = 'IN_PROGRESS';
-          } else if (ticket.projectStatus === 'COMPLETED') {
-            ticket.ticketStatus = 'CLOSED';
-          }
-        }
-
-        // Auto update projectStatus when ticketStatus changes to OPEN
-        if (ticket.changed('ticketStatus') && ticket.ticketStatus === 'OPEN') {
-          ticket.projectStatus = 'PENDING';
-        }
-
-        // Set takenAt when projectStatus changes to IN_PROGRESS
-        if (ticket.changed('projectStatus') && ticket.projectStatus === 'IN_PROGRESS' && !ticket.takenAt) {
+        const oldValues = ticket._previousDataValues;
+        
+        // Auto set takenAt when projectStatus changes to IN_PROGRESS for the first time
+        if (ticket.changed('projectStatus') && ticket.projectStatus === 'IN_PROGRESS' && !oldValues.takenAt) {
           ticket.takenAt = new Date();
         }
 
+        // Auto update ticketStatus when projectStatus changes to IN_PROGRESS
+        if (ticket.changed('projectStatus') && ticket.projectStatus === 'IN_PROGRESS') {
+          ticket.ticketStatus = 'IN_PROGRESS';
+        }
+
+        // Auto update ticketStatus when projectStatus changes to COMPLETED
+        if (ticket.changed('projectStatus') && ticket.projectStatus === 'COMPLETED') {
+          ticket.ticketStatus = 'CLOSED';
+        }
+
         // Set resolvedAt when ticketStatus changes to RESOLVED
-        if (ticket.changed('ticketStatus') && ticket.ticketStatus === 'RESOLVED' && !ticket.resolvedAt) {
+        if (ticket.changed('ticketStatus') && ticket.ticketStatus === 'RESOLVED') {
           ticket.resolvedAt = new Date();
         }
       }
