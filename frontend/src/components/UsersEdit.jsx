@@ -139,12 +139,13 @@ const UsersEdit = () => {
           <div className="data-shape-3"></div>
           <div className="data-shape-4"></div>
 
+
           <div className="columns mt-5 is-centered">
             <div className="column is-half">
-              <div className="notification is-white has-text-centered">
+              <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                  <i className="fas fa-spinner fa-spin fa-lg"></i>
-                  <p className="title is-5">Loading user data...</p>
+                  <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
+                  <p className="title is-5 text-glass">Loading user data...</p>
                 </div>
               </div>
             </div>

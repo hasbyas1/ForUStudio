@@ -62,10 +62,10 @@ const UsersList = () => {
 
           <div className="columns mt-5 is-centered">
             <div className="column is-half">
-              <div className="notification is-white has-text-centered">
+              <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                  <i className="fas fa-spinner fa-spin fa-lg"></i>
-                  <p className="title is-5">Loading users...</p>
+                  <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
+                  <p className="title is-5 text-glass">Loading users...</p>
                 </div>
               </div>
             </div>

@@ -67,10 +67,10 @@ const RolesList = () => {
 
           <div className="columns mt-5 is-centered">
             <div className="column is-half">
-              <div className="notification is-white has-text-centered">
+              <div className="bg-glass has-text-centered" style={{ padding: '2rem', margin: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                  <i className="fas fa-spinner fa-spin fa-lg"></i>
-                  <p className="title is-5">Loading roles...</p>
+                  <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
+                  <p className="title is-5 text-glass">Loading roles...</p>
                 </div>
               </div>
             </div>
@@ -146,7 +146,7 @@ const RolesList = () => {
                 <div style={{ overflowX: "auto" }}>
                   <table className="table is-fullwidth is-hoverable" style={{ backgroundColor: 'transparent' }}>
                     <thead>
-                      <tr>
+                      <tr style={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}>
                         <th className="text-glass">No</th>
                         <th className="text-glass">Role ID</th>
                         <th className="text-glass">Role Name</th>
@@ -157,7 +157,16 @@ const RolesList = () => {
                     <tbody>
                       {roles.length > 0 ? (
                         roles.map((role, index) => (
-                          <tr key={role.roleId} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                          <tr key={role.roleId} style={{
+                            backgroundColor: 'rgba(15, 23, 42, 0.3)',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(30, 41, 59, 0.6)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.3)';
+                          }}>
                             <td className="text-glass">{index + 1}</td>
                             <td>
                               <span className="tag is-primary">{role.roleId}</span>
