@@ -67,9 +67,9 @@ const RolesList = () => {
 
           <div className="columns mt-5 is-centered">
             <div className="column is-half">
-              <div className="notification is-text has-text-centered">
+              <div className="notification is-white has-text-centered">
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                  <i className="fas fa-spinner fa-spin fa-lg text-glass"></i>
+                  <i className="fas fa-spinner fa-spin fa-lg"></i>
                   <p className="title is-5">Loading roles...</p>
                 </div>
               </div>
