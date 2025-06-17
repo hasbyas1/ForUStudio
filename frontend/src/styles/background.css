@@ -206,7 +206,7 @@ html, body {
 }
 
 .radius-shape-2 {
-  bottom: -60px;
+  bottom: 40px;
   right: -40px;
   width: 340px;
   height: 280px;
@@ -216,7 +216,7 @@ html, body {
 }
 
 .radius-shape-3 {
-  bottom: 103px;
+  bottom: 203px;
   right: -180px;
   width: 330px;
   height: 300px;
@@ -226,7 +226,7 @@ html, body {
 }
 
 .radius-shape-4 {
-  bottom: -118px;
+  bottom: -18px;
   right: -255px;
   width: 305px;
   height: 328px;

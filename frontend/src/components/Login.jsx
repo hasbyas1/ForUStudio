@@ -209,8 +209,18 @@ const Login = () => {
                 </div>
               </div>
 
+              {/* Divider */}
+              <hr />
+
+              {/* Quote */}
+                <div className="has-text-centered">
+                  <strong style={{color:"black"}}>
+                    ForUStudio | It was specially designed and made for U!{" "}
+                  </strong>
+                </div>
+
               {/* Demo Credentials */}
-              <div className="notification is-info is-light mt-4">
+              <div className="bg-glass notification is-info is-light mt-4">
                 <p className="has-text-weight-semibold">Demo Credentials:</p>
                 <div className="content">
                   <p><strong>Admin:</strong></p>

@@ -224,8 +224,8 @@ const UsersList = () => {
                               </span>
                             </td>
                             <td className="text-glass">
-                              {user.gender === 'laki-laki' ? '👨 Not Set' : 
-                              user.gender === 'perempuan' ? '👩 Not Set' : 
+                              {user.gender === 'laki-laki' ? '👨 Laki-laki' : 
+                              user.gender === 'perempuan' ? '👩 Perempuan' : 
                               '❓ Not Set'}
                             </td>
                             <td className="text-glass">{user.phone || '-'}</td>

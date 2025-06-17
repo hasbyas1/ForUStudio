@@ -18,6 +18,16 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
           justifyContent: 'center'
         }}
       >
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+
         <div className="box has-text-centered">
           <div className="is-size-1 mb-4">
             <i className="fas fa-spinner fa-spin has-text-primary"></i>
@@ -46,6 +56,16 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
           justifyContent: 'center'
         }}
       >
+        <div className="radius-shape-1"></div>
+        <div className="radius-shape-2"></div>
+        <div className="radius-shape-3"></div>
+        <div className="radius-shape-4"></div>
+        <div className="radius-shape-5"></div>
+        <div className="data-shape-1"></div>
+        <div className="data-shape-2"></div>
+        <div className="data-shape-3"></div>
+        <div className="data-shape-4"></div>
+
         <div className="box has-text-centered">
           <div className="is-size-1 mb-4 has-text-danger">
             <i className="fas fa-exclamation-triangle"></i>
