@@ -70,7 +70,12 @@ File: frontend/src/styles/glass-theme.css
 
 /* ===== GRADIENT BACKGROUNDS ===== */
 .gradient-background {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 96px 48px 48px 48px !important;
+  background: hsla(203, 100%, 36%, 1);
+  background: linear-gradient(-45deg, hsla(203, 100%, 36%, 1) 6%, hsla(123, 77%, 66%, 1) 95%);
+  background: -moz-linear-gradient(-45deg, hsla(203, 100%, 36%, 1) 6%, hsla(123, 77%, 66%, 1) 95%);
+  background: -webkit-linear-gradient(-45deg, hsla(203, 100%, 36%, 1) 6%, hsla(123, 77%, 66%, 1) 95%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#0071B8", endColorstr="#67EB6E", GradientType=1 );
   min-height: 100vh;
   position: relative;
   overflow: hidden;

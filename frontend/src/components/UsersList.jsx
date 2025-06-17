@@ -28,6 +28,7 @@ const UsersList = () => {
   }
 
   const deleteUser = async (id, userName) => {
+    
     if (window.confirm(`Are you sure you want to delete user "${userName}"?`)) {
       try {
         await axios.delete(`http://localhost:5000/users/${id}`);

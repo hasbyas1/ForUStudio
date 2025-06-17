@@ -318,27 +318,6 @@ const Register = () => {
                         <p className="help">Optional, 10-13 digits</p>
                       </div>
                     </div>
-
-                    {/* Role Field */}
-                    <div className="column is-12">
-                      <div className="field">
-                        <label className="label">Account Type</label>
-                        <div className="control has-icons-left">
-                          <div className="select is-fullwidth">
-                            <select name="roleId" value={formData.roleId} onChange={handleChange}>
-                              {roles.map((role) => (
-                                <option key={role.roleId} value={role.roleId}>
-                                  {role.roleName.charAt(0).toUpperCase() + role.roleName.slice(1)} - {role.description}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <span className="icon is-small is-left">
-                            <i className="fas fa-user-tag"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Terms and Conditions */}

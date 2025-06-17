@@ -19,6 +19,7 @@ const Users = db.define(
       references: {
         model: "roles", // nama table roles
         key: "roleId", // primary key di table roles
+      defaultValue: 3,
       },
     },
 

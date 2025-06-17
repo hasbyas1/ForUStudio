@@ -174,28 +174,28 @@ const Navbar = () => {
             <span>Projects</span>
           </Link>
 
-          {/* Users Link */}
-          <Link 
-            className={`navbar-item ${isCurrentPath('/users') ? 'is-active' : ''}`} 
-            to="/users"
-            onClick={handleMobileMenuClick}
-            style={{ 
-              backgroundColor: 'transparent', 
-              background: 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              height: '100%'
-            }}
-          >
-            <span className="icon">
-              <i className="fas fa-users"></i>
-            </span>
-            <span>Users</span>
-          </Link>
 
           {/* Admin-only Links */}
           {isAdmin() && (
             <>
+              {/* Users Link */}
+              <Link 
+                className={`navbar-item ${isCurrentPath('/users') ? 'is-active' : ''}`} 
+                to="/users"
+                onClick={handleMobileMenuClick}
+                style={{ 
+                  backgroundColor: 'transparent', 
+                  background: 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '100%'
+                }}
+              >
+                <span className="icon">
+                  <i className="fas fa-users"></i>
+                </span>
+                <span>Users</span>
+              </Link>
               <Link 
                 className={`navbar-item ${isCurrentPath('/roles') ? 'is-active' : ''}`} 
                 to="/roles"

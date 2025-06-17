@@ -18,7 +18,7 @@ const Login = () => {
   // Redirect jika sudah login
   useEffect(() => {
     if (isAuthenticated()) {
-      navigate("/users", { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
