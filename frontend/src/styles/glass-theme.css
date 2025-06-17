@@ -1,0 +1,346 @@
+/* 
+===================================
+🔮 GLASS THEME CSS - FORUSSTUDIO
+===================================
+File: frontend/src/styles/glass-theme.css
+*/
+
+/* ===== MAIN GLASS EFFECTS ===== */
+.bg-glass {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: saturate(200%) blur(25px);
+  -webkit-backdrop-filter: saturate(200%) blur(25px);
+  transition: all 0.3s ease-in-out;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bg-glass:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ===== GLASS VARIANTS ===== */
+.bg-glass-light {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bg-glass-dark {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.bg-glass-subtle {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== TEXT GLASS EFFECTS ===== */
+.text-glass {
+  color: hsl(218, 81%, 95%) !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.text-glass-subtitle {
+  color: hsl(218, 81%, 75%) !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.text-glass-muted {
+  color: hsl(218, 81%, 85%) !important;
+  opacity: 0.7;
+}
+
+.text-glass-dark {
+  color: rgba(0, 0, 0, 0.8) !important;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+/* ===== GRADIENT BACKGROUNDS ===== */
+.gradient-background {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-background-alt {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-background-blue {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-background-green {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== ANIMATED SHAPES ===== */
+[class^="radius-shape-"] {
+  transition: all 2s ease-in-out;
+  position: absolute;
+  overflow: hidden;
+  border-radius: 20% 20% 20% 20% / 20% 20% 20% 20%;
+  z-index: 1;
+}
+
+.radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -50px;
+  background: radial-gradient(#006b52, #25fdb5);
+  transform-origin: center;
+  animation: floating-shape1 8s ease-in-out infinite;
+}
+
+.radius-shape-2 {
+  bottom: 40px;
+  right: -40px;
+  width: 340px;
+  height: 280px;
+  background: radial-gradient(#004333, #67fdb7);
+  transform-origin: center;
+  animation: floating-shape2 12s ease-in-out infinite;
+}
+
+.radius-shape-3 {
+  bottom: 203px;
+  right: -180px;
+  width: 330px;
+  height: 300px;
+  background: radial-gradient(#097188, #23ccb8);
+  transform-origin: center;
+  animation: floating-shape3 10s ease-in-out infinite;
+}
+
+.radius-shape-4 {
+  bottom: -18px;
+  right: -255px;
+  width: 305px;
+  height: 328px;
+  background: radial-gradient(#0a3b6b, #1080bc);
+  transform-origin: center;
+  animation: floating-shape4 14s ease-in-out infinite;
+}
+
+.radius-shape-5 {
+  bottom: 80px;
+  right: 1725px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(#002e6b, #1f80ff);
+  transform-origin: center;
+  animation: floating-shape5 9s ease-in-out infinite;
+}
+
+/* ===== DATA SHAPES ===== */
+[class^="data-shape-"] {
+  transition: all 0.12s cubic-bezier(0.57, 0.4, 0.55, 1.17);
+  position: absolute;
+  border-radius: 100% 100% 100% 100% / 80% 80% 80% 80%;
+  height: 140px;
+  width: 200px;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.data-shape-1 {
+  top: 525px;
+  left: 301.5px;
+  background: radial-gradient(#004233, #00b68c);
+  animation: gentle-float1 7s ease-in-out infinite;
+  z-index: 0;
+}
+
+.data-shape-2 {
+  top: 475px;
+  left: 301.5px;
+  background: radial-gradient(#006b52, #25fdb5);
+  animation: gentle-float2 9s ease-in-out infinite;
+}
+
+.data-shape-3 {
+  top: 425px;
+  left: 301.5px;
+  background: radial-gradient(#670000, #fd4525);
+  animation: gentle-float3 8s ease-in-out infinite;
+}
+
+.data-shape-4 {
+  top: 375px;
+  left: 301.5px;
+  background: radial-gradient(#006670, #00f2ff);
+  animation: gentle-float4 11s ease-in-out infinite;
+}
+
+/* ===== CONTENT WRAPPER ===== */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes floating-shape1 {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floating-shape2 {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(-20px, 5px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes floating-shape3 {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(-15px, -20px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes floating-shape4 {
+  0% { transform: translate(0px, 0px); }
+  50% { transform: translate(-28px, -28px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes floating-shape5 {
+  0% { transform: translate(0px); }
+  50% { transform: translate(-5px, -20px); }
+  100% { transform: translate(0px); }
+}
+
+@keyframes gentle-float1 {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  30% { transform: translate(-6px, -10px) rotate(1deg); }
+  70% { transform: translate(9px, -14px) rotate(-2deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes gentle-float2 {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  40% { transform: translate(8px, -12px) rotate(-1deg); }
+  80% { transform: translate(-5px, -8px) rotate(2deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes gentle-float3 {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  35% { transform: translate(-10px, -6px) rotate(1deg); }
+  75% { transform: translate(7px, -16px) rotate(-1deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes gentle-float4 {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  30% { transform: translate(12px, -8px) rotate(-2deg); }
+  70% { transform: translate(-8px, -12px) rotate(1deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .radius-shape-1 {
+    height: 150px;
+    width: 150px;
+  }
+  
+  .radius-shape-2 {
+    width: 250px;
+    height: 200px;
+  }
+  
+  .radius-shape-3 {
+    width: 230px;
+    height: 210px;
+  }
+  
+  .radius-shape-4 {
+    width: 220px;
+    height: 240px;
+  }
+  
+  .radius-shape-5 {
+    width: 200px;
+    height: 250px;
+  }
+  
+  [class^="data-shape-"] {
+    height: 100px;
+    width: 160px;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+.data-hover:hover {
+  transform: translateX(50px) translateY(-10px) rotate(5deg);
+  background: radial-gradient(#4a005c, #dd00ff);
+  opacity: 0.9;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.blur-background {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.no-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.glass-border {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-shadow {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-shadow-strong {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== FALLBACK FOR BROWSERS WITHOUT BACKDROP-FILTER ===== */
+@supports not (backdrop-filter: blur(1px)) {
+  .bg-glass {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  .bg-glass-dark {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+  }
+  
+  .bg-glass-light {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+  }
+  
+  .bg-glass-subtle {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+  }
+}

@@ -1,10 +1,7 @@
-
+// frontend/src/components/Navbar.jsx (Updated)
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import '../styles/navbar.css';
-
-const navbarTheme = 'theme-tinted-glass';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./src/contexts/AuthContext";
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
@@ -59,7 +56,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={`navbar navbar-forustudio ${navbarTheme} ${isScrolled ? 'scrolled' : ''}`}
+      className={`navbar is-fixed-top ${isScrolled ? 'scrolled' : ''}`}
       role="navigation" 
       aria-label="main navigation"
       style={{
