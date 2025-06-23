@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { useAuth } from '../contexts/AuthContext';
 import "../styles/glass-theme.css";
 
+
 const ProjectsList = () => {
   const [tickets, setTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -12,11 +13,12 @@ const ProjectsList = () => {
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [filterProjectStatus, setFilterProjectStatus] = useState("ALL");
   const { user } = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchProjectTickets();
   }, []);
-
+  
   const fetchProjectTickets = async () => {
     try {
       setIsLoading(true);
@@ -102,7 +104,16 @@ const ProjectsList = () => {
   const filteredTickets = tickets.filter(ticket => {
     const statusMatch = filterStatus === "ALL" || ticket.ticketStatus === filterStatus;
     const projectStatusMatch = filterProjectStatus === "ALL" || ticket.projectStatus === filterProjectStatus;
-    return statusMatch && projectStatusMatch;
+    
+    // Search functionality - mencari di project title, subject, client name
+    const searchMatch = searchTerm === "" || 
+      ticket.projectTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.client?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.editor?.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.projectTicketId.toString().includes(searchTerm);
+    
+    return statusMatch && projectStatusMatch && searchMatch;
   });
 
   const getStatusColor = (status) => {
@@ -397,6 +408,25 @@ const ProjectsList = () => {
                   {error}
                 </div>
               )}
+
+              {/* Search Box */}
+              <div className="column is-4">
+                <div className="field">
+                  <label className="label text-glass">Search Projects</label>
+                  <div className="control has-icons-left">
+                    <input
+                      className="input"
+                      type="text"
+                      placeholder="Search by title, subject, client name, or ID..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <span className="icon is-small is-left">
+                      <i className="fas fa-search"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
 
               {/* Filters */}
               <div className="bg-glass mb-5" style={{ padding: '1.5rem', borderRadius: '15px' }}>
