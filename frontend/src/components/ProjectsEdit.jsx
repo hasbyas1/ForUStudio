@@ -255,7 +255,7 @@ const ProjectsEdit = () => {
               <div className="container">
                 <div className="notification is-danger">
                   <h1 className="title">Access Denied</h1>
-                  <p>You don't have permission to edit this ticket.</p>
+                  <p>You can't edit this ticket while it's in progress or either you don't have permission to edit this ticket.</p>
                   <button className="button is-light mt-3" onClick={() => navigate('/projects')}>
                     Back to Projects
                   </button>

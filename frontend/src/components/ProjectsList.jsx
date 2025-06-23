@@ -109,21 +109,21 @@ const ProjectsList = () => {
     switch (status) {
       case 'PENDING': return 'is-warning';
       case 'IN_PROGRESS': return 'is-info';
-      case 'REVIEW': return 'is-primary';
-      case 'COMPLETED': return 'is-success';
-      case 'OPEN': return 'is-light';
-      case 'RESOLVED': return 'is-success';
-      case 'CLOSED': return 'is-dark';
+      case 'REVIEW': return 'is-link';
+      case 'COMPLETED': return 'is';
+      case 'OPEN': return 'is-success';
+      case 'RESOLVED': return 'has-background-primary-50 has-text-primary-50-invert';
+      case 'CLOSED': return 'is';
       default: return 'is-light';
     }
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'URGENT': return 'is-danger';
-      case 'HIGH': return 'is-warning';
-      case 'MEDIUM': return 'is-info';
-      case 'LOW': return 'is-light';
+      case 'URGENT': return 'is-dark';
+      case 'HIGH': return 'is-danger';
+      case 'MEDIUM': return 'is-warning';
+      case 'LOW': return 'is-success';
       default: return 'is-light';
     }
   };
@@ -470,9 +470,9 @@ const ProjectsList = () => {
                           <th className="text-glass">Budget</th>
                           <th className="text-glass">Ticket Status</th>
                           <th className="text-glass">Project Status</th>
-                          <th className="text-glass">Files</th>
                           <th className="text-glass">Created</th>
                           <th className="text-glass">Deadline</th>
+                          <th className="text-glass">Files</th>
                           <th className="text-glass">Actions</th>
                         </tr>
                       </thead>
@@ -515,18 +515,6 @@ const ProjectsList = () => {
                               </span>
                             </td>
                             <td className="text-glass">
-                              {ticket.projectFiles && ticket.projectFiles.length > 0 ? (
-                                <span className="tag is-info">
-                                  <span className="icon">
-                                    <i className="fas fa-paperclip"></i>
-                                  </span>
-                                  <span>{ticket.projectFiles.length}</span>
-                                </span>
-                              ) : (
-                                <span className="tag is-light">0</span>
-                              )}
-                            </td>
-                            <td className="text-glass">
                               {new Date(ticket.createdAt).toLocaleDateString()}
                             </td>
                             <td className="text-glass">
@@ -534,6 +522,23 @@ const ProjectsList = () => {
                                 new Date(ticket.deadline).toLocaleDateString() : 
                                 'No deadline'
                               }
+                            </td>
+                            <td className="text-glass">
+                              {ticket.projectFiles && ticket.projectFiles.length > 0 ? (
+                                <span className="tag is-link">
+                                  <span className="icon">
+                                    <i className="fas fa-paperclip"></i>
+                                  </span>
+                                  <span>{ticket.projectFiles.length}</span>
+                                </span>
+                              ) : (
+                                <span className="tag is">
+                                  <span className="icon">
+                                    <i className="fas fa-paperclip"></i>
+                                  </span>
+                                  <span>0</span>
+                                </span>
+                              )}
                             </td>
                             <td>
                               {renderActionButtons(ticket)}
