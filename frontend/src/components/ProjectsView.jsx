@@ -51,8 +51,8 @@ const ProjectsView = () => {
     switch (status) {
       case 'OPEN': return 'is-success';
       case 'IN_PROGRESS': return 'is-info';
-      case 'RESOLVED': return 'is-warning';
-      case 'CLOSED': return 'is-dark';
+      case 'RESOLVED': return 'has-background-primary-50 has-text-primary-50-invert';
+      case 'CLOSED': return 'is';
       default: return 'is-light';
     }
   };
@@ -62,7 +62,7 @@ const ProjectsView = () => {
       case 'PENDING': return 'is-warning';
       case 'IN_PROGRESS': return 'is-info';
       case 'REVIEW': return 'is-link';
-      case 'COMPLETED': return 'is-success';
+      case 'COMPLETED': return 'is';
       default: return 'is-light';
     }
   };

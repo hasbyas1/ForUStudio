@@ -1,4 +1,4 @@
-// frontend/src/components/ProjectsEdit.jsx
+// frontend/src/components/ProjectsEdit.jsx - COMPLETE VERSION
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from "./Navbar";
@@ -235,7 +235,7 @@ const ProjectsEdit = () => {
                   <div className="is-size-1 mb-4">
                     <i className="fas fa-spinner fa-spin has-text-primary"></i>
                   </div>
-                  <p className="title is-5 text-glass">Loading Ticket...</p>
+                  <p className="title is-5 text-glass">Loading Project...</p>
                 </div>
               </div>
             </div>
@@ -250,15 +250,40 @@ const ProjectsEdit = () => {
       <>
         <Navbar />
         <div className="section gradient-background" style={{ minHeight: '100vh' }}>
+          <div className="radius-shape-1"></div>
+          <div className="radius-shape-2"></div>
+          <div className="radius-shape-3"></div>
+          <div className="radius-shape-4"></div>
+          <div className="radius-shape-5"></div>
+          <div className="data-shape-1"></div>
+          <div className="data-shape-2"></div>
+          <div className="data-shape-3"></div>
+          <div className="data-shape-4"></div>
+
           <div className="content-wrapper">
             <div className="section">
               <div className="container">
-                <div className="notification is-danger">
-                  <h1 className="title">Access Denied</h1>
-                  <p>You can't edit this ticket while it's in progress or either you don't have permission to edit this ticket.</p>
-                  <button className="button is-light mt-3" onClick={() => navigate('/projects')}>
-                    Back to Projects
-                  </button>
+                <div className="columns is-centered">
+                  <div className="column is-6">
+                    <div className="bg-glass has-text-centered" style={{ padding: '3rem', borderRadius: '15px' }}>
+                      <div className="is-size-1 mb-4 has-text-warning">
+                        <i className="fas fa-lock"></i>
+                      </div>
+                      <h2 className="title is-4 text-glass">Cannot Edit This Ticket</h2>
+                      <p className="text-glass mb-4">
+                        This ticket cannot be edited in its current state or you don't have permission to edit it.
+                      </p>
+                      <button 
+                        className="button is-primary"
+                        onClick={() => navigate('/projects')}
+                      >
+                        <span className="icon">
+                          <i className="fas fa-arrow-left"></i>
+                        </span>
+                        <span>Back to Projects</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -293,7 +318,7 @@ const ProjectsEdit = () => {
                       <div className="level-item">
                         <h1 className="title text-glass">
                           <i className="fas fa-edit mr-3"></i>
-                          Edit Project Ticket #{id}
+                          Edit Project Ticket
                         </h1>
                       </div>
                     </div>
@@ -312,11 +337,12 @@ const ProjectsEdit = () => {
                     </div>
                   </div>
 
-                  {/* Error Message */}
                   {error && (
-                    <div className="notification is-danger mb-5">
-                      <button className="delete" onClick={() => setError("")}></button>
-                      <i className="fas fa-exclamation-triangle mr-2"></i>
+                    <div className="notification is-danger">
+                      <button 
+                        className="delete" 
+                        onClick={() => setError("")}
+                      ></button>
                       {error}
                     </div>
                   )}
@@ -324,18 +350,15 @@ const ProjectsEdit = () => {
                   {/* Current Status Info */}
                   {originalTicket && (
                     <div className="bg-glass mb-5" style={{ padding: '1.5rem', borderRadius: '15px' }}>
-                      <h4 className="title is-6 text-glass mb-3">
-                        <i className="fas fa-info-circle mr-2"></i>
-                        Current Status
-                      </h4>
+                      <h3 className="title is-6 text-glass mb-3">Current Status</h3>
                       <div className="columns">
                         <div className="column">
                           <p className="text-glass">
-                            <strong>Ticket Status:</strong> 
+                            <strong>Ticket Status:</strong>
                             <span className={`tag ml-2 ${
                               originalTicket.ticketStatus === 'OPEN' ? 'is-success' :
                               originalTicket.ticketStatus === 'IN_PROGRESS' ? 'is-info' :
-                              originalTicket.ticketStatus === 'RESOLVED' ? 'is-warning' :
+                              originalTicket.ticketStatus === 'RESOLVED' ? 'has-background-primary-50 has-text-primary-50-invert' :
                               'is-dark'
                             }`}>
                               {originalTicket.ticketStatus}
@@ -344,7 +367,7 @@ const ProjectsEdit = () => {
                         </div>
                         <div className="column">
                           <p className="text-glass">
-                            <strong>Project Status:</strong> 
+                            <strong>Project Status:</strong>
                             <span className={`tag ml-2 ${
                               originalTicket.projectStatus === 'PENDING' ? 'is-warning' :
                               originalTicket.projectStatus === 'IN_PROGRESS' ? 'is-info' :
@@ -510,8 +533,13 @@ const ProjectsEdit = () => {
                                 value={formData.deadline}
                                 onChange={handleInputChange}
                                 disabled={!isFieldEditable('deadline')}
+                                style={{
+                                  color: 'white',
+                                  backgroundColor: '#14161a', // Background hitam seperti input lainnya
+                                  borderColor: '#dbdbdb'
+                                }}
                               />
-                              <span className="icon is-small is-left">
+                              <span className="icon is-small is-left" style={{ color: '#ffffff' }}>
                                 <i className="fas fa-calendar-alt"></i>
                               </span>
                             </div>
@@ -527,7 +555,7 @@ const ProjectsEdit = () => {
                             <div className="control">
                               <textarea
                                 className="textarea"
-                                style={{color:"white"}}
+                                style={{ color: "white" }}
                                 name="description"
                                 value={formData.description}
                                 onChange={handleInputChange}
@@ -574,48 +602,53 @@ const ProjectsEdit = () => {
                     </form>
                   </div>
 
-                  {/* Business Rules Info */}
-                  {user?.role?.roleName === 'client' && (
-                    <div className="bg-glass mt-5" style={{ padding: '1.5rem', borderRadius: '15px' }}>
-                      <h4 className="title is-6 text-glass">
-                        <i className="fas fa-info-circle mr-2"></i>
-                        Business Rules
-                      </h4>
-                      <div className="content text-glass">
-                        <ul>
-                          <li><strong>OPEN Status:</strong> You can edit all fields and delete the ticket</li>
-                          <li><strong>IN_PROGRESS:</strong> You CANNOT edit any fields (editor is working)</li>
-                          <li><strong>REVIEW Status:</strong> You can ONLY mark ticket as <strong>RESOLVED</strong> if satisfied</li>
-                          <li><strong>COMPLETED/CLOSED:</strong> Ticket is final and cannot be modified</li>
-                        </ul>
-                        
-                        {originalTicket && (
-                          <div className="notification is-info is-light mt-3">
-                            <strong>Current State:</strong>
-                            <br />
-                            Ticket Status: <span className="tag is-info">{originalTicket.ticketStatus}</span>
-                            <br />
-                            Project Status: <span className="tag is-info">{originalTicket.projectStatus}</span>
-                            <br />
-                            {originalTicket.projectStatus === 'COMPLETED' || originalTicket.ticketStatus === 'CLOSED' ? (
-                              <span className="has-text-danger">🔒 This ticket is in final state and cannot be modified</span>
-                            ) : originalTicket.ticketStatus === 'OPEN' ? (
-                              <span className="has-text-success">✅ You can edit all fields and delete this ticket</span>
-                            ) : originalTicket.projectStatus === 'REVIEW' && originalTicket.ticketStatus === 'IN_PROGRESS' ? (
-                              <span style={{color:"darkcyan"}}>✅ You can mark this ticket as RESOLVED if you're satisfied</span>
-                            ) : (
-                              <span className="has-text-warning">🚫 You cannot edit any fields in current state</span>
-                            )}
-                          </div>
-                        )}
-                      </div>
+                  {/* Info Box */}
+                  <div className="bg-glass mt-5" style={{ padding: '1.5rem', borderRadius: '15px' }}>
+                    <h4 className="title is-6 text-glass">
+                      <i className="fas fa-info-circle mr-2"></i>
+                      Edit Permissions
+                    </h4>
+                    <div className="content text-glass">
+                      {user?.role?.roleName === 'client' && (
+                        <div>
+                          <p><strong>As a Client:</strong></p>
+                          <ul>
+                            <li>You can edit project details when ticket status is <strong>OPEN</strong></li>
+                            <li>You can mark ticket as <strong>RESOLVED</strong> when project is in <strong>REVIEW</strong> status</li>
+                            <li>Once ticket is <strong>CLOSED</strong> or project is <strong>COMPLETED</strong>, no further edits are allowed</li>
+                          </ul>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* CSS untuk calendar icon */}
+        <style jsx>{`
+          input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3e%3cpath fill='%23ffffff' d='M6 2a1 1 0 0 0-1 1v1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zM3 8h14v8H3V8z'/%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: 16px 16px !important;
+            cursor: pointer !important;
+            opacity: 1 !important;
+            filter: none !important;
+          }
+          
+          input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3e%3cpath fill='%23ffdd57' d='M6 2a1 1 0 0 0-1 1v1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zM3 8h14v8H3V8z'/%3e%3c/svg%3e") !important;
+            transform: scale(1.1) !important;
+          }
+
+          input[type="datetime-local"]:disabled::-webkit-calendar-picker-indicator {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+          }
+        `}</style>
       </div>
     </>
   );

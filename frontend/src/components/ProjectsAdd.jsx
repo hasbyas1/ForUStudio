@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import { useAuth } from '../contexts/AuthContext';
+import '../styles/calendar-fix.css'; // ← Import CSS untuk fix calendar icon
 
 const ProjectsAdd = () => {
   const navigate = useNavigate();
@@ -246,14 +247,22 @@ const ProjectsAdd = () => {
 
                       <div className="field">
                         <label className="label text-glass">Deadline (Optional)</label>
-                        <div className="control">
+                        <div className="control has-icons-left datetime-field-custom">
                           <input
                             className="input"
                             type="datetime-local"
                             name="deadline"
                             value={formData.deadline}
                             onChange={handleInputChange}
+                            style={{ 
+                              color: 'white',
+                              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                              borderColor: 'rgba(255, 255, 255, 0.3)'
+                            }}
                           />
+                          <span className="icon is-small is-left calendar-icon">
+                            <i className="fas fa-calendar-alt" style={{ color: '#ffffff' }}></i>
+                          </span>
                         </div>
                       </div>
 
