@@ -407,7 +407,14 @@ const UsersEdit = () => {
                           <button 
                             type="button" 
                             className="button is-light mr-3" 
-                            onClick={() => navigate("/users")}
+                            onClick={() => {
+                              // Navigate based on user role
+                              if (user?.role?.roleName === 'admin') {
+                                navigate("/users");
+                              } else {
+                                navigate("/dashboard");
+                              }
+                            }}
                             disabled={isLoading}
                           >
                             <span className="icon">

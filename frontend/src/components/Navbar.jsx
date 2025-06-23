@@ -213,78 +213,6 @@ const Navbar = () => {
                 </span>
                 <span>Roles</span>
               </Link>
-
-              {/* Admin Quick Actions Dropdown */}
-              <div 
-                className="navbar-item has-dropdown is-hoverable"
-                style={{ 
-                  backgroundColor: 'transparent', 
-                  background: 'transparent',
-                  display: 'flex',
-                  alignItems: 'center',
-                  height: '100%'
-                }}
-              >
-                <a 
-                  className="navbar-link"
-                  style={{
-                    backgroundColor: 'transparent',
-                    background: 'transparent',
-                    color: 'white',
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: '100%'
-                  }}
-                >
-                  <span className="icon">
-                    <i className="fas fa-plus"></i>
-                  </span>
-                  <span>Quick Add</span>
-                </a>
-                <div 
-                  className="navbar-dropdown"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  <Link 
-                    className="navbar-item"
-                    to="/users/add"
-                    onClick={handleMobileMenuClick}
-                    style={{
-                      color: '#2c3e50',
-                      transition: 'background-color 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(102, 126, 234, 0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    <span className="icon" style={{ marginRight: '8px' }}>
-                      <i className="fas fa-user-plus"></i>
-                    </span>
-                    <span>Add User</span>
-                  </Link>
-                  <Link 
-                    className="navbar-item"
-                    to="/roles/add"
-                    onClick={handleMobileMenuClick}
-                    style={{
-                      color: '#2c3e50',
-                      transition: 'background-color 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(102, 126, 234, 0.1)'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    <span className="icon" style={{ marginRight: '8px' }}>
-                      <i className="fas fa-plus-circle"></i>
-                    </span>
-                    <span>Add Role</span>
-                  </Link>
-                </div>
-              </div>
             </>
           )}
         </div>
@@ -412,7 +340,7 @@ const Navbar = () => {
                     <span className="icon">
                       <i className="fas fa-user-cog"></i>
                     </span>
-                    <span>Edit Profile</span>
+                    <span>Profile Settings</span>
                   </Link>
 
                   <Link
