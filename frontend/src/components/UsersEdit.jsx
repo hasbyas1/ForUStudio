@@ -237,7 +237,15 @@ const UsersEdit = () => {
                       <div className="level-item">
                         <button 
                           className="button is-light"
-                          onClick={() => navigate('/users')}
+                          onClick={() => {
+                            // Navigate based on user role
+                            if (user?.role?.roleName === 'admin') {
+                              navigate("/users");
+                            } else {
+                              navigate("/dashboard");
+                            }
+                          }}
+                          disabled={isLoading}
                         >
                           <span className="icon">
                             <i className="fas fa-arrow-left"></i>
