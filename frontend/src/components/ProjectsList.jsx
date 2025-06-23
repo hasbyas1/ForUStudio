@@ -261,17 +261,20 @@ const ProjectsList = () => {
                       </span>
                       <span>Back to Work</span>
                     </button>
-                    <button 
-                      className="button is-small is-success"
-                      onClick={() => handleStatusUpdate(ticket.projectTicketId, {
-                        projectStatus: 'COMPLETED'
-                      })}
-                    >
-                      <span className="icon">
-                        <i className="fas fa-check"></i>
-                      </span>
-                      <span>Complete</span>
-                    </button>
+                    {/* Complete button only shows when ticket is RESOLVED */}
+                    {ticket.ticketStatus === 'RESOLVED' && (
+                      <button 
+                        className="button is-small is-success"
+                        onClick={() => handleStatusUpdate(ticket.projectTicketId, {
+                          projectStatus: 'COMPLETED'
+                        })}
+                      >
+                        <span className="icon">
+                          <i className="fas fa-check"></i>
+                        </span>
+                        <span>Complete</span>
+                      </button>
+                    )}
                   </>
                 )}
               </>

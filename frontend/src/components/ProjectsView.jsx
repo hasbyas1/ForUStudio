@@ -473,7 +473,6 @@ const ProjectsView = () => {
                           </button>
                         </>
                       )}
-
                       {ticket.projectStatus === 'REVIEW' && (
                         <>
                           <button className="button is-info is-fullwidth mb-2">
@@ -482,12 +481,15 @@ const ProjectsView = () => {
                             </span>
                             <span>Back to Progress</span>
                           </button>
-                          <button className="button is-success is-fullwidth">
-                            <span className="icon">
-                              <i className="fas fa-check-circle"></i>
-                            </span>
-                            <span>Mark Complete</span>
-                          </button>
+                          {/* Complete button only shows when ticket is RESOLVED */}
+                          {ticket.ticketStatus === 'RESOLVED' && (
+                            <button className="button is-success is-fullwidth">
+                              <span className="icon">
+                                <i className="fas fa-check-circle"></i>
+                              </span>
+                              <span>Complete</span>
+                            </button>
+                          )}
                         </>
                       )}
                     </div>

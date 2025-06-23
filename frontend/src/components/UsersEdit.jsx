@@ -250,7 +250,7 @@ const UsersEdit = () => {
                           <span className="icon">
                             <i className="fas fa-arrow-left"></i>
                           </span>
-                          <span>Back to Users</span>
+                          <span>Back</span>
                         </button>
                       </div>
                     </div>
