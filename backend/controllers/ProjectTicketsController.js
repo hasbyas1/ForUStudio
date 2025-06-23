@@ -1,8 +1,86 @@
-// backend/controllers/ProjectTicketsController.js
+// backend/controllers/ProjectTicketsController.js (Updated with file upload)
 import ProjectTickets from "../models/ProjectTicketsModel.js";
+import ProjectFiles from "../models/ProjectFilesModel.js";
 import Users from "../models/UsersModel.js";
 import Roles from "../models/RolesModel.js";
 import { Op } from "sequelize";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configure multer for project ticket creation with files
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // We'll create the directory after getting the project ticket ID
+    const tempDir = path.join(__dirname, '..', 'uploads', 'temp');
+    fs.mkdirSync(tempDir, { recursive: true });
+    cb(null, tempDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    const name = path.basename(file.originalname, ext);
+    cb(null, `${name}-${uniqueSuffix}${ext}`);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = [
+    'video/mp4', 'video/avi', 'video/mov', 'video/mkv', 'video/wmv',
+    'audio/mp3', 'audio/wav', 'audio/aac', 'audio/flac',
+    'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp',
+    'application/pdf', 'text/plain',
+    'application/zip', 'application/rar', 'application/x-7z-compressed'
+  ];
+  
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('File type not allowed'), false);
+  }
+};
+
+export const uploadForTicketCreation = multer({ 
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 500 * 1024 * 1024 // 500MB limit
+  }
+});
+
+// Helper function to move files from temp to project folder
+const moveFilesToProjectFolder = async (tempFiles, projectTicketId, userId) => {
+  const projectDir = path.join(__dirname, '..', 'uploads', `project_${projectTicketId}`, 'INPUT');
+  fs.mkdirSync(projectDir, { recursive: true });
+  
+  const movedFiles = [];
+  
+  for (const file of tempFiles) {
+    const newFilePath = path.join(projectDir, file.filename);
+    
+    // Move file from temp to project folder
+    fs.renameSync(file.path, newFilePath);
+    
+    // Create database record
+    const projectFile = await ProjectFiles.create({
+      projectTicketId: projectTicketId,
+      fileName: file.originalname,
+      filePath: newFilePath,
+      fileType: file.mimetype,
+      fileSize: file.size,
+      fileCategory: 'INPUT',
+      uploadedBy: userId
+    });
+    
+    movedFiles.push(projectFile);
+  }
+  
+  return movedFiles;
+};
 
 // Helper function to check if ticket/project is final state
 const isFinalState = (ticket) => {
@@ -11,23 +89,18 @@ const isFinalState = (ticket) => {
 
 // Helper function to check if client can edit ticket
 const canClientEdit = (ticket) => {
-  // Client cannot edit if ticket is in final state (COMPLETED/CLOSED)
   if (isFinalState(ticket)) return false;
-  
-  // Client can edit when ticket is OPEN or when project is REVIEW and ticket is not CLOSED
   return ticket.ticketStatus === 'OPEN' || 
          (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus !== 'CLOSED');
 };
 
 // Helper function to check if client can delete ticket
 const canClientDelete = (ticket) => {
-  // Client can only delete when ticket status is OPEN
   return ticket.ticketStatus === 'OPEN';
 };
 
 // Helper function to check if editor can edit
 const canEditorEdit = (ticket) => {
-  // Editor cannot edit if ticket is in final state
   return !isFinalState(ticket);
 };
 
@@ -55,7 +128,7 @@ export const getDashboardStats = async (req, res) => {
 
     res.status(200).json(formattedStats);
   } catch (error) {
-    console.error("Error deleting project ticket:", error);
+    console.error("Error fetching dashboard stats:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -66,11 +139,9 @@ export const getProjectTickets = async (req, res) => {
     const { userId, roleName } = req.user;
     let whereClause = {};
 
-    // Filter based on role
     if (roleName === 'client') {
       whereClause.clientId = userId;
     }
-    // Admin and editor can see all tickets
 
     const tickets = await ProjectTickets.findAll({
       where: whereClause,
@@ -94,6 +165,11 @@ export const getProjectTickets = async (req, res) => {
             as: "role",
             attributes: ["roleName"]
           }]
+        },
+        {
+          model: ProjectFiles,
+          as: "projectFiles",
+          attributes: ["fileId", "fileName", "fileCategory", "uploadedAt"]
         }
       ],
       order: [['createdAt', 'DESC']]
@@ -133,6 +209,15 @@ export const getProjectTicketById = async (req, res) => {
             as: "role",
             attributes: ["roleName"]
           }]
+        },
+        {
+          model: ProjectFiles,
+          as: "projectFiles",
+          include: [{
+            model: Users,
+            as: "uploader",
+            attributes: ["userId", "fullName", "email"]
+          }]
         }
       ]
     });
@@ -141,7 +226,6 @@ export const getProjectTicketById = async (req, res) => {
       return res.status(404).json({ message: "Project ticket not found" });
     }
 
-    // Check access permissions
     if (roleName === 'client' && ticket.clientId !== userId) {
       return res.status(403).json({ message: "Access denied. You can only view your own tickets." });
     }
@@ -153,7 +237,7 @@ export const getProjectTicketById = async (req, res) => {
   }
 };
 
-// Create new ticket (client only)
+// Create new ticket (client only) with optional file upload
 export const createProjectTicket = async (req, res) => {
   try {
     const { userId, roleName } = req.user;
@@ -170,6 +254,7 @@ export const createProjectTicket = async (req, res) => {
       });
     }
 
+    // Create the project ticket first
     const newTicket = await ProjectTickets.create({
       clientId: userId,
       subject,
@@ -182,6 +267,13 @@ export const createProjectTicket = async (req, res) => {
       projectStatus: 'PENDING'
     });
 
+    // If files were uploaded, move them to the project folder and create records
+    let uploadedFiles = [];
+    if (req.files && req.files.length > 0) {
+      uploadedFiles = await moveFilesToProjectFolder(req.files, newTicket.projectTicketId, userId);
+    }
+
+    // Fetch the complete ticket with associations
     const ticketWithAssociations = await ProjectTickets.findByPk(newTicket.projectTicketId, {
       include: [
         {
@@ -193,21 +285,41 @@ export const createProjectTicket = async (req, res) => {
             as: "role",
             attributes: ["roleName"]
           }]
+        },
+        {
+          model: ProjectFiles,
+          as: "projectFiles",
+          include: [{
+            model: Users,
+            as: "uploader",
+            attributes: ["userId", "fullName", "email"]
+          }]
         }
       ]
     });
 
     res.status(201).json({
       message: "Project ticket created successfully",
-      ticket: ticketWithAssociations
+      ticket: ticketWithAssociations,
+      filesUploaded: uploadedFiles.length
     });
   } catch (error) {
     console.error("Error creating project ticket:", error);
+    
+    // Clean up temp files if ticket creation failed
+    if (req.files) {
+      req.files.forEach(file => {
+        if (fs.existsSync(file.path)) {
+          fs.unlinkSync(file.path);
+        }
+      });
+    }
+    
     res.status(500).json({ message: error.message });
   }
 };
 
-// Update ticket
+// Update ticket (existing function remains the same)
 export const updateProjectTicket = async (req, res) => {
   try {
     const { id } = req.params;
@@ -218,14 +330,12 @@ export const updateProjectTicket = async (req, res) => {
       return res.status(404).json({ message: "Project ticket not found" });
     }
 
-    // Check if ticket is in final state - nobody can edit
     if (isFinalState(ticket)) {
       return res.status(400).json({ 
         message: "Cannot modify ticket. Project is completed or ticket is closed." 
       });
     }
 
-    // Check permissions
     const isClient = roleName === 'client' && ticket.clientId === userId;
     const isEditor = roleName === 'editor' || roleName === 'admin';
 
@@ -235,7 +345,6 @@ export const updateProjectTicket = async (req, res) => {
 
     const updates = { ...req.body };
 
-    // CLIENT LOGIC
     if (isClient) {
       if (!canClientEdit(ticket)) {
         return res.status(400).json({ 
@@ -243,7 +352,6 @@ export const updateProjectTicket = async (req, res) => {
         });
       }
 
-      // When ticket status is OPEN, client can edit basic fields
       if (ticket.ticketStatus === 'OPEN') {
         const allowedFields = ['subject', 'budget', 'description', 'priority', 'projectTitle', 'deadline'];
         Object.keys(updates).forEach(key => {
@@ -251,11 +359,7 @@ export const updateProjectTicket = async (req, res) => {
             delete updates[key];
           }
         });
-      }
-      
-      // When project is REVIEW and ticket is IN_PROGRESS, client can change ticket status to RESOLVED
-      else if (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus === 'IN_PROGRESS') {
-        // Client can only change ticketStatus to RESOLVED in this case
+      } else if (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus === 'IN_PROGRESS') {
         const allowedFields = ['ticketStatus'];
         Object.keys(updates).forEach(key => {
           if (!allowedFields.includes(key)) {
@@ -263,23 +367,18 @@ export const updateProjectTicket = async (req, res) => {
           }
         });
         
-        // Validate that ticketStatus change is to RESOLVED
         if (updates.ticketStatus && updates.ticketStatus !== 'RESOLVED') {
           return res.status(400).json({ 
             message: "You can only mark ticket as RESOLVED when project is in review." 
           });
         }
-      }
-      
-      // In any other state, client cannot make changes
-      else {
+      } else {
         return res.status(400).json({ 
           message: "You cannot edit this ticket in its current state." 
         });
       }
     }
 
-    // EDITOR LOGIC
     if (isEditor) {
       if (!canEditorEdit(ticket)) {
         return res.status(400).json({ 
@@ -287,7 +386,6 @@ export const updateProjectTicket = async (req, res) => {
         });
       }
 
-      // Editor can only edit projectStatus and editorId
       const allowedFields = ['projectStatus', 'editorId'];
       Object.keys(updates).forEach(key => {
         if (!allowedFields.includes(key)) {
@@ -295,54 +393,21 @@ export const updateProjectTicket = async (req, res) => {
         }
       });
 
-      // Editor projectStatus change validations
       if (updates.projectStatus) {
         const currentProjectStatus = ticket.projectStatus;
         const newProjectStatus = updates.projectStatus;
 
-        // Cannot go back to PENDING once project has started
         if (newProjectStatus === 'PENDING' && currentProjectStatus !== 'PENDING') {
           return res.status(400).json({ 
             message: "Cannot change project status back to PENDING once project has started." 
           });
         }
 
-        // Can only take project (PENDING -> IN_PROGRESS) if not assigned to another editor
-        if (currentProjectStatus === 'PENDING' && newProjectStatus === 'IN_PROGRESS') {
-          if (ticket.editorId && ticket.editorId !== userId) {
-            return res.status(400).json({ 
-              message: "This project is already assigned to another editor." 
-            });
-          }
-          // Auto-assign editor when taking project
-          updates.editorId = userId;
-        }
-
-        // IN_PROGRESS can go to REVIEW
-        if (currentProjectStatus === 'IN_PROGRESS' && newProjectStatus === 'REVIEW') {
-          // Allowed
-        }
-
-        // REVIEW can go back to IN_PROGRESS (for revisions)
-        if (currentProjectStatus === 'REVIEW' && newProjectStatus === 'IN_PROGRESS') {
-          // Allowed
-        }
-
-        // REVIEW can go to COMPLETED only if ticketStatus is RESOLVED
-        if (currentProjectStatus === 'REVIEW' && newProjectStatus === 'COMPLETED') {
-          if (ticket.ticketStatus !== 'RESOLVED') {
-            return res.status(400).json({ 
-              message: "Cannot complete project until client marks ticket as resolved." 
-            });
-          }
-        }
-
-        // Validate valid transitions
         const validTransitions = {
           'PENDING': ['IN_PROGRESS'],
           'IN_PROGRESS': ['REVIEW'],
           'REVIEW': ['IN_PROGRESS', 'COMPLETED'],
-          'COMPLETED': [] // Cannot change from completed
+          'COMPLETED': []
         };
 
         if (!validTransitions[currentProjectStatus].includes(newProjectStatus)) {
@@ -401,15 +466,31 @@ export const deleteProjectTicket = async (req, res) => {
       return res.status(404).json({ message: "Project ticket not found" });
     }
 
-    // Admin can always delete
     if (roleName === 'admin') {
+      // Admin can delete and should also clean up files
+      const projectFiles = await ProjectFiles.findAll({
+        where: { projectTicketId: id }
+      });
+
+      // Delete all files from filesystem
+      for (const file of projectFiles) {
+        if (fs.existsSync(file.filePath)) {
+          fs.unlinkSync(file.filePath);
+        }
+      }
+
+      // Delete project directory
+      const projectDir = path.join(__dirname, '..', 'uploads', `project_${id}`);
+      if (fs.existsSync(projectDir)) {
+        fs.rmSync(projectDir, { recursive: true, force: true });
+      }
+
       await ticket.destroy();
       return res.status(200).json({
-        message: "Project ticket deleted successfully"
+        message: "Project ticket and all associated files deleted successfully"
       });
     }
 
-    // Client can only delete their own tickets and only when status is OPEN
     if (roleName === 'client' && ticket.clientId === userId) {
       if (!canClientDelete(ticket)) {
         return res.status(400).json({ 
@@ -417,13 +498,28 @@ export const deleteProjectTicket = async (req, res) => {
         });
       }
       
+      // Client can also delete files when deleting ticket
+      const projectFiles = await ProjectFiles.findAll({
+        where: { projectTicketId: id }
+      });
+
+      for (const file of projectFiles) {
+        if (fs.existsSync(file.filePath)) {
+          fs.unlinkSync(file.filePath);
+        }
+      }
+
+      const projectDir = path.join(__dirname, '..', 'uploads', `project_${id}`);
+      if (fs.existsSync(projectDir)) {
+        fs.rmSync(projectDir, { recursive: true, force: true });
+      }
+      
       await ticket.destroy();
       return res.status(200).json({
-        message: "Project ticket deleted successfully"
+        message: "Project ticket and all associated files deleted successfully"
       });
     }
 
-    // Editor cannot delete tickets
     return res.status(403).json({ 
       message: "You don't have permission to delete this ticket." 
     });

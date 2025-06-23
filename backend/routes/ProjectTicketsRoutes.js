@@ -1,4 +1,4 @@
-// backend/routes/ProjectTicketsRoutes.js
+// backend/routes/ProjectTicketsRoutes.js (Updated with file upload)
 import express from "express";
 import { 
   getDashboardStats,
@@ -6,7 +6,8 @@ import {
   getProjectTicketById, 
   createProjectTicket, 
   updateProjectTicket, 
-  deleteProjectTicket 
+  deleteProjectTicket,
+  uploadForTicketCreation
 } from "../controllers/ProjectTicketsController.js";
 import { authenticateToken } from "../middleware/AuthMiddleware.js";
 
@@ -22,13 +23,16 @@ router.get("/dashboard/stats", getDashboardStats);
 router.get("/project-tickets", getProjectTickets);
 router.get("/project-tickets/:id", getProjectTicketById);
 
-// POST Route (create new ticket)
-router.post("/project-tickets", createProjectTicket);
+// POST Route (create new ticket with optional file upload)
+router.post("/project-tickets", 
+  uploadForTicketCreation.array('files', 10), // Allow up to 10 files
+  createProjectTicket
+);
 
 // PATCH Route (update ticket)
 router.patch("/project-tickets/:id", updateProjectTicket);
 
-// DELETE Route (admin only - handled in controller)
+// DELETE Route (admin/client - handled in controller)
 router.delete("/project-tickets/:id", deleteProjectTicket);
 
 export default router;

@@ -1,4 +1,4 @@
-// frontend/src/App.js (Updated)
+// frontend/src/App.js (Updated with ProjectFiles route)
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -25,6 +25,7 @@ import ProjectsList from "./components/ProjectsList";
 import ProjectsAdd from "./components/ProjectsAdd";
 import ProjectsEdit from "./components/ProjectsEdit";
 import ProjectsView from "./components/ProjectsView";
+import ProjectFiles from "./components/ProjectFiles"; // ← Add import
 
 function App() {
   return (
@@ -80,6 +81,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProjectsView />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/projects/:projectId/files" 
+            element={
+              <ProtectedRoute>
+                <ProjectFiles />
               </ProtectedRoute>
             } 
           />

@@ -1,4 +1,4 @@
-// frontend/src/components/ProjectsList.jsx
+// frontend/src/components/ProjectsList.jsx (Updated with Files link and complete component)
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from "./Navbar";
@@ -72,7 +72,7 @@ const ProjectsList = () => {
   };
 
   const handleDelete = async (ticketId) => {
-    if (!window.confirm('Are you sure you want to delete this ticket?')) {
+    if (!window.confirm('Are you sure you want to delete this ticket? All associated files will also be deleted.')) {
       return;
     }
 
@@ -81,232 +81,217 @@ const ProjectsList = () => {
       const response = await fetch(`http://localhost:5000/project-tickets/${ticketId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
         }
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete ticket');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete ticket');
       }
 
+      // Refresh the list
       fetchProjectTickets();
     } catch (error) {
       console.error('Error deleting ticket:', error);
-      setError('Failed to delete ticket');
+      setError(error.message);
     }
   };
+
+  // Filter tickets based on selected filters
+  const filteredTickets = tickets.filter(ticket => {
+    const statusMatch = filterStatus === "ALL" || ticket.ticketStatus === filterStatus;
+    const projectStatusMatch = filterProjectStatus === "ALL" || ticket.projectStatus === filterProjectStatus;
+    return statusMatch && projectStatusMatch;
+  });
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'OPEN': return 'is-success';
-      case 'IN_PROGRESS': return 'is-info';
-      case 'RESOLVED': return 'is-warning';
-      case 'CLOSED': return 'is-dark';
-      default: return 'is-light';
-    }
-  };
-
-  const getProjectStatusColor = (status) => {
-    switch (status) {
       case 'PENDING': return 'is-warning';
       case 'IN_PROGRESS': return 'is-info';
-      case 'REVIEW': return 'is-link';
+      case 'REVIEW': return 'is-primary';
       case 'COMPLETED': return 'is-success';
+      case 'OPEN': return 'is-light';
+      case 'RESOLVED': return 'is-success';
+      case 'CLOSED': return 'is-dark';
       default: return 'is-light';
     }
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'LOW': return 'is-success';
-      case 'MEDIUM': return 'is-warning';
-      case 'HIGH': return 'is-danger';
-      case 'URGENT': return 'is-dark';
+      case 'URGENT': return 'is-danger';
+      case 'HIGH': return 'is-warning';
+      case 'MEDIUM': return 'is-info';
+      case 'LOW': return 'is-light';
       default: return 'is-light';
     }
   };
 
-  const filteredTickets = tickets.filter(ticket => {
-    if (filterStatus !== "ALL" && ticket.ticketStatus !== filterStatus) return false;
-    if (filterProjectStatus !== "ALL" && ticket.projectStatus !== filterProjectStatus) return false;
-    return true;
-  });
-
-  const canEdit = (ticket) => {
+  // Check if user can access project files
+  const canAccessFiles = (ticket) => {
     if (user?.role?.roleName === 'admin') return true;
-    if (user?.role?.roleName === 'editor') return true;
     if (user?.role?.roleName === 'client' && ticket.clientId === user.userId) return true;
+    if (user?.role?.roleName === 'editor' && ticket.editorId === user.userId) return true;
     return false;
   };
 
-  const renderActionButtons = (ticket) => {
-    const isClient = user?.role?.roleName === 'client';
-    const isEditor = user?.role?.roleName === 'editor' || user?.role?.roleName === 'admin';
-    const isAdmin = user?.role?.roleName === 'admin';
-    const isOwner = ticket.clientId === user?.userId;
-    
-    // Check if ticket is in final state
-    const isFinalState = ticket.projectStatus === 'COMPLETED' || ticket.ticketStatus === 'CLOSED';
-    
-    // Helper functions for permissions
-    const canClientEdit = () => {
-      if (!isClient || !isOwner || isFinalState) return false;
+  // Check edit permissions
+  const canEdit = (ticket) => {
+    if (user?.role?.roleName === 'admin') return true;
+    if (user?.role?.roleName === 'client' && ticket.clientId === user.userId) {
       return ticket.ticketStatus === 'OPEN' || 
-             (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus !== 'CLOSED');
-    };
-    
-    const canClientDelete = () => {
-      return isClient && isOwner && ticket.ticketStatus === 'OPEN';
-    };
-    
-    const canEditorEdit = () => {
-      return isEditor && !isFinalState;
-    };
+             (ticket.projectStatus === 'REVIEW' && ticket.ticketStatus === 'IN_PROGRESS');
+    }
+    if (user?.role?.roleName === 'editor') {
+      return ticket.projectStatus !== 'COMPLETED' && ticket.ticketStatus !== 'CLOSED';
+    }
+    return false;
+  };
+
+  // Check delete permissions
+  const canDelete = (ticket) => {
+    if (user?.role?.roleName === 'admin') return true;
+    if (user?.role?.roleName === 'client' && ticket.clientId === user.userId) {
+      return ticket.ticketStatus === 'OPEN';
+    }
+    return false;
+  };
+
+  // Render action buttons for each ticket
+  const renderActionButtons = (ticket) => {
+    const isFinalState = ticket.projectStatus === 'COMPLETED' || ticket.ticketStatus === 'CLOSED';
+    const isClient = user?.role?.roleName === 'client';
+    const isEditor = user?.role?.roleName === 'editor';
+    const isAdmin = user?.role?.roleName === 'admin';
 
     return (
-      <div className="field is-grouped">
-        {/* Client Actions */}
-        {isClient && isOwner && (
-          <>
-            {canClientEdit() && (
-              <div className="control">
-                <Link 
-                  to={`/projects/edit/${ticket.projectTicketId}`} 
-                  className="button is-small is-info"
-                >
-                  <span className="icon">
-                    <i className="fas fa-edit"></i>
-                  </span>
-                  <span>Edit</span>
-                </Link>
-              </div>
-            )}
-            
-            {/* Client can mark as RESOLVED only when project is in REVIEW */}
-            {ticket.projectStatus === 'REVIEW' && ticket.ticketStatus === 'IN_PROGRESS' && (
-              <div className="control">
-                <button 
-                  className="button is-small is-success"
-                  onClick={() => handleStatusUpdate(ticket.projectTicketId, { ticketStatus: 'RESOLVED' })}
-                >
-                  <span className="icon">
-                    <i className="fas fa-check"></i>
-                  </span>
-                  <span>Mark Resolved</span>
-                </button>
-              </div>
-            )}
-            
-            {/* Client can delete only when ticket is OPEN */}
-            {canClientDelete() && (
-              <div className="control">
-                <button 
-                  className="button is-small is-danger"
-                  onClick={() => handleDelete(ticket.projectTicketId)}
-                >
-                  <span className="icon">
-                    <i className="fas fa-trash"></i>
-                  </span>
-                  <span>Delete</span>
-                </button>
-              </div>
-            )}
-          </>
+      <div className="buttons">
+        {/* View Button - everyone can view their accessible tickets */}
+        <Link 
+          to={`/projects/view/${ticket.projectTicketId}`}
+          className="button is-small is-info"
+        >
+          <span className="icon">
+            <i className="fas fa-eye"></i>
+          </span>
+          <span>View</span>
+        </Link>
+
+        {/* Files Button - for users who can access files */}
+        {canAccessFiles(ticket) && (
+          <Link 
+            to={`/projects/${ticket.projectTicketId}/files`}
+            className="button is-small is-link"
+          >
+            <span className="icon">
+              <i className="fas fa-folder"></i>
+            </span>
+            <span>Files</span>
+          </Link>
+        )}
+
+        {/* Edit Button */}
+        {canEdit(ticket) && (
+          <Link 
+            to={`/projects/edit/${ticket.projectTicketId}`}
+            className="button is-small is-warning"
+          >
+            <span className="icon">
+              <i className="fas fa-edit"></i>
+            </span>
+            <span>Edit</span>
+          </Link>
         )}
 
         {/* Editor Actions */}
-        {canEditorEdit() && (
+        {isEditor && !isFinalState && (
           <>
-            {/* Editor can take project when PENDING */}
-            {ticket.projectStatus === 'PENDING' && (
-              <div className="control">
-                <button 
-                  className="button is-small is-info"
-                  onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'IN_PROGRESS' })}
-                >
-                  <span className="icon">
-                    <i className="fas fa-play"></i>
-                  </span>
-                  <span>Take Project</span>
-                </button>
-              </div>
-            )}
-            
-            {/* Editor can send to review when IN_PROGRESS */}
-            {ticket.projectStatus === 'IN_PROGRESS' && (
-              <div className="control">
-                <button 
-                  className="button is-small is-link"
-                  onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'REVIEW' })}
-                >
-                  <span className="icon">
-                    <i className="fas fa-search"></i>
-                  </span>
-                  <span>Send to Review</span>
-                </button>
-              </div>
+            {/* Take Project Button */}
+            {ticket.projectStatus === 'PENDING' && !ticket.editorId && (
+              <button 
+                className="button is-small is-success"
+                onClick={() => handleStatusUpdate(ticket.projectTicketId, {
+                  editorId: user.userId,
+                  projectStatus: 'IN_PROGRESS'
+                })}
+              >
+                <span className="icon">
+                  <i className="fas fa-hand-paper"></i>
+                </span>
+                <span>Take</span>
+              </button>
             )}
 
-            {/* Editor actions when project is in REVIEW */}
-            {ticket.projectStatus === 'REVIEW' && (
+            {/* Project Status Updates */}
+            {ticket.editorId === user.userId && (
               <>
-                <div className="control">
+                {ticket.projectStatus === 'IN_PROGRESS' && (
                   <button 
-                    className="button is-small is-warning"
-                    onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'IN_PROGRESS' })}
+                    className="button is-small is-primary"
+                    onClick={() => handleStatusUpdate(ticket.projectTicketId, {
+                      projectStatus: 'REVIEW'
+                    })}
                   >
                     <span className="icon">
-                      <i className="fas fa-undo"></i>
+                      <i className="fas fa-search"></i>
                     </span>
-                    <span>Back to Progress</span>
+                    <span>Review</span>
                   </button>
-                </div>
-                
-                {/* Editor can complete only if ticket is RESOLVED */}
-                {ticket.ticketStatus === 'RESOLVED' && (
-                  <div className="control">
+                )}
+
+                {ticket.projectStatus === 'REVIEW' && (
+                  <>
                     <button 
-                      className="button is-small is-success"
-                      onClick={() => handleStatusUpdate(ticket.projectTicketId, { projectStatus: 'COMPLETED' })}
+                      className="button is-small is-warning"
+                      onClick={() => handleStatusUpdate(ticket.projectTicketId, {
+                        projectStatus: 'IN_PROGRESS'
+                      })}
                     >
                       <span className="icon">
-                        <i className="fas fa-check-circle"></i>
+                        <i className="fas fa-arrow-left"></i>
                       </span>
-                      <span>Complete Project</span>
+                      <span>Back to Work</span>
                     </button>
-                  </div>
+                    <button 
+                      className="button is-small is-success"
+                      onClick={() => handleStatusUpdate(ticket.projectTicketId, {
+                        projectStatus: 'COMPLETED'
+                      })}
+                    >
+                      <span className="icon">
+                        <i className="fas fa-check"></i>
+                      </span>
+                      <span>Complete</span>
+                    </button>
+                  </>
                 )}
               </>
             )}
           </>
         )}
 
-        {/* Admin can always delete */}
-        {isAdmin && (
-          <div className="control">
-            <button 
-              className="button is-small is-danger"
-              onClick={() => handleDelete(ticket.projectTicketId)}
-            >
-              <span className="icon">
-                <i className="fas fa-trash"></i>
-              </span>
-              <span>Delete</span>
-            </button>
-          </div>
+        {/* Delete Button */}
+        {canDelete(ticket) && (
+          <button 
+            className="button is-small is-danger"
+            onClick={() => handleDelete(ticket.projectTicketId)}
+          >
+            <span className="icon">
+              <i className="fas fa-trash"></i>
+            </span>
+            <span>Delete</span>
+          </button>
         )}
 
         {/* Show final state message */}
         {isFinalState && (
-          <div className="control">
-            <span className="tag is-dark">
-              <span className="icon">
-                <i className="fas fa-lock"></i>
-              </span>
-              <span>Final State</span>
+          <span className="tag is-dark">
+            <span className="icon">
+              <i className="fas fa-lock"></i>
             </span>
-          </div>
+            <span>Final State</span>
+          </span>
         )}
       </div>
     );
@@ -443,20 +428,10 @@ const ProjectsList = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="column is-narrow">
-                    <div className="field">
-                      <label className="label text-glass">Total</label>
-                      <div className="control">
-                        <span className="tag is-info is-large">
-                          {filteredTickets.length} tickets
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              {/* Tickets Table */}
+              {/* Tickets Table/List */}
               <div className="bg-glass" style={{ padding: '1.5rem', borderRadius: '15px' }}>
                 {filteredTickets.length === 0 ? (
                   <div className="has-text-centered py-6">
@@ -495,6 +470,7 @@ const ProjectsList = () => {
                           <th className="text-glass">Budget</th>
                           <th className="text-glass">Ticket Status</th>
                           <th className="text-glass">Project Status</th>
+                          <th className="text-glass">Files</th>
                           <th className="text-glass">Created</th>
                           <th className="text-glass">Deadline</th>
                           <th className="text-glass">Actions</th>
@@ -503,80 +479,61 @@ const ProjectsList = () => {
                       <tbody>
                         {filteredTickets.map((ticket, index) => (
                           <tr key={ticket.projectTicketId} style={{ 
-                            backgroundColor: index % 2 === 0 ? 'rgba(30, 41, 59, 0.4)' : 'rgba(30, 41, 59, 0.2)' 
+                            backgroundColor: index % 2 === 0 ? 
+                              'rgba(15, 23, 42, 0.6)' : 'rgba(30, 41, 59, 0.4)' 
                           }}>
-                            <td className="table-text-white">
-                              <strong>#{ticket.projectTicketId}</strong>
+                            <td className="text-glass">
+                              <span className="tag is-dark">#{ticket.projectTicketId}</span>
                             </td>
-                            <td className="table-text-white">
-                              <Link 
-                                to={`/projects/view/${ticket.projectTicketId}`}
-                                className="table-link"
-                              >
-                                <strong>{ticket.projectTitle}</strong>
-                              </Link>
+                            <td className="text-glass">
+                              <strong>{ticket.projectTitle}</strong>
                               <br />
-                              <small className="small-text-stroke">
-                                {ticket.subject}
-                              </small>
+                              <small>{ticket.subject}</small>
                             </td>
-                            <td className="table-text-white">
-                              <div>
-                                <strong className="table-text-white">{ticket.client?.fullName}</strong>
-                                <br />
-                                <small className="small-text-stroke">
-                                  {ticket.client?.email}
-                                </small>
-                              </div>
+                            <td className="text-glass">
+                              {ticket.client?.fullName || 'N/A'}
                             </td>
-                            <td className="table-text-white">
-                              {ticket.editor ? (
-                                <div>
-                                  <strong className="table-text-white">{ticket.editor.fullName}</strong>
-                                  <br />
-                                  <small className="small-text-stroke">
-                                    {ticket.editor.email}
-                                  </small>
-                                </div>
-                              ) : (
-                                <span className="small-text-stroke">Unassigned</span>
-                              )}
+                            <td className="text-glass">
+                              {ticket.editor?.fullName || 'Unassigned'}
                             </td>
                             <td>
                               <span className={`tag ${getPriorityColor(ticket.priority)}`}>
                                 {ticket.priority}
                               </span>
                             </td>
-                            <td className="table-text-white">
-                              <strong>${ticket.budget?.toLocaleString()}</strong>
+                            <td className="text-glass">
+                              ${ticket.budget}
                             </td>
                             <td>
                               <span className={`tag ${getStatusColor(ticket.ticketStatus)}`}>
-                                {ticket.ticketStatus.replace('_', ' ')}
+                                {ticket.ticketStatus}
                               </span>
                             </td>
                             <td>
-                              <span className={`tag ${getProjectStatusColor(ticket.projectStatus)}`}>
-                                {ticket.projectStatus.replace('_', ' ')}
+                              <span className={`tag ${getStatusColor(ticket.projectStatus)}`}>
+                                {ticket.projectStatus}
                               </span>
                             </td>
-                            <td className="table-text-white">
-                              <small className="small-text-stroke">
-                                {new Date(ticket.createdAt).toLocaleDateString()}
-                              </small>
-                            </td>
-                            <td className="table-text-white">
-                              {ticket.deadline ? (
-                                <small className={
-                                  new Date(ticket.deadline) < new Date() 
-                                    ? 'has-text-danger small-text-stroke' 
-                                    : 'small-text-stroke'
-                                }>
-                                  {new Date(ticket.deadline).toLocaleDateString()}
-                                </small>
+                            <td className="text-glass">
+                              {ticket.projectFiles && ticket.projectFiles.length > 0 ? (
+                                <span className="tag is-info">
+                                  <span className="icon">
+                                    <i className="fas fa-paperclip"></i>
+                                  </span>
+                                  <span>{ticket.projectFiles.length}</span>
+                                </span>
                               ) : (
-                                <span className="small-text-stroke">No deadline</span>
+                                <span className="tag is-light">0</span>
                               )}
+                            </td>
+                            <td className="text-glass">
+                              {new Date(ticket.createdAt).toLocaleDateString()}
+                            </td>
+                            <td className="text-glass">
+                              {ticket.deadline ? 
+                                new Date(ticket.deadline).toLocaleDateString() : 
+                                'No deadline'
+                              }
                             </td>
                             <td>
                               {renderActionButtons(ticket)}

@@ -1,9 +1,9 @@
-// backend/models/Associations.js
+// backend/models/Associations.js (Updated)
 import Users from "./UsersModel.js";
 import Roles from "./RolesModel.js";
 import ProjectTickets from "./ProjectTicketsModel.js";
+import ProjectFiles from "./ProjectFilesModel.js";
 // import Transactions from "./TransactionsModel.js";      // Akan diimport nanti
-// import ProjectFiles from "./ProjectFilesModel.js";      // Akan diimport nanti
 
 // ===== USERS - ROLES ASSOCIATIONS =====
 // Many-to-One: Users belongs to Roles (1 User has 1 Role)
@@ -23,14 +23,12 @@ Roles.hasMany(Users, {
 ProjectTickets.belongsTo(Users, {
   foreignKey: "clientId",
   as: "client"
-  // Removed constraints: false since we're now using INTEGER
 });
 
 // Many-to-One: ProjectTickets belongs to Users (Editor) - Optional
 ProjectTickets.belongsTo(Users, {
   foreignKey: "editorId",
   as: "editor"
-  // Removed constraints: false since we're now using INTEGER
 });
 
 // One-to-Many: Users has many ProjectTickets as Client
@@ -43,6 +41,32 @@ Users.hasMany(ProjectTickets, {
 Users.hasMany(ProjectTickets, {
   foreignKey: "editorId",
   as: "editorTickets"
+});
+
+// ===== PROJECTFILES - PROJECTTICKETS ASSOCIATIONS =====
+// Many-to-One: ProjectFiles belongs to ProjectTickets
+ProjectFiles.belongsTo(ProjectTickets, {
+  foreignKey: "projectTicketId",
+  as: "projectTicket"
+});
+
+// One-to-Many: ProjectTickets has many ProjectFiles
+ProjectTickets.hasMany(ProjectFiles, {
+  foreignKey: "projectTicketId",
+  as: "projectFiles"
+});
+
+// ===== PROJECTFILES - USERS ASSOCIATIONS =====
+// Many-to-One: ProjectFiles belongs to Users (Uploader)
+ProjectFiles.belongsTo(Users, {
+  foreignKey: "uploadedBy",
+  as: "uploader"
+});
+
+// One-to-Many: Users has many ProjectFiles (as uploader)
+Users.hasMany(ProjectFiles, {
+  foreignKey: "uploadedBy",
+  as: "uploadedFiles"
 });
 
 // ===== TRANSACTIONS - PROJECTTICKETS ASSOCIATIONS =====
@@ -61,26 +85,11 @@ ProjectTickets.hasMany(Transactions, {
 });
 */
 
-// ===== PROJECTFILES - PROJECTTICKETS ASSOCIATIONS =====
-// Akan diimplementasikan nanti ketika model ProjectFiles dibuat
-/*
-// Many-to-One: ProjectFiles belongs to ProjectTickets
-ProjectFiles.belongsTo(ProjectTickets, {
-  foreignKey: "projectTicketId",
-  as: "projectTicket"
-});
-
-// One-to-Many: ProjectTickets has many ProjectFiles
-ProjectTickets.hasMany(ProjectFiles, {
-  foreignKey: "projectTicketId",
-  as: "projectFiles"
-});
-*/
-
 console.log("✅ Database associations have been set up successfully!");
 console.log("📋 Current associations:");
 console.log("   - Users ↔ Roles (Many-to-One)");
 console.log("   - ProjectTickets ↔ Users (Many-to-One for client and editor)");
+console.log("   - ProjectFiles ↔ ProjectTickets (Many-to-One)");
+console.log("   - ProjectFiles ↔ Users (Many-to-One for uploader)");
 console.log("💡 Future associations (when models are created):");
 console.log("   - Transactions ↔ ProjectTickets (Many-to-One)");
-console.log("   - ProjectFiles ↔ ProjectTickets (Many-to-One)");
