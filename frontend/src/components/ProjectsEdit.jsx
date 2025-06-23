@@ -536,7 +536,7 @@ const ProjectsEdit = () => {
                                 style={{
                                   color: 'white',
                                   backgroundColor: '#14161a', // Background hitam seperti input lainnya
-                                  borderColor: '#dbdbdb'
+                                  borderColor: 'gray'
                                 }}
                               />
                               <span className="icon is-small is-left" style={{ color: '#ffffff' }}>

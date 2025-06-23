@@ -245,26 +245,29 @@ const ProjectsAdd = () => {
                         </div>
                       </div>
 
-                      <div className="field">
-                        <label className="label text-glass">Deadline (Optional)</label>
-                        <div className="control has-icons-left datetime-field-custom">
-                          <input
-                            className="input"
-                            type="datetime-local"
-                            name="deadline"
-                            value={formData.deadline}
-                            onChange={handleInputChange}
-                            style={{ 
-                              color: 'white',
-                              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                              borderColor: 'rgba(255, 255, 255, 0.3)'
-                            }}
-                          />
-                          <span className="icon is-small is-left calendar-icon">
-                            <i className="fas fa-calendar-alt" style={{ color: '#ffffff' }}></i>
-                          </span>
+                        {/* Deadline */}
+                        <div className="column is-12">
+                          <div className="field">
+                            <label className="label text-glass">Deadline (Optional)</label>
+                            <div className="control has-icons-left">
+                              <input
+                                className="input"
+                                type="datetime-local"
+                                name="deadline"
+                                value={formData.deadline}
+                                onChange={handleInputChange}
+                                style={{
+                                  color: 'white',
+                                  backgroundColor: '#14161a', // Background hitam seperti input lainnya
+                                  borderColor: 'gray'
+                                }}
+                              />
+                              <span className="icon is-small is-left" style={{ color: '#ffffff' }}>
+                                <i className="fas fa-calendar-alt"></i>
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
 
                       <div className="field">
                         <label className="label text-glass">Description *</label>
@@ -390,6 +393,29 @@ const ProjectsAdd = () => {
             </div>
           </div>
         </div>
+        
+        {/* CSS untuk calendar icon - sama dengan ProjectsEdit */}
+        <style jsx>{`
+          input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3e%3cpath fill='%23ffffff' d='M6 2a1 1 0 0 0-1 1v1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zM3 8h14v8H3V8z'/%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-size: 16px 16px !important;
+            cursor: pointer !important;
+            opacity: 1 !important;
+            filter: none !important;
+          }
+          
+          input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3e%3cpath fill='%23ffdd57' d='M6 2a1 1 0 0 0-1 1v1H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H7V3a1 1 0 0 0-1-1zM3 8h14v8H3V8z'/%3e%3c/svg%3e") !important;
+            transform: scale(1.1) !important;
+          }
+
+          input[type="datetime-local"]:disabled::-webkit-calendar-picker-indicator {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+          }
+        `}</style>
       </div>
     </>
   );
