@@ -265,7 +265,7 @@ const ProjectsEdit = () => {
               <div className="container">
                 <div className="columns is-centered">
                   <div className="column is-6">
-                    <div className="bg-glass has-text-centered" style={{ padding: '3rem', borderRadius: '15px' }}>
+                    <div className="box has-text-centered" style={{ padding: '3rem', borderRadius: '15px' }}>
                       <div className="is-size-1 mb-4 has-text-warning">
                         <i className="fas fa-lock"></i>
                       </div>
