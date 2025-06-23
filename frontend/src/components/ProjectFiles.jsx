@@ -23,6 +23,13 @@ const ProjectFiles = () => {
       return;
     }
     
+    // Set default upload category based on user role
+    if (user.role?.roleName === 'client') {
+      setUploadCategory('INPUT');
+    } else if (user.role?.roleName === 'editor') {
+      setUploadCategory('OUTPUT');
+    }
+    
     fetchProjectTicket();
     fetchProjectFiles();
   }, [projectId, navigate, user]);
@@ -198,6 +205,10 @@ const ProjectFiles = () => {
     return false;
   };
 
+  const canUploadToAnyCategory = () => {
+    return canUploadToCategory('INPUT') || canUploadToCategory('OUTPUT');
+  };
+
   if (isLoading) {
     return (
       <>
@@ -272,7 +283,7 @@ const ProjectFiles = () => {
               )}
 
               {/* Upload Section */}
-              {(canUploadToCategory('INPUT') || canUploadToCategory('OUTPUT')) && (
+              {canUploadToAnyCategory() && (
                 <div className="bg-glass mb-6" style={{ padding: '1.5rem', borderRadius: '15px' }}>
                   <h3 className="title is-5 text-glass mb-4">
                     <i className="fas fa-cloud-upload-alt mr-2"></i>
@@ -335,7 +346,7 @@ const ProjectFiles = () => {
                       <button
                         className={`button is-primary ${isUploading ? 'is-loading' : ''}`}
                         onClick={handleUpload}
-                        disabled={isUploading || selectedFiles.length === 0}
+                        disabled={isUploading || selectedFiles.length === 0 || !canUploadToCategory(uploadCategory)}
                       >
                         <span className="icon">
                           <i className="fas fa-upload"></i>
@@ -343,6 +354,11 @@ const ProjectFiles = () => {
                         <span>{isUploading ? 'Uploading...' : 'Upload Files'}</span>
                       </button>
                     </div>
+                    {!canUploadToCategory(uploadCategory) && (
+                      <p className="help is-danger">
+                        You don't have permission to upload {uploadCategory} files
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
