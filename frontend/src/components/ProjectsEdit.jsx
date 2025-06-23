@@ -444,9 +444,9 @@ const ProjectsEdit = () => {
                         {/* Budget and Priority */}
                         <div className="column is-4">
                           <div className="field">
-                            <label className="label text-glass">
-                              Budget <span className="has-text-danger">*</span>
-                            </label>
+                              <label className="label text-glass">
+                                Budget (Rp) <span className="has-text-danger">*</span>
+                              </label>
                             <div className="control has-icons-left">
                               <input
                                 className="input"
@@ -461,7 +461,7 @@ const ProjectsEdit = () => {
                                 required
                               />
                               <span className="icon is-small is-left">
-                                <i className="fas fa-dollar-sign"></i>
+                                <i className="fas fa-coins"></i>
                               </span>
                             </div>
                           </div>

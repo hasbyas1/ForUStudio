@@ -208,7 +208,7 @@ const ProjectsAdd = () => {
                       <div className="columns">
                         <div className="column">
                           <div className="field">
-                            <label className="label text-glass">Budget (USD) *</label>
+                            <label className="label text-glass">Budget (Rp) *</label>
                             <div className="control">
                               <input
                                 className="input"

@@ -89,10 +89,12 @@ const ProjectsView = () => {
     return new Date(dateString).toLocaleString();
   };
 
+  // jika Anda ingin format yang lebih sederhana tanpa simbol currency:
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
+    return 'Rp' + new Intl.NumberFormat('id-ID', {
+      style: 'decimal',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(amount);
   };
 

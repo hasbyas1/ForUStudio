@@ -158,6 +158,14 @@ const ProjectsList = () => {
     return false;
   };
 
+  const formatCurrency = (amount) => {
+    return 'Rp' + new Intl.NumberFormat('id-ID', {
+      style: 'decimal',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
   // Render action buttons for each ticket
   const renderActionButtons = (ticket) => {
     const isFinalState = ticket.projectStatus === 'COMPLETED' || ticket.ticketStatus === 'CLOSED';
@@ -502,7 +510,7 @@ const ProjectsList = () => {
                               </span>
                             </td>
                             <td className="text-glass">
-                              ${ticket.budget}
+                              {formatCurrency(ticket.budget)}
                             </td>
                             <td>
                               <span className={`tag ${getStatusColor(ticket.ticketStatus)}`}>
